@@ -1,9 +1,10 @@
 object Versions {
     const val kotlin = "1.5.0"
     const val springBoot = "2.4.5"
-
     const val springDependencyManagement = "1.0.11.RELEASE"
+
     const val grGit = "4.1.0"
+    const val gradleVersions = "0.38.0"
 }
 
 object Plugins {
@@ -11,6 +12,7 @@ object Plugins {
     const val springDependencyManagement = "io.spring.dependency-management"
     const val kotlinSpring = "plugin.spring"
     const val grGit = "org.ajoberstar.grgit"
+    const val gradleVersions = "com.github.ben-manes.versions"
 }
 
 object Libs {
