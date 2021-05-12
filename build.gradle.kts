@@ -1,7 +1,9 @@
+import org.ajoberstar.grgit.Branch
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version Versions.kotlin
+    id(Plugins.grGit) version Versions.grGit
 }
 
 buildscript {
@@ -30,6 +32,18 @@ subprojects {
         plugin("kotlin")
     }
 
+    if (grgit.branch.current().isMainBranch()) {
+        configurations.all {
+            resolutionStrategy {
+                eachDependency {
+                    if (requested.version.isRcOrSnapshotVersion()) {
+                        throw GradleException("SNAPSHOT or RC dependency found: ${requested.name} ${requested.version}")
+                    }
+                }
+            }
+        }
+    }
+
     repositories {
         jcenter()
         mavenCentral()
@@ -55,3 +69,11 @@ subprojects {
         }
     }
 }
+
+fun Branch.isMainBranch(): Boolean = name?.toLowerCase() == "main"
+
+fun String?.isRcOrSnapshotVersion(): Boolean =
+    this?.let { version ->
+        version.contains("RC", ignoreCase = true) || version.contains("SNAPSHOT", ignoreCase = true)
+    } ?: false
+

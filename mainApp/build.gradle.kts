@@ -7,7 +7,6 @@ plugins {
 dependencies {
     implementation(Libs.springBootWebfluxStarter)
 
-
     implementation(Libs.jacksonKotlinModule)
     implementation(Libs.kotlinReflect)
     implementation(Libs.kotlinStdlibJdk8)
