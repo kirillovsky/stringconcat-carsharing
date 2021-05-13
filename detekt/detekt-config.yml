@@ -17,6 +17,8 @@ style:
         active: true
     UnusedImports:
         active: true
+    FunctionOnlyReturningConstant:
+        active: false
 
 formatting:
     active: true
