@@ -17,3 +17,17 @@ dependencies {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
 }
+
+tasks {
+    withType<JacocoCoverageVerification> {
+        afterEvaluate {
+            excludeFilesFromDirectory(classDirectories, listOf("**/CarSharingApplication*.*"))
+        }
+    }
+
+    withType<JacocoReport> {
+        afterEvaluate {
+            excludeFilesFromDirectory(classDirectories, listOf("**/CarSharingApplication*.*"))
+        }
+    }
+}

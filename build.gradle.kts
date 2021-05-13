@@ -8,6 +8,7 @@ plugins {
     id(Plugins.grGit) version Versions.grGit
     id(Plugins.gradleVersions) version Versions.gradleVersions
     id(Plugins.detekt) version Versions.detekt
+    jacoco
 }
 
 buildscript {
@@ -36,6 +37,7 @@ subprojects {
         plugin("kotlin")
         plugin(Plugins.gradleVersions)
         plugin(Plugins.detekt)
+        plugin("jacoco")
     }
 
     repositories {
@@ -77,6 +79,10 @@ subprojects {
         }
     }
 
+    jacoco {
+        toolVersion = "0.8.7"
+    }
+
     tasks {
         val check = named<DefaultTask>("check")
         val dependencyUpdate = named<DependencyUpdatesTask>("dependencyUpdates")
@@ -114,6 +120,30 @@ subprojects {
 
         withType<Test> {
             useJUnitPlatform()
+        }
+
+        val jacocoTestReport = named<JacocoReport>("jacocoTestReport")
+        val jacocoTestCoverageVerification = named<JacocoCoverageVerification>("jacocoTestCoverageVerification")
+
+        test {
+            finalizedBy(jacocoTestReport)
+        }
+
+        jacocoTestReport {
+            dependsOn(test)
+            finalizedBy(jacocoTestCoverageVerification)
+        }
+
+        jacocoTestCoverageVerification {
+            dependsOn(jacocoTestReport)
+
+            violationRules {
+                rule {
+                    limit {
+                        minimum = "0.8".toBigDecimal()
+                    }
+                }
+            }
         }
     }
 }
