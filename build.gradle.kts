@@ -1,4 +1,5 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import io.gitlab.arturbosch.detekt.extensions.DetektExtension.Companion.DEFAULT_SRC_DIR_KOTLIN
 import org.ajoberstar.grgit.Branch
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -6,6 +7,7 @@ plugins {
     kotlin("jvm") version Versions.kotlin
     id(Plugins.grGit) version Versions.grGit
     id(Plugins.gradleVersions) version Versions.gradleVersions
+    id(Plugins.detekt) version Versions.detekt
 }
 
 buildscript {
@@ -33,6 +35,7 @@ subprojects {
     apply {
         plugin("kotlin")
         plugin(Plugins.gradleVersions)
+        plugin(Plugins.detekt)
     }
 
     repositories {
@@ -54,6 +57,23 @@ subprojects {
                     }
                 }
             }
+        }
+    }
+
+    detekt {
+        buildUponDefaultConfig = true
+        config = files(rootDir.resolve("detekt/detekt-config.yml"))
+        input = files(
+            DEFAULT_SRC_DIR_KOTLIN,
+            "src/test/kotlin"
+        )
+
+        reports {
+            html.enabled = true
+        }
+
+        dependencies {
+            detektPlugins("${Plugins.detektFormatting}:${Versions.detekt}")
         }
     }
 
@@ -84,7 +104,6 @@ subprojects {
             finalizedBy(dependencyUpdate)
         }
 
-
         withType<KotlinCompile> {
             kotlinOptions {
                 freeCompilerArgs = listOf("-Xjsr305=strict")
@@ -95,7 +114,6 @@ subprojects {
 
         withType<Test> {
             useJUnitPlatform()
-            maxParallelForks = 10
         }
     }
 }

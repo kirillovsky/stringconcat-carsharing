@@ -2,9 +2,10 @@ object Versions {
     const val kotlin = "1.5.0"
     const val springBoot = "2.4.5"
     const val springDependencyManagement = "1.0.11.RELEASE"
-
     const val grGit = "4.1.0"
+
     const val gradleVersions = "0.38.0"
+    const val detekt = "1.16.0"
 }
 
 object Plugins {
@@ -13,6 +14,8 @@ object Plugins {
     const val kotlinSpring = "plugin.spring"
     const val grGit = "org.ajoberstar.grgit"
     const val gradleVersions = "com.github.ben-manes.versions"
+    const val detekt = "io.gitlab.arturbosch.detekt"
+    const val detektFormatting = "io.gitlab.arturbosch.detekt:detekt-formatting"
 }
 
 object Libs {
