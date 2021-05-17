@@ -4,7 +4,7 @@ source "$rootDir/bashScriptUtils/utils.sh"
 set -e
 
 imageTag=$(imageTagOrLatest "$1")
-repositoryName=test/mainapp #todo: replace to real repository name
+repositoryName=454535773208.dkr.ecr.us-east-2.amazonaws.com/mainapp
 imageFullName=$repositoryName:$imageTag
 
 echo [Main App STARTING] building "$imageFullName"...
