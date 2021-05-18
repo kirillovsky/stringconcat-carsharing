@@ -77,5 +77,5 @@ jobs:
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
         service: app-service
-        cluster: carsharingUpdate
+        cluster: carsharing
         wait-for-service-stability: true
