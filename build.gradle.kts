@@ -150,6 +150,11 @@ subprojects {
     }
 }
 
+tasks.register<Copy>("installGitHooks") {
+    from("$projectDir/git-hooks")
+    into("$projectDir/.git/hooks")
+}
+
 fun Branch.isMainBranch(): Boolean = name?.toLowerCase() == "main"
 
 fun String?.isNonReleaseVersion(): Boolean =
