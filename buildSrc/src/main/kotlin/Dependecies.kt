@@ -22,7 +22,6 @@ object Libs {
     const val kotlinStdlibJdk8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     const val kotlinStdlib = "org.jetbrains.kotlin:kotlin-stdlib"
     const val kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect"
-    const val kotlinxCoroutineReactor = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor"
     const val jacksonKotlinModule = "com.fasterxml.jackson.module:jackson-module-kotlin"
 
     const val springBootWebfluxStarter = "org.springframework.boot:spring-boot-starter-webflux"

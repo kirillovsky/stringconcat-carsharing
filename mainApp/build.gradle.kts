@@ -11,8 +11,6 @@ dependencies {
     implementation(Libs.kotlinReflect)
     implementation(Libs.kotlinStdlibJdk8)
 
-    implementation(Libs.kotlinxCoroutineReactor)
-
     testImplementation(Libs.springBootTestStarter) {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
