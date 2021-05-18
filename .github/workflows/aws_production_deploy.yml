@@ -63,6 +63,35 @@ jobs:
         ./buildAll.sh $IMAGE_TAG
         ./pushAll.sh $IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+      continue-on-error: true
+
+    - name: Upload detekt artifact
+      id: upload-detekt-artifact
+      if: steps.build-image.outcome != 'success'
+      uses: actions/upload-artifact@v2
+      with:
+        name: mainApp-detekt
+        path: ${{ github.workspace }}/mainApp/build/reports/detekt/detekt.html
+
+    - name: Upload jacoco artifact
+      id: upload-jacoco-artifact
+      if: steps.build-image.outcome != 'success'
+      uses: actions/upload-artifact@v2
+      with:
+        name: mainApp-jacoco
+        path: ${{ github.workspace }}/mainApp/build/reports/jacoco/test/html
+
+    - name: Upload tests artifact
+      id: upload-tests-artifact
+      if: steps.build-image.outcome != 'success'
+      uses: actions/upload-artifact@v2
+      with:
+        name: mainApp-tests
+        path: ${{ github.workspace }}/mainApp/build/reports/tests/test
+
+    - name: Check on build failures
+      if: steps.build-image.outcome != 'success'
+      run: exit 1
 
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
