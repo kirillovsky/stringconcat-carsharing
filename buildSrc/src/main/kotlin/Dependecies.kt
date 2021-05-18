@@ -5,7 +5,7 @@ object Versions {
     const val grGit = "4.1.0"
 
     const val gradleVersions = "0.38.0"
-    const val detekt = "1.16.0"
+    const val detekt = "1.17.0"
 }
 
 object Plugins {
