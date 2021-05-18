@@ -50,11 +50,13 @@ subprojects {
         implementation(Libs.kotlinStdlibJdk8)
     }
 
-    if (grgit.branch.current().isMainBranch()) {
+    val checkNonReleaseVersion = project.properties["checkNonReleaseVersion"] == "true"
+
+    if (checkNonReleaseVersion || grgit.branch.current().isMainBranch()) {
         configurations.all {
             resolutionStrategy {
                 eachDependency {
-                    if (requested.version.isRcOrSnapshotVersion()) {
+                    if (requested.version.isNonReleaseVersion()) {
                         throw GradleException("SNAPSHOT or RC dependency found: ${requested.name} ${requested.version}")
                     }
                 }
@@ -150,7 +152,7 @@ subprojects {
 
 fun Branch.isMainBranch(): Boolean = name?.toLowerCase() == "main"
 
-fun String?.isRcOrSnapshotVersion(): Boolean =
+fun String?.isNonReleaseVersion(): Boolean =
     this?.let { version ->
         version.contains("RC", ignoreCase = true) || version.contains("SNAPSHOT", ignoreCase = true)
     } ?: false
