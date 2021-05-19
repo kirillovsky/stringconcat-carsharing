@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo [Install git hooks] installing git hooks for project repo...
+echo [Install git hooks] installing git hooks to project repo...
 
 (exec "./gradlew" installGitHooks  --stacktrace --no-daemon)
 

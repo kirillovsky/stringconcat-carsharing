@@ -155,6 +155,15 @@ tasks.register<Copy>("installGitHooks") {
     into("$projectDir/.git/hooks")
 }
 
+tasks.register<Delete>("removeGitHooks") {
+    delete(
+        fileTree("$projectDir/.git/hooks").matching {
+            include("**/*")
+            exclude("**/*.sample")
+        }
+    )
+}
+
 fun Branch.isMainBranch(): Boolean = name?.toLowerCase() == "main"
 
 fun String?.isNonReleaseVersion(): Boolean =
