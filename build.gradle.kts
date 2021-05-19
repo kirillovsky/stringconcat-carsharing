@@ -65,6 +65,7 @@ subprojects {
     }
 
     detekt {
+        allRules = false
         buildUponDefaultConfig = true
         config = files(rootDir.resolve("detekt/detekt-config.yml"))
         input = files(
