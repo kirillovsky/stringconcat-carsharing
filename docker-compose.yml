@@ -1,5 +1,6 @@
+version: "3"
 services:
   mainApp:
     image: 454535773208.dkr.ecr.us-east-2.amazonaws.com/mainapp:latest
     ports:
-    - 8080:8080
+    - "8080:8080"
