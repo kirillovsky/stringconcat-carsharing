@@ -43,3 +43,16 @@
 ```shell
 ./installGitHooks.sh
 ```
+* Отключение git hooks
+Обычно git-команды можно выполнять минуя hooks с помощью флага `--no-verify`. Например, 
+```shell
+git push --no-verify
+```
+* Удаление git hooks:
+```shell
+./gradlew removeGitHooks
+```
+или так
+```shell
+./removeGitHooks.sh
+```
