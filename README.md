@@ -34,7 +34,15 @@
 ```shell
 ./gradlew dependencyUpdates
 ```
+или так
+```shell
+./showDependencyUpdates.sh
+```
 * Установка git hooks:
 ```shell
 ./gradlew installGitHooks
+```
+или так
+```shell
+./installGitHooks.sh
 ```
