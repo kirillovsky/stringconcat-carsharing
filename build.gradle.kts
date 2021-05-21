@@ -65,6 +65,7 @@ subprojects {
     }
 
     detekt {
+        allRules = false
         buildUponDefaultConfig = true
         config = files(rootDir.resolve("detekt/detekt-config.yml"))
         input = files(
@@ -153,6 +154,15 @@ subprojects {
 tasks.register<Copy>("installGitHooks") {
     from("$projectDir/git-hooks")
     into("$projectDir/.git/hooks")
+}
+
+tasks.register<Delete>("removeGitHooks") {
+    delete(
+        fileTree("$projectDir/.git/hooks").matching {
+            include("**/*")
+            exclude("**/*.sample")
+        }
+    )
 }
 
 fun Branch.isMainBranch(): Boolean = name?.toLowerCase() == "main"

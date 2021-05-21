@@ -34,7 +34,28 @@
 ```shell
 ./gradlew dependencyUpdates
 ```
+или так
+```shell
+./showDependencyUpdates.sh
+```
 * Установка git hooks:
 ```shell
 ./gradlew installGitHooks
+```
+или так
+```shell
+./installGitHooks.sh
+```
+* Отключение git hooks
+Обычно git-команды можно выполнять минуя hooks с помощью флага `--no-verify`. Например, 
+```shell
+git push --no-verify
+```
+* Удаление git hooks:
+```shell
+./gradlew removeGitHooks
+```
+или так
+```shell
+./removeGitHooks.sh
 ```
