@@ -27,11 +27,6 @@ repositories {
     mavenCentral()
 }
 
-allprojects {
-    group = "ru.kirillov.stringconcat"
-    version = "0.0.1-SNAPSHOT"
-}
-
 subprojects {
     apply {
         plugin("kotlin")
@@ -47,7 +42,11 @@ subprojects {
     }
 
     dependencies {
+        implementation(Libs.kotlinStdlib)
         implementation(Libs.kotlinStdlibJdk8)
+
+        testImplementation(Libs.junit5Api)
+        testImplementation(Libs.junit5Jupiter)
     }
 
     val checkNonReleaseVersion = project.properties["checkNonReleaseVersion"] == "true"

@@ -9,7 +9,6 @@ dependencies {
 
     implementation(Libs.jacksonKotlinModule)
     implementation(Libs.kotlinReflect)
-    implementation(Libs.kotlinStdlibJdk8)
 
     testImplementation(Libs.springBootTestStarter) {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
