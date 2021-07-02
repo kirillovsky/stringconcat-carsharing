@@ -1,10 +1,10 @@
 package com.stringconcat.kirillov.carsharing.commons.types.valueObjects
 
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.RegistrationPlate.InvalidNumberFormat
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.RegistrationPlate.InvalidRegionCodeFormat
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.RegistrationPlate.InvalidSeriesFormat
-import io.kotest.matchers.result.shouldBeFailure
-import io.kotest.matchers.result.shouldBeSuccess
+import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.CreateRegistrationPlateError.InvalidNumberFormat
+import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.CreateRegistrationPlateError.InvalidRegionCodeFormat
+import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.CreateRegistrationPlateError.InvalidSeriesFormat
+import io.kotest.assertions.arrow.either.shouldBeLeft
+import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.DynamicTest.dynamicTest
@@ -24,10 +24,10 @@ internal class RegistrationPlateTest {
             regionCode = validRegistrationCode
         )
 
-        plate.shouldBeSuccess {
-            it?.series shouldBe validSeries
-            it?.number shouldBe validNumber
-            it?.regionCode shouldBe validRegistrationCode
+        plate shouldBeRight {
+            it.series shouldBe validSeries
+            it.number shouldBe validNumber
+            it.regionCode shouldBe validRegistrationCode
         }
     }
 
@@ -39,7 +39,7 @@ internal class RegistrationPlateTest {
             validRegistrationCode
         )
 
-        nonDigitsNumberPlate.shouldBeFailure {
+        nonDigitsNumberPlate shouldBeLeft {
             it shouldBe InvalidNumberFormat
         }
     }
@@ -57,10 +57,10 @@ internal class RegistrationPlateTest {
             validRegistrationCode
         )
 
-        twoDigitsNumberPlate.shouldBeFailure {
+        twoDigitsNumberPlate shouldBeLeft {
             it shouldBe InvalidNumberFormat
         }
-        fourDigitsNumberPlate.shouldBeFailure {
+        fourDigitsNumberPlate shouldBeLeft {
             it shouldBe InvalidNumberFormat
         }
     }
@@ -73,7 +73,7 @@ internal class RegistrationPlateTest {
             validRegistrationCode
         )
 
-        zeroNumberPlate.shouldBeFailure {
+        zeroNumberPlate shouldBeLeft {
             it shouldBe InvalidNumberFormat
         }
     }
@@ -91,7 +91,9 @@ internal class RegistrationPlateTest {
             validRegistrationCode
         )
 
-        onePlate.getOrThrow() shouldBe anotherPlate.getOrThrow()
+        onePlate.shouldBeRight()
+        anotherPlate.shouldBeRight()
+        onePlate.b shouldBe anotherPlate.b
     }
 
     @Test
@@ -102,7 +104,7 @@ internal class RegistrationPlateTest {
             validRegistrationCode
         )
 
-        invalidSeriesPlate.shouldBeFailure {
+        invalidSeriesPlate shouldBeLeft {
             it shouldBe InvalidSeriesFormat
         }
     }
@@ -120,10 +122,10 @@ internal class RegistrationPlateTest {
             validRegistrationCode
         )
 
-        twoLettersSeriesPlate.shouldBeFailure {
+        twoLettersSeriesPlate shouldBeLeft {
             it shouldBe InvalidSeriesFormat
         }
-        fourDigitsNumberPlate.shouldBeFailure {
+        fourDigitsNumberPlate shouldBeLeft {
             it shouldBe InvalidSeriesFormat
         }
     }
@@ -141,7 +143,7 @@ internal class RegistrationPlateTest {
                     validRegistrationCode
                 )
 
-                legalSeriesPlate.shouldBeFailure {
+                legalSeriesPlate shouldBeLeft {
                     it shouldBe InvalidSeriesFormat
                 }
             }
@@ -156,7 +158,7 @@ internal class RegistrationPlateTest {
             regionCode = "D1 "
         )
 
-        invalidPlate.shouldBeFailure {
+        invalidPlate shouldBeLeft {
             it shouldBe InvalidRegionCodeFormat
         }
     }
@@ -174,10 +176,10 @@ internal class RegistrationPlateTest {
             regionCode = "1234"
         )
 
-        oneDigitRegionCodePlate.shouldBeFailure {
+        oneDigitRegionCodePlate shouldBeLeft {
             it shouldBe InvalidRegionCodeFormat
         }
-        fourDigitRegionCodePlate.shouldBeFailure {
+        fourDigitRegionCodePlate shouldBeLeft {
             it shouldBe InvalidRegionCodeFormat
         }
     }
@@ -190,7 +192,7 @@ internal class RegistrationPlateTest {
             regionCode = "00"
         )
 
-        illegalPlate.shouldBeFailure {
+        illegalPlate shouldBeLeft {
             it shouldBe InvalidRegionCodeFormat
         }
     }
@@ -203,7 +205,7 @@ internal class RegistrationPlateTest {
             regionCode = "091"
         )
 
-        illegalPlate.shouldBeFailure {
+        illegalPlate shouldBeLeft {
             it shouldBe InvalidRegionCodeFormat
         }
     }

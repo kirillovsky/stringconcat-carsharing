@@ -44,6 +44,7 @@ subprojects {
     dependencies {
         implementation(Libs.kotlinStdlib)
         implementation(Libs.kotlinStdlibJdk8)
+        implementation(Libs.kotlinReflect)
 
         testImplementation(Libs.junit5Api)
         testImplementation(Libs.junit5Jupiter)

@@ -1,9 +1,9 @@
 package com.stringconcat.kirillov.carsharing.commons.types.valueObjects
 
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.VehicleModel.EmptyOrBlankMaker
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.VehicleModel.EmptyOrBlankName
-import io.kotest.matchers.result.shouldBeFailure
-import io.kotest.matchers.result.shouldBeSuccess
+import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.CreateVehicleModelError.EmptyOrBlankMaker
+import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.CreateVehicleModelError.EmptyOrBlankName
+import io.kotest.assertions.arrow.either.shouldBeLeft
+import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -14,21 +14,21 @@ internal class VehicleModelTest {
         val expectedMaker = "Toyota"
         val model = VehicleModel.from(expectedName, expectedMaker)
 
-        model.shouldBeSuccess {
-            it?.maker shouldBe expectedMaker
-            it?.name shouldBe expectedName
+        model shouldBeRight {
+            it.maker shouldBe expectedMaker
+            it.name shouldBe expectedName
         }
     }
 
     @Test
     fun `shouldn't create vehicle with blank or empty name`() {
         val emptyNameModel = VehicleModel.from(name = "", maker = "Toyota")
-        emptyNameModel.shouldBeFailure {
+        emptyNameModel shouldBeLeft {
             it shouldBe EmptyOrBlankName
         }
 
         val blankNameModel = VehicleModel.from(name = "  ", maker = "Toyota")
-        blankNameModel.shouldBeFailure {
+        blankNameModel shouldBeLeft {
             it shouldBe EmptyOrBlankName
         }
     }
@@ -36,12 +36,12 @@ internal class VehicleModelTest {
     @Test
     fun `shouldn't create vehicle with blank or empty maker`() {
         val emptyMakerModel = VehicleModel.from(name = "Camry", maker = "")
-        emptyMakerModel.shouldBeFailure {
+        emptyMakerModel shouldBeLeft {
             it shouldBe EmptyOrBlankMaker
         }
 
         val blankMakerModel = VehicleModel.from(name = "Camry", maker = "   ")
-        blankMakerModel.shouldBeFailure {
+        blankMakerModel shouldBeLeft {
             it shouldBe EmptyOrBlankMaker
         }
     }

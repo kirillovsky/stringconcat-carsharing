@@ -1,9 +1,9 @@
 package com.stringconcat.kirillov.carsharing.commons.types.valueObjects
 
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.Vin.IllegalCharacterContains
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.Vin.InvalidCodeLength
-import io.kotest.matchers.result.shouldBeFailure
-import io.kotest.matchers.result.shouldBeSuccess
+import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.CreateVinError.IllegalCharacterContains
+import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.CreateVinError.InvalidCodeLength
+import io.kotest.assertions.arrow.either.shouldBeLeft
+import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -15,8 +15,8 @@ internal class VinTest {
         val expectedVinCode = "KMHJU81VCBU266113"
         val actualVin = Vin.from(expectedVinCode)
 
-        actualVin.shouldBeSuccess {
-            it?.code shouldBe expectedVinCode
+        actualVin shouldBeRight {
+            it.code shouldBe expectedVinCode
         }
     }
 
@@ -26,16 +26,16 @@ internal class VinTest {
         val actualVin = Vin.from(vinCode)
         val expectedVin = Vin.from(vinCode.lowercase())
 
-        actualVin.shouldBeSuccess()
-        expectedVin.shouldBeSuccess()
-        actualVin.getOrThrow() shouldBe expectedVin.getOrThrow()
+        actualVin.shouldBeRight()
+        expectedVin.shouldBeRight()
+        actualVin.b shouldBe expectedVin.b
     }
 
     @Test
     fun `vin should contains only 17 symbols`() {
         val invalidVin = Vin.from("KMHJ")
 
-        invalidVin.shouldBeFailure {
+        invalidVin shouldBeLeft {
             it shouldBe InvalidCodeLength
         }
     }
@@ -44,17 +44,17 @@ internal class VinTest {
     fun `vin should contains only digits or latin letters`() {
         val invalidVin = Vin.from("!@#$%^&*()_+-,./\\")
 
-        invalidVin.shouldBeFailure {
+        invalidVin shouldBeLeft {
             it shouldBe IllegalCharacterContains
         }
     }
 
-    @ParameterizedTest(name = "vin shouldn't contains special latin letter - `{0}`")
+    @ParameterizedTest(name = "vin shouldn't contains special latin letter - '{0}'")
     @ValueSource(chars = ['I', 'i', 'Q', 'q', 'O', 'o'])
     fun `vin shouldn't contains special latin letter`(specialLetter: Char) {
         val invalidVin = Vin.from("KMHJU81VC${specialLetter}U266113")
 
-        invalidVin.shouldBeFailure {
+        invalidVin shouldBeLeft {
             it shouldBe IllegalCharacterContains
         }
     }
