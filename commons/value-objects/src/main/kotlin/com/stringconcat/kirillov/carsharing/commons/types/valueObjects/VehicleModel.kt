@@ -1,10 +1,14 @@
 package com.stringconcat.kirillov.carsharing.commons.types.valueObjects
 
+import com.stringconcat.kirillov.carsharing.commons.types.base.ValueObject
 import com.stringconcat.kirillov.carsharing.commons.types.error.BusinessError
 import kotlin.Result.Companion.failure
 import kotlin.Result.Companion.success
 
-data class VehicleModel(val name: String, val maker: String) {
+data class VehicleModel internal constructor(
+    val name: String,
+    val maker: String,
+) : ValueObject {
     companion object {
         fun from(name: String, maker: String): Result<VehicleModel> =
             when {

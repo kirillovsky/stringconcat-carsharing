@@ -1,5 +1,6 @@
 package com.stringconcat.kirillov.carsharing.commons.types.valueObjects
 
+import com.stringconcat.kirillov.carsharing.commons.types.base.ValueObject
 import com.stringconcat.kirillov.carsharing.commons.types.error.BusinessError
 import kotlin.Result.Companion.failure
 import kotlin.Result.Companion.success
@@ -8,7 +9,11 @@ private val NUMBER_FORMAT_PATTERN = "^[0-9]{3}$".toRegex()
 private val SERIES_FORMAT_PATTERN = "^[АВЕКМНОРСТУХ]{3}$".toRegex()
 private val REGION_CODE_FORMAT_PATTERN = "^[1-9]?([0-9]{2})$".toRegex()
 
-data class RegistrationPlate(val series: String, val number: String, val regionCode: String) {
+data class RegistrationPlate internal constructor(
+    val series: String,
+    val number: String,
+    val regionCode: String,
+) : ValueObject {
     companion object {
         fun from(series: String, number: String, regionCode: String): Result<RegistrationPlate> {
             val normalizedSeries = series.uppercase()
