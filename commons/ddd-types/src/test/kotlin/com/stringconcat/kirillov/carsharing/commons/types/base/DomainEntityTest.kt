@@ -20,8 +20,8 @@ internal class DomainEntityTest {
         val expectedEvents2 = listOf(domainEvent())
 
         entity.apply {
-            addEvents(expectedEvents1)
-            addEvents(expectedEvents2)
+            produceEvents(expectedEvents1)
+            produceEvents(expectedEvents2)
         }
 
         entity.popEvents() shouldContainAll expectedEvents1 + expectedEvents2
@@ -32,7 +32,7 @@ internal class DomainEntityTest {
         val events = listOf<DomainEvent>(domainEvent())
 
         val entity = TestEntity(id = 123L).apply {
-            addEvents(events)
+            produceEvents(events)
             popEvents()
         }
 
@@ -40,6 +40,10 @@ internal class DomainEntityTest {
     }
 }
 
-private class TestEntity(id: Long) : DomainEntity<Long>(id)
+private class TestEntity(id: Long) : DomainEntity<Long>(id) {
+    fun produceEvents(events: List<DomainEvent>) {
+        addEvents(events)
+    }
+}
 
 private fun domainEvent() = object : DomainEvent() {}
