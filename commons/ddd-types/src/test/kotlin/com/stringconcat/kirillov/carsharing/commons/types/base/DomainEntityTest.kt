@@ -16,23 +16,25 @@ internal class DomainEntityTest {
     @Test
     fun `domain entity should accumulate added domain events`() {
         val entity = TestEntity(id = 123L)
-        val expectedEvents1 = listOf(domainEvent())
-        val expectedEvents2 = listOf(domainEvent())
+        val expectedEvent1 = domainEvent()
+        val expectedEvent2 = domainEvent()
 
         entity.apply {
-            produceEvents(expectedEvents1)
-            produceEvents(expectedEvents2)
+            produceEvent(expectedEvent1)
+            produceEvent(expectedEvent2)
         }
 
-        entity.popEvents() shouldContainAll expectedEvents1 + expectedEvents2
+        entity.popEvents() shouldContainAll listOf(expectedEvent1, expectedEvent2)
     }
 
     @Test
-    fun `domain entity should clean all events after pop`() {
-        val events = listOf<DomainEvent>(domainEvent())
+    fun `domain entity should clean events after pop`() {
+        val event = domainEvent()
 
         val entity = TestEntity(id = 123L).apply {
-            produceEvents(events)
+            produceEvent(event)
+            produceEvent(event)
+
             popEvents()
         }
 
@@ -41,8 +43,8 @@ internal class DomainEntityTest {
 }
 
 private class TestEntity(id: Long) : DomainEntity<Long>(id) {
-    fun produceEvents(events: List<DomainEvent>) {
-        addEvents(events)
+    fun produceEvent(event: DomainEvent) {
+        addEvent(event)
     }
 }
 
