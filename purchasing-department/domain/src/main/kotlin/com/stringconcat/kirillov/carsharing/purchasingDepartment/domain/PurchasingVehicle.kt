@@ -8,6 +8,7 @@ import com.stringconcat.kirillov.carsharing.commons.types.error.BusinessError
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.RegistrationPlate
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.VehicleModel
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.Vin
+import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.PurchasingDepartmentEvents.VehicleAddedToPurchasingBalance
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.PurchasingVehicle.CreatePurchasingVehicleError.AlreadyExistsWithSameRegistrationPlate
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.PurchasingVehicle.CreatePurchasingVehicleError.AlreadyExistsWithSameVin
 import java.time.LocalDate
@@ -50,7 +51,7 @@ class PurchasingVehicle internal constructor(
                     purchaseDate = LocalDate.now(),
                     capacity
                 ).apply {
-                    addEvent(VehicleAddedToPurchasingBalanceEvent(id))
+                    addEvent(VehicleAddedToPurchasingBalance(vehicleId = id))
                 }.right()
             }
         }

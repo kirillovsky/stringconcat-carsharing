@@ -6,11 +6,11 @@ import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.registrat
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.vehicleModel
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.vin
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.Capacity.Companion.five
+import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.PurchasingDepartmentEvents.VehicleAddedToPurchasingBalance
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.PurchasingVehicle.CreatePurchasingVehicleError.AlreadyExistsWithSameRegistrationPlate
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.PurchasingVehicle.CreatePurchasingVehicleError.AlreadyExistsWithSameVin
 import io.kotest.assertions.arrow.either.shouldBeLeft
 import io.kotest.assertions.arrow.either.shouldBeRight
-import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import java.time.LocalDate.now
@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test
 
 internal class PurchasingVehicleTest {
     @Test
-    fun `addVehicleToBalance should create vehicle in context with special event`() {
+    fun `addVehicleToBalance should create vehicle in context`() {
         val expectedId = purchasingVehicleId()
         val expectedCapacity = five()
         val expectedModel = vehicleModel()
@@ -42,7 +42,7 @@ internal class PurchasingVehicleTest {
             it.purchaseDate shouldBe now()
             it.registrationPlate shouldBe expectedRegistrationPlate
             it.vin shouldBe expectedVin
-            it.popEvents().shouldContainExactly(VehicleAddedToPurchasingBalanceEvent(expectedId))
+            it.popEvents().shouldContainExactly(VehicleAddedToPurchasingBalance(expectedId))
         }
     }
 
