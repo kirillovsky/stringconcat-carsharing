@@ -71,7 +71,7 @@ internal class MaintenanceVehicleTest {
     }
 
     @Test
-    fun `vehicle shouldn't broken twice`() {
+    fun `vehicle shouldn be broken twice`() {
         val id = maintenanceVehicleId()
         val vehicle = maintenanceVehicle(id, broken = true)
 
