@@ -47,7 +47,7 @@ internal class DriverLicenseNumberTest {
             it shouldBe IllegalSeries
         }
     }
-    
+
     @Test
     fun `driver license number shouldn't contains non-digits in number`() {
         val driverLicenseNumber = DriverLicenseNumber.from(series = correctSeries, number = "D2!456")
