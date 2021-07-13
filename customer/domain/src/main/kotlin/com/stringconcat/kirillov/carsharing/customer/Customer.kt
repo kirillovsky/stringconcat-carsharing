@@ -70,3 +70,7 @@ sealed class CustomerRegistrationError : BusinessError {
     object AlreadyRegistered : CustomerRegistrationError()
     object ActuallyDoesNotExists : CustomerRegistrationError()
 }
+
+enum class CustomerStatus {
+    REGISTERED, REJECTED, VERIFIED
+}
