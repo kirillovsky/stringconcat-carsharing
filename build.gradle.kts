@@ -70,7 +70,8 @@ subprojects {
         config = files(rootDir.resolve("detekt/detekt-config.yml"))
         input = files(
             DEFAULT_SRC_DIR_KOTLIN,
-            "src/test/kotlin"
+            "src/test/kotlin",
+            "src/testFixtures/kotlin"
         )
 
         reports {

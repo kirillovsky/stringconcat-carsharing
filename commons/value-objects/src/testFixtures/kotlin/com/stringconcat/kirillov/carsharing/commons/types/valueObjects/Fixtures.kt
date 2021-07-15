@@ -2,7 +2,6 @@ package com.stringconcat.kirillov.carsharing.commons.types.valueObjects
 
 import arrow.core.Either
 
-//todo: replace internal constructor
 fun vehicleModel(): VehicleModel {
     val result = VehicleModel.from(
         name = "Toyota",
