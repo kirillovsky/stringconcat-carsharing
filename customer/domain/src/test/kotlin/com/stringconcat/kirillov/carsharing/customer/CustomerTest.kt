@@ -11,40 +11,43 @@ import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
+import java.time.Clock
+import java.time.Clock.fixed
 import java.time.LocalDate
-import java.time.LocalDate.EPOCH
 import java.time.Month.JULY
+import java.time.ZoneId.systemDefault
+import java.time.ZoneOffset.UTC
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
 import org.junit.jupiter.params.provider.EnumSource.Mode.EXCLUDE
 
 internal class CustomerTest {
-    private val allCustomerAreMaturedEnough = CustomerIsMaturedEnough { true }
     private val allCustomerAreNotRegistered = CustomerAlreadyRegistered { _, _ -> false }
     private val allCustomerActuallyExists = CustomerActuallyExists { _, _ -> true }
+    private val maturedYetBirthDate = LocalDate.of(1992, JULY, 9)
+    private val currentClock = Clock.systemDefaultZone()
 
     @Test
     fun `registerCustomer should create customer in context`() {
         val id = customerId()
         val fullName = fullName()
-        val birthDate = LocalDate.of(1992, JULY, 9)
         val driverLicenseNumber = driverLicenseNumber()
 
         val customer = Customer.registerCustomer(
             idGenerator = { id },
-            customerIsMaturedEnough = allCustomerAreMaturedEnough,
+            clock = currentClock,
             customerAlreadyRegistered = allCustomerAreNotRegistered,
             customerActuallyExists = allCustomerActuallyExists,
             fullName = fullName,
-            birthDate = birthDate,
+            birthDate = maturedYetBirthDate,
             driverLicenseNumber = driverLicenseNumber
         )
 
         customer shouldBeRight {
             it.id shouldBe id
             it.fullName shouldBe fullName
-            it.birthDate shouldBe birthDate
+            it.birthDate shouldBe maturedYetBirthDate
             it.driverLicenseNumber shouldBe driverLicenseNumber
             it.status shouldBe REGISTERED
             it.popEvents().shouldContainExactly(CustomerRegistered(value = id))
@@ -53,15 +56,16 @@ internal class CustomerTest {
 
     @Test
     fun `registerCustomer shouldn't create customer which not matured enough`() {
-        val customerNotMaturedEnough = CustomerIsMaturedEnough { false }
+        val notMaturedYetBirthDate = LocalDate.of(2000, JULY, 16)
+        val currentDate = LocalDate.of(2021, JULY, 15)
 
         val customer = Customer.registerCustomer(
             idGenerator = { customerId() },
-            customerIsMaturedEnough = customerNotMaturedEnough,
+            clock = currentDate.asFixedClock(),
             customerAlreadyRegistered = allCustomerAreNotRegistered,
             customerActuallyExists = allCustomerActuallyExists,
             fullName = fullName(),
-            birthDate = EPOCH,
+            birthDate = notMaturedYetBirthDate,
             driverLicenseNumber = driverLicenseNumber()
         )
 
@@ -76,11 +80,11 @@ internal class CustomerTest {
 
         val customer = Customer.registerCustomer(
             idGenerator = { customerId() },
-            customerIsMaturedEnough = allCustomerAreMaturedEnough,
+            clock = currentClock,
             customerAlreadyRegistered = customerAlreadyRegistered,
             customerActuallyExists = allCustomerActuallyExists,
             fullName = fullName(),
-            birthDate = EPOCH,
+            birthDate = maturedYetBirthDate,
             driverLicenseNumber = driverLicenseNumber()
         )
 
@@ -95,11 +99,11 @@ internal class CustomerTest {
 
         val customer = Customer.registerCustomer(
             idGenerator = { customerId() },
-            customerIsMaturedEnough = allCustomerAreMaturedEnough,
+            clock = currentClock,
             customerAlreadyRegistered = allCustomerAreNotRegistered,
             customerActuallyExists = customerActuallyDoesNotExists,
             fullName = fullName(),
-            birthDate = EPOCH,
+            birthDate = maturedYetBirthDate,
             driverLicenseNumber = driverLicenseNumber()
         )
 
@@ -160,3 +164,6 @@ internal class CustomerTest {
         }
     }
 }
+
+private fun LocalDate.asFixedClock(): Clock =
+    fixed(atStartOfDay().toInstant(UTC), systemDefault())

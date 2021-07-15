@@ -11,6 +11,7 @@ import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.N
 import com.stringconcat.kirillov.carsharing.customer.CustomerStatus.REGISTERED
 import com.stringconcat.kirillov.carsharing.customer.CustomerStatus.REJECTED
 import com.stringconcat.kirillov.carsharing.customer.CustomerStatus.VERIFIED
+import java.time.Clock
 import java.time.LocalDate
 
 class Customer internal constructor(
@@ -41,7 +42,7 @@ class Customer internal constructor(
     companion object {
         fun registerCustomer(
             idGenerator: CustomerIdGenerator,
-            customerIsMaturedEnough: CustomerIsMaturedEnough,
+            clock: Clock,
             customerAlreadyRegistered: CustomerAlreadyRegistered,
             customerActuallyExists: CustomerActuallyExists,
             fullName: FullName,
@@ -49,7 +50,7 @@ class Customer internal constructor(
             driverLicenseNumber: DriverLicenseNumber,
         ): Either<CustomerRegistrationError, Customer> {
             return when {
-                customerIsMaturedEnough.check(birthDate).not() -> NotMaturedEnough.left()
+                isCustomerMatureEnough(birthDate, clock).not() -> NotMaturedEnough.left()
                 customerAlreadyRegistered.check(fullName, birthDate) -> AlreadyRegistered.left()
                 customerActuallyExists.check(fullName, birthDate).not() -> ActuallyDoesNotExists.left()
                 else -> Customer(
@@ -64,6 +65,11 @@ class Customer internal constructor(
         }
     }
 }
+
+private const val MATURITY_AGE = 21L
+
+private fun isCustomerMatureEnough(customerBirthDate: LocalDate, clock: Clock): Boolean =
+    customerBirthDate.plusYears(MATURITY_AGE) < LocalDate.now(clock)
 
 sealed class CustomerRegistrationError : BusinessError {
     object NotMaturedEnough : CustomerRegistrationError()

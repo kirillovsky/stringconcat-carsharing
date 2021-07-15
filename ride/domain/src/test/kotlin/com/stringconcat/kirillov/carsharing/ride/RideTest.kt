@@ -1,6 +1,5 @@
 package com.stringconcat.kirillov.carsharing.ride
 
-import arrow.core.left
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.toKilometers
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.toPrice
 import com.stringconcat.kirillov.carsharing.ride.RideStartingError.CustomerIsNotVerified

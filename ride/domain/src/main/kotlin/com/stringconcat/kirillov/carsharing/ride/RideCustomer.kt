@@ -16,4 +16,4 @@ class RideCustomer(id: RideCustomerId) : AggregateRoot<RideCustomerId>(id) {
     }
 }
 
-data class RideCustomerId(val value: Long): ValueObject
+data class RideCustomerId(val value: Long) : ValueObject
