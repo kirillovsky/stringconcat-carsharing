@@ -13,20 +13,20 @@ fun vehicleModel(): VehicleModel {
     return result.b
 }
 
-fun registrationPlate(): RegistrationPlate {
-    val result = RegistrationPlate.from(
-        series = "УУУ",
-        number = "001",
-        regionCode = "01"
-    )
+fun registrationPlate(
+    series: String = "ууу",
+    number: String = "001",
+    regionCode: String = "01"
+): RegistrationPlate {
+    val result = RegistrationPlate.from(series, number, regionCode)
 
     check(result is Either.Right)
 
     return result.b
 }
 
-fun vin(): Vin {
-    val result = Vin.from("KMHJU81VCBU266113")
+fun vin(code: String = "KMHJU81VCBU266113"): Vin {
+    val result = Vin.from(code)
 
     check(result is Either.Right)
 

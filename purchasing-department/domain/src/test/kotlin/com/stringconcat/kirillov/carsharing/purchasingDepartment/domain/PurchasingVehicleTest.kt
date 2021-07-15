@@ -1,7 +1,5 @@
 package com.stringconcat.kirillov.carsharing.purchasingDepartment.domain
 
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.RegistrationPlate
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.Vin
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.registrationPlate
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.vehicleModel
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.vin
@@ -27,12 +25,11 @@ internal class PurchasingVehicleTest {
 
         val vehicle = PurchasingVehicle.addVehicleToBalance(
             idGenerator = { expectedId },
-            vehicleExistsByRegistrationPlate = NotExistsByRegistrationPlate,
-            vehicleExistsByVin = NotExistsByVin,
             model = expectedModel,
             registrationPlate = expectedRegistrationPlate,
             vin = expectedVin,
-            capacity = expectedCapacity
+            capacity = expectedCapacity,
+            existingVehicles = emptyList()
         )
 
         vehicle shouldBeRight {
@@ -49,15 +46,18 @@ internal class PurchasingVehicleTest {
     @Test
     fun `addVehicleToBalance shouldn't create vehicle with already exists by registrationPlate`() {
         val existsRegistrationPlate = registrationPlate()
+        val oneVin = vin("MMHJU81VCBU266113")
+        val anotherVin = vin("JJHJU81VCBU266113")
 
         val vehicle = PurchasingVehicle.addVehicleToBalance(
             idGenerator = { purchasingVehicleId() },
-            vehicleExistsByRegistrationPlate = { it == existsRegistrationPlate },
-            vehicleExistsByVin = NotExistsByVin,
             model = vehicleModel(),
             registrationPlate = existsRegistrationPlate,
-            vin = vin(),
-            capacity = five()
+            vin = oneVin,
+            capacity = five(),
+            existingVehicles = listOf(
+                purchasingVehicle(registrationPlate = existsRegistrationPlate, vin = anotherVin)
+            )
         )
 
         vehicle shouldBeLeft {
@@ -68,27 +68,22 @@ internal class PurchasingVehicleTest {
     @Test
     fun `addVehicleToBalance shouldn't create vehicle with already exists by vin`() {
         val existsVin = vin()
+        val oneRegistrationPlate = registrationPlate(series = "ууу", number = "100", regionCode = "12")
+        val anotherRegistrationPlate = registrationPlate(series = "уму", number = "750", regionCode = "179")
 
         val vehicle = PurchasingVehicle.addVehicleToBalance(
-            vehicleExistsByRegistrationPlate = NotExistsByRegistrationPlate,
-            vehicleExistsByVin = { it == existsVin },
             idGenerator = { purchasingVehicleId() },
             model = vehicleModel(),
-            registrationPlate = registrationPlate(),
+            registrationPlate = oneRegistrationPlate,
             vin = existsVin,
-            capacity = five()
+            capacity = five(),
+            existingVehicles = listOf(
+                purchasingVehicle(vin = existsVin, registrationPlate = anotherRegistrationPlate)
+            )
         )
 
         vehicle shouldBeLeft {
             it shouldBe AlreadyExistsWithSameVin
         }
     }
-}
-
-private object NotExistsByRegistrationPlate : PurchasingVehicleExists.ByRegistrationPlate {
-    override fun check(registrationPlate: RegistrationPlate) = false
-}
-
-private object NotExistsByVin : PurchasingVehicleExists.ByVin {
-    override fun check(vin: Vin) = false
 }

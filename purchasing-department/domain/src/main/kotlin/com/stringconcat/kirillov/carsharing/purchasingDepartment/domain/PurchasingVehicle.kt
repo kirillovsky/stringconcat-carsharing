@@ -29,31 +29,26 @@ class PurchasingVehicle internal constructor(
     companion object {
         fun addVehicleToBalance(
             idGenerator: PurchasingVehicleIdGenerator,
-            vehicleExistsByRegistrationPlate: PurchasingVehicleExists.ByRegistrationPlate,
-            vehicleExistsByVin: PurchasingVehicleExists.ByVin,
             model: VehicleModel,
             registrationPlate: RegistrationPlate,
             vin: Vin,
             capacity: Capacity,
-        ): Either<CreatePurchasingVehicleError, PurchasingVehicle> {
-            val id = idGenerator.generate()
-
-            return when {
-                vehicleExistsByRegistrationPlate.check(registrationPlate) -> {
-                    AlreadyExistsWithSameRegistrationPlate.left()
-                }
-                vehicleExistsByVin.check(vin) -> AlreadyExistsWithSameVin.left()
-                else -> PurchasingVehicle(
-                    id,
-                    model,
-                    registrationPlate,
-                    vin,
-                    purchaseDate = LocalDate.now(),
-                    capacity
-                ).apply {
-                    addEvent(VehicleAddedToPurchasingBalance(vehicleId = id))
-                }.right()
+            existingVehicles: List<PurchasingVehicle>,
+        ): Either<CreatePurchasingVehicleError, PurchasingVehicle> = when {
+            existingVehicles.any { it.registrationPlate == registrationPlate } -> {
+                AlreadyExistsWithSameRegistrationPlate.left()
             }
+            existingVehicles.any { it.vin == vin } -> AlreadyExistsWithSameVin.left()
+            else -> PurchasingVehicle(
+                id = idGenerator.generate(),
+                model,
+                registrationPlate,
+                vin,
+                purchaseDate = LocalDate.now(),
+                capacity
+            ).apply {
+                addEvent(VehicleAddedToPurchasingBalance(vehicleId = id))
+            }.right()
         }
     }
 }
