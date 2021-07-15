@@ -19,29 +19,23 @@ jobs:
           ./buildAll.sh $IMAGE_TAG
         continue-on-error: true
 
-      - name: Upload detekt artifact
-        id: upload-detekt-artifact
+      - name: Upload reports
+        id: upload-reports
         if: steps.build-images.outcome != 'success'
         uses: actions/upload-artifact@v2
         with:
-          name: mainApp-detekt
-          path: ${{ github.workspace }}/mainApp/build/reports/detekt/detekt.html
+          name: reports
+          path: |
+            ./**/**/build/reports
+            ./mainApp/build/reports
+            !./buildSrc/build/reports
 
-      - name: Upload jacoco artifact
-        id: upload-jacoco-artifact
-        if: steps.build-images.outcome != 'success'
-        uses: actions/upload-artifact@v2
+      - name: Publish unit tests result
+        id: publish-unit-tests-result
+        uses: EnricoMi/publish-unit-test-result-action@v1.9
         with:
-          name: mainApp-jacoco
-          path: ${{ github.workspace }}/mainApp/build/reports/jacoco/test/html
-
-      - name: Upload tests artifact
-        id: upload-tests-artifact
-        if: steps.build-images.outcome != 'success'
-        uses: actions/upload-artifact@v2
-        with:
-          name: mainApp-tests
-          path: ${{ github.workspace }}/mainApp/build/reports/tests/test
+          report_individual_runs: true
+          files: ./**/build/test-results/**/*.xml
 
       - name: Check on build failures
         if: steps.build-images.outcome != 'success'
