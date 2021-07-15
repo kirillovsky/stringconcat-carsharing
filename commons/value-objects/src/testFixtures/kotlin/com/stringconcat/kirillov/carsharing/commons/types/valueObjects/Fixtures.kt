@@ -33,9 +33,16 @@ fun vin(): Vin {
     return result.b
 }
 
-
 fun Double.toKilometers(): Distance {
-    val result = Distance.ofKilometers(toBigDecimal())
+    val result = Distance.ofKilometers(this.toBigDecimal())
+
+    check(result is Either.Right)
+
+    return result.b
+}
+
+fun Double.toPrice(): Price {
+    val result = Price.from(this.toBigDecimal())
 
     check(result is Either.Right)
 
