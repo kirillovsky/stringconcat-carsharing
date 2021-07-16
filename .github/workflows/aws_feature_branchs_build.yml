@@ -27,7 +27,19 @@ jobs:
           name: reports
           path: |
             ./**/**/build/reports
+            !./**/**/build/reports/jacoco
             ./mainApp/build/reports
+            !./mainApp/build/reports/jacoco
+            !./buildSrc/build/reports
+
+      - name: Upload test coverage reports
+        id: upload-test-coverage-reports
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-coverage
+          path: |
+            ./**/**/build/reports/jacoco
+            ./mainApp/build/reports/jacoco
             !./buildSrc/build/reports
 
       - name: Publish unit tests result
