@@ -5,6 +5,8 @@ import io.kotest.assertions.arrow.either.shouldBeLeft
 import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 internal class CapacityTest {
     @Test
@@ -17,20 +19,12 @@ internal class CapacityTest {
         }
     }
 
-    @Test
-    fun `capacity shouldn't have negative value`() {
-        val negativeCapacity = Capacity.from(-2)
+    @ParameterizedTest(name = "capacity shouldn''t be less or equals to zero - ''{0}''")
+    @ValueSource(ints = [-1, -3, 0])
+    fun `capacity shouldn't be less or equals to zero`(illegalValue: Int) {
+        val negativeCapacity = Capacity.from(illegalValue)
 
         negativeCapacity shouldBeLeft {
-            it shouldBe IllegalCapacityValueError
-        }
-    }
-
-    @Test
-    fun `capacity shouldn't have zero value`() {
-        val zeroCapacity = Capacity.from(0)
-
-        zeroCapacity shouldBeLeft {
             it shouldBe IllegalCapacityValueError
         }
     }

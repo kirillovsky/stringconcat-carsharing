@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 
 class DistanceTest {
     @Test
-    fun `ofKilometers should create distance with value in kilometers`() {
+    fun `should create distance with value in kilometers`() {
         val expectedValueInKilometers = 1040.0.toBigDecimal()
 
         val distance = Distance.ofKilometers(value = expectedValueInKilometers)
@@ -20,7 +20,7 @@ class DistanceTest {
     }
 
     @Test
-    fun `ofKilometers should ceil passed value to one decimal places`() {
+    fun `should ceil passed value to one decimal places`() {
         val distance = Distance.ofKilometers(value = 1040.356.toBigDecimal())
 
         distance shouldBeRight {
@@ -29,7 +29,7 @@ class DistanceTest {
     }
 
     @Test
-    fun `ofKilometers shouldn't create distance with negative value`() {
+    fun `shouldn't create distance with negative value`() {
         val distance = Distance.ofKilometers(value = (-12.31).toBigDecimal())
 
         distance shouldBeLeft {

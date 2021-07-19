@@ -30,7 +30,7 @@ internal class RideTest {
     private val noOneVehicleInRent = RideVehicleInRent { false }
 
     @Test
-    fun `startRide should create ride in context`() {
+    fun `should start ride`() {
         val expectedId = rideId()
         val expectedStartDateTime = OffsetDateTime.now()
 

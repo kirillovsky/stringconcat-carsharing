@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 internal class RideVehicleTest {
     @Test
-    fun `new ride vehicle should contains id`() {
+    fun `ride vehicle should contains id`() {
         val expectedId = rideVehicleId()
 
         val vehicle = RideVehicle(id = expectedId)

@@ -109,6 +109,7 @@ internal class RegistrationPlateTest {
         }
     }
 
+    //todo: merge with previous test
     @Test
     fun `registration plates series shouldn't contains more of less than 3 russian letters`() {
         val twoLettersSeriesPlate = RegistrationPlate.from(

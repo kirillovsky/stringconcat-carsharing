@@ -41,11 +41,11 @@ class PurchasingVehicle internal constructor(
             existingVehicles.any { it.vin == vin } -> AlreadyExistsWithSameVin.left()
             else -> PurchasingVehicle(
                 id = idGenerator.generate(),
-                model,
-                registrationPlate,
-                vin,
+                model = model,
+                registrationPlate = registrationPlate,
+                vin = vin,
                 purchaseDate = LocalDate.now(),
-                capacity
+                capacity = capacity
             ).apply {
                 addEvent(VehicleAddedToPurchasingBalance(vehicleId = id))
             }.right()

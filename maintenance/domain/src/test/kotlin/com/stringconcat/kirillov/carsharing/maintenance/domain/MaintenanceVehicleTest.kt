@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test
 
 internal class MaintenanceVehicleTest {
     @Test
-    fun `addVehicleToInventory should create vehicle in context`() {
+    fun `should add vehicle to inventory`() {
         val expectedId = maintenanceVehicleId()
         val expectedModel = vehicleModel()
         val expectedVin = vin()
@@ -40,7 +40,7 @@ internal class MaintenanceVehicleTest {
     }
 
     @Test
-    fun `increaseMileage should add mileage to vehicle own value`() {
+    fun `should increase vehicle own mileage`() {
         val id = maintenanceVehicleId()
         val additionalMileage = 4.0.toKilometers()
         val vehicle = maintenanceVehicle(id, coveredMileage = 5.0.toKilometers())
@@ -56,7 +56,7 @@ internal class MaintenanceVehicleTest {
     }
 
     @Test
-    fun `detectFault should set flag broken`() {
+    fun `should detect fault`() {
         val id = maintenanceVehicleId()
         val vehicle = maintenanceVehicle(id)
 
@@ -84,7 +84,7 @@ internal class MaintenanceVehicleTest {
     }
 
     @Test
-    fun `repair should unset flag broken`() {
+    fun `should repair broken vehicle`() {
         val id = maintenanceVehicleId()
         val vehicle = maintenanceVehicle(id, broken = true)
 

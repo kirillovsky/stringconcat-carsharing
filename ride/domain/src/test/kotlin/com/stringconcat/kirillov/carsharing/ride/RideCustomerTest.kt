@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 internal class RideCustomerTest {
     @Test
-    fun `new rideCustomer should contains id and is not verified`() {
+    fun `ride customer should contains id and is not verified`() {
         val expectedId = rideCustomerId()
 
         val customer = RideCustomer(id = expectedId)
@@ -19,7 +19,7 @@ internal class RideCustomerTest {
     }
 
     @Test
-    fun `rideCustomer can be verified`() {
+    fun `ride customer can be verified`() {
         rideCustomer(verified = false) should {
             it.isVerified shouldBe false
 
@@ -30,7 +30,7 @@ internal class RideCustomerTest {
     }
 
     @Test
-    fun `rideCustomer shouldn't be verified after rejection`() {
+    fun `ride customer shouldn't be verified after rejection`() {
         rideCustomer(verified = true) should {
             it.isVerified shouldBe true
 

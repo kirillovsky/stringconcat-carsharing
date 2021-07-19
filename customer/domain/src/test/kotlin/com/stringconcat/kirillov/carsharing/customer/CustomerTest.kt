@@ -29,7 +29,7 @@ internal class CustomerTest {
     private val currentClock = Clock.systemDefaultZone()
 
     @Test
-    fun `registerCustomer should create customer in context`() {
+    fun `should register customer`() {
         val id = customerId()
         val fullName = fullName()
         val driverLicenseNumber = driverLicenseNumber()
@@ -55,7 +55,7 @@ internal class CustomerTest {
     }
 
     @Test
-    fun `registerCustomer shouldn't create customer which not matured enough`() {
+    fun `shouldn't register customer which not matured enough`() {
         val notMaturedYetBirthDate = LocalDate.of(2000, JULY, 16)
         val currentDate = LocalDate.of(2021, JULY, 15)
 
@@ -75,7 +75,7 @@ internal class CustomerTest {
     }
 
     @Test
-    fun `registerCustomer shouldn't create customer which already registered`() {
+    fun `shouldn't register customer which already registered`() {
         val customerAlreadyRegistered = CustomerAlreadyRegistered { _, _ -> true }
 
         val customer = Customer.registerCustomer(
@@ -94,7 +94,7 @@ internal class CustomerTest {
     }
 
     @Test
-    fun `registerCustomer shouldn't create customer which actually does not exists`() {
+    fun `shouldn't register customer which actually does not exists`() {
         val customerActuallyDoesNotExists = CustomerActuallyExists { _, _ -> false }
 
         val customer = Customer.registerCustomer(

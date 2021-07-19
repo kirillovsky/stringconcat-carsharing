@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test
 
 internal class PurchasingVehicleTest {
     @Test
-    fun `addVehicleToBalance should create vehicle in context`() {
+    fun `should add vehicle to balance`() {
         val expectedId = purchasingVehicleId()
         val expectedCapacity = five()
         val expectedModel = vehicleModel()
@@ -44,7 +44,7 @@ internal class PurchasingVehicleTest {
     }
 
     @Test
-    fun `addVehicleToBalance shouldn't create vehicle with already exists by registrationPlate`() {
+    fun `shouldn't add vehicle to balance if already exists another vehicle with same registration plate`() {
         val existsRegistrationPlate = registrationPlate()
         val oneVin = vin("MMHJU81VCBU266113")
         val anotherVin = vin("JJHJU81VCBU266113")
@@ -66,7 +66,7 @@ internal class PurchasingVehicleTest {
     }
 
     @Test
-    fun `addVehicleToBalance shouldn't create vehicle with already exists by vin`() {
+    fun `shouldn't add vehicle to balance if already exists another vehicle with same vin`() {
         val existsVin = vin()
         val oneRegistrationPlate = registrationPlate(series = "ууу", number = "100", regionCode = "12")
         val anotherRegistrationPlate = registrationPlate(series = "уму", number = "750", regionCode = "179")

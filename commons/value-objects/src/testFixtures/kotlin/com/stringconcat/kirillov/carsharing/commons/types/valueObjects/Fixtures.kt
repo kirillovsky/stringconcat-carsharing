@@ -4,8 +4,8 @@ import arrow.core.Either
 
 fun vehicleModel(): VehicleModel {
     val result = VehicleModel.from(
-        name = "Toyota",
-        maker = "Camry"
+        maker = "Toyota",
+        name = "Camry 3.5"
     )
 
     check(result is Either.Right)
