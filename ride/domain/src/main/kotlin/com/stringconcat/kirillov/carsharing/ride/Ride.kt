@@ -43,11 +43,11 @@ class Ride internal constructor(
         return Unit.right()
     }
 
-    fun pay(price: Price): Either<Any, Unit> {
+    fun pay(taximeter: Taximeter): Either<Any, Unit> {
         if (status != FINISHED) return RidePaidError.left()
 
         status = PAID
-        paidPrice = price
+        paidPrice = taximeter.calculatePrice(ride = this)
 
         addEvent(RidePaidEvent(rideId = id))
 

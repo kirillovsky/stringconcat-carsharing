@@ -153,7 +153,7 @@ internal class RideTest {
             status = FINISHED
         )
 
-        val operationResult = ride.pay(price = expectedPaidPrice)
+        val operationResult = ride.pay(taximeter = { expectedPaidPrice })
 
         operationResult.shouldBeRight()
         ride should {
@@ -167,7 +167,7 @@ internal class RideTest {
     fun `started ride shouldn't be paid`() {
         val ride = ride(status = STARTED)
 
-        val operationResult = ride.pay(price = 300.0.toPrice())
+        val operationResult = ride.pay(taximeter = { 100500.0.toPrice() })
 
         operationResult.shouldBeLeft(RidePaidError)
         ride should {
@@ -182,7 +182,7 @@ internal class RideTest {
         val initialPaidPrice = 300.0.toPrice()
         val ride = ride(status = PAID, paidPrice = initialPaidPrice)
 
-        val operationResult = ride.pay(price = 10.0.toPrice())
+        val operationResult = ride.pay(taximeter = { 100500.0.toPrice() })
 
         operationResult.shouldBeLeft(RidePaidError)
         ride should {
