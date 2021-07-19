@@ -7,6 +7,7 @@ import com.stringconcat.kirillov.carsharing.commons.types.base.AggregateRoot
 import com.stringconcat.kirillov.carsharing.commons.types.error.BusinessError
 import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.ActuallyDoesNotExists
 import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.AlreadyRegistered
+import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.BirthDateMoreThanRegistrationDate
 import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.NotMaturedEnough
 import com.stringconcat.kirillov.carsharing.customer.CustomerStatus.REGISTERED
 import com.stringconcat.kirillov.carsharing.customer.CustomerStatus.REJECTED
@@ -42,14 +43,18 @@ class Customer internal constructor(
         fun registerCustomer(
             idGenerator: CustomerIdGenerator,
             registrationDate: LocalDate,
+            birthDate: LocalDate,
+            maturityAge: Age,
             customerAlreadyRegistered: CustomerAlreadyRegistered,
             customerActuallyExists: CustomerActuallyExists,
             fullName: FullName,
-            birthDate: LocalDate,
             driverLicenseNumber: DriverLicenseNumber,
         ): Either<CustomerRegistrationError, Customer> {
+            val age = Age.from(birthDate, registrationDate)
+
             return when {
-                isCustomerMatureEnough(birthDate, registrationDate).not() -> NotMaturedEnough.left()
+                birthDate > registrationDate -> BirthDateMoreThanRegistrationDate.left()
+                age.exists { it < maturityAge } -> NotMaturedEnough.left()
                 customerAlreadyRegistered.check(fullName, birthDate) -> AlreadyRegistered.left()
                 customerActuallyExists.check(fullName, birthDate).not() -> ActuallyDoesNotExists.left()
                 else -> Customer(
@@ -65,15 +70,11 @@ class Customer internal constructor(
     }
 }
 
-private const val MATURITY_AGE = 21L
-
-private fun isCustomerMatureEnough(customerBirthDate: LocalDate, registrationDate: LocalDate): Boolean =
-    customerBirthDate.plusYears(MATURITY_AGE) < registrationDate
-
 sealed class CustomerRegistrationError : BusinessError {
     object NotMaturedEnough : CustomerRegistrationError()
     object AlreadyRegistered : CustomerRegistrationError()
     object ActuallyDoesNotExists : CustomerRegistrationError()
+    object BirthDateMoreThanRegistrationDate : CustomerRegistrationError()
 }
 
 enum class CustomerStatus {

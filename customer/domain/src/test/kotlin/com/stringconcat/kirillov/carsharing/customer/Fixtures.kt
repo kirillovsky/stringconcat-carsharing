@@ -1,5 +1,6 @@
 package com.stringconcat.kirillov.carsharing.customer
 
+import arrow.core.Either
 import java.time.LocalDate.EPOCH
 import kotlin.random.Random
 
@@ -26,4 +27,12 @@ fun customer(
     driverLicenseNumber = driverLicenseNumber()
 ).apply {
     status = customerStatus
+}
+
+fun Int.asYearsAge(): Age {
+    val result = Age.from(yearsCount = this)
+
+    check(result is Either.Right)
+
+    return result.b
 }
