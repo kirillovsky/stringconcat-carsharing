@@ -13,10 +13,8 @@ import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
-import java.time.Clock
-import java.time.Clock.fixed
-import java.time.Clock.systemDefaultZone
-import java.time.OffsetDateTime
+import java.time.OffsetDateTime.MAX
+import java.time.OffsetDateTime.now
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
@@ -25,21 +23,20 @@ internal class RideTest {
     private val someIdGenerator = RideIdGenerator { rideId() }
     private val validCustomer = rideCustomer(verified = true)
     private val validVehicle = rideVehicle(inRentalPool = true)
-    private val clock = systemDefaultZone()
 
     private val noOneVehicleInRent = RideVehicleInRent { false }
 
     @Test
     fun `should start ride`() {
         val expectedId = rideId()
-        val expectedStartDateTime = OffsetDateTime.now()
+        val expectedStartDateTime = now()
 
         val ride = Ride.startRide(
             vehicleInRent = noOneVehicleInRent,
             idGenerator = { expectedId },
             customer = validCustomer,
             vehicle = validVehicle,
-            clock = expectedStartDateTime.asFixedClock()
+            startDateTime = expectedStartDateTime
         )
 
         ride shouldBeRight {
@@ -48,7 +45,7 @@ internal class RideTest {
             it.vehicleId shouldBe validVehicle.id
             it.startDateTime shouldBe expectedStartDateTime
             it.status shouldBe STARTED
-            it.endDateTime shouldBe null
+            it.finishDateTime shouldBe null
             it.coveredDistance shouldBe null
             it.paidPrice shouldBe null
             it.popEvents().shouldContainExactly(RideStartedEvent(rideId = expectedId))
@@ -62,7 +59,7 @@ internal class RideTest {
             idGenerator = someIdGenerator,
             customer = rideCustomer(verified = false),
             vehicle = validVehicle,
-            clock = clock
+            startDateTime = now()
         )
 
         result shouldBeLeft {
@@ -77,7 +74,7 @@ internal class RideTest {
             idGenerator = someIdGenerator,
             customer = validCustomer,
             vehicle = rideVehicle(inRentalPool = false),
-            clock = clock
+            startDateTime = now()
         )
 
         result shouldBeLeft {
@@ -93,7 +90,7 @@ internal class RideTest {
             idGenerator = someIdGenerator,
             customer = validCustomer,
             vehicle = validVehicle,
-            clock
+            startDateTime = now()
         )
 
         result shouldBeLeft {
@@ -105,18 +102,18 @@ internal class RideTest {
     fun `started ride can be finished`() {
         val expectedRideId = rideId()
         val ride = ride(id = expectedRideId, status = STARTED)
-        val expectedEndDateTime = OffsetDateTime.MAX
+        val expectedEndDateTime = now()
         val expectedCoveredDistance = 101.0.toKilometers()
 
         val operationResult = ride.finish(
-            clock = expectedEndDateTime.asFixedClock(),
+            finishDateTime = expectedEndDateTime,
             coveredDistance = expectedCoveredDistance
         )
 
         operationResult.shouldBeRight()
         ride should {
             it.status shouldBe FINISHED
-            it.endDateTime shouldBe expectedEndDateTime
+            it.finishDateTime shouldBe expectedEndDateTime
             it.coveredDistance shouldBe expectedCoveredDistance
             it.popEvents().shouldContainExactly(RideFinishedEvent(rideId = expectedRideId))
         }
@@ -125,7 +122,7 @@ internal class RideTest {
     @ParameterizedTest(name = "ride should not be finished if status already is {0}")
     @EnumSource(names = ["FINISHED", "PAID"])
     fun `ride should not be finished if status already is`(status: RideStatus) {
-        val endDateTime = OffsetDateTime.MAX
+        val endDateTime = MAX
         val coveredDistance = 1.0.toKilometers()
         val ride = ride(
             status = status,
@@ -133,12 +130,12 @@ internal class RideTest {
             coveredDistance = coveredDistance
         )
 
-        val operationResult = ride.finish(clock, coveredDistance = 111.0.toKilometers())
+        val operationResult = ride.finish(finishDateTime = now(), coveredDistance = 111.0.toKilometers())
 
         operationResult.shouldBeLeft(RideFinishingError)
         ride should {
             it.status shouldBe status
-            it.endDateTime shouldBe endDateTime
+            it.finishDateTime shouldBe endDateTime
             it.coveredDistance shouldBe coveredDistance
             it.popEvents() shouldBe emptyList()
         }
@@ -192,6 +189,3 @@ internal class RideTest {
         }
     }
 }
-
-private fun OffsetDateTime.asFixedClock(): Clock =
-    fixed(toInstant(), offset.normalized())

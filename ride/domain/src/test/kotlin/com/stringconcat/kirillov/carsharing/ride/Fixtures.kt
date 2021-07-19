@@ -31,7 +31,7 @@ fun ride(
     startDateTime = OffsetDateTime.now()
 ).also {
     it.status = status
-    it.endDateTime = endDateTime
+    it.finishDateTime = endDateTime
     it.coveredDistance = coveredDistance
     it.paidPrice = paidPrice
 }

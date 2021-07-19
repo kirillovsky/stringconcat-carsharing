@@ -11,12 +11,9 @@ import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
-import java.time.Clock
-import java.time.Clock.fixed
 import java.time.LocalDate
+import java.time.LocalDate.now
 import java.time.Month.JULY
-import java.time.ZoneId.systemDefault
-import java.time.ZoneOffset.UTC
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
@@ -26,7 +23,6 @@ internal class CustomerTest {
     private val allCustomerAreNotRegistered = CustomerAlreadyRegistered { _, _ -> false }
     private val allCustomerActuallyExists = CustomerActuallyExists { _, _ -> true }
     private val maturedYetBirthDate = LocalDate.of(1992, JULY, 9)
-    private val currentClock = Clock.systemDefaultZone()
 
     @Test
     fun `should register customer`() {
@@ -36,7 +32,7 @@ internal class CustomerTest {
 
         val customer = Customer.registerCustomer(
             idGenerator = { id },
-            clock = currentClock,
+            registrationDate = now(),
             customerAlreadyRegistered = allCustomerAreNotRegistered,
             customerActuallyExists = allCustomerActuallyExists,
             fullName = fullName,
@@ -61,7 +57,7 @@ internal class CustomerTest {
 
         val customer = Customer.registerCustomer(
             idGenerator = { customerId() },
-            clock = currentDate.asFixedClock(),
+            registrationDate = currentDate,
             customerAlreadyRegistered = allCustomerAreNotRegistered,
             customerActuallyExists = allCustomerActuallyExists,
             fullName = fullName(),
@@ -80,7 +76,7 @@ internal class CustomerTest {
 
         val customer = Customer.registerCustomer(
             idGenerator = { customerId() },
-            clock = currentClock,
+            registrationDate = now(),
             customerAlreadyRegistered = customerAlreadyRegistered,
             customerActuallyExists = allCustomerActuallyExists,
             fullName = fullName(),
@@ -99,7 +95,7 @@ internal class CustomerTest {
 
         val customer = Customer.registerCustomer(
             idGenerator = { customerId() },
-            clock = currentClock,
+            registrationDate = now(),
             customerAlreadyRegistered = allCustomerAreNotRegistered,
             customerActuallyExists = customerActuallyDoesNotExists,
             fullName = fullName(),
@@ -164,6 +160,3 @@ internal class CustomerTest {
         }
     }
 }
-
-private fun LocalDate.asFixedClock(): Clock =
-    fixed(atStartOfDay().toInstant(UTC), systemDefault())

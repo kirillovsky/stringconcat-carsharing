@@ -13,9 +13,7 @@ import com.stringconcat.kirillov.carsharing.ride.RideStartingError.VehicleNotInR
 import com.stringconcat.kirillov.carsharing.ride.RideStatus.FINISHED
 import com.stringconcat.kirillov.carsharing.ride.RideStatus.PAID
 import com.stringconcat.kirillov.carsharing.ride.RideStatus.STARTED
-import java.time.Clock
 import java.time.OffsetDateTime
-import java.time.OffsetDateTime.now
 
 class Ride internal constructor(
     id: RideId,
@@ -27,16 +25,16 @@ class Ride internal constructor(
         internal set
     var coveredDistance: Distance? = null
         internal set
-    var endDateTime: OffsetDateTime? = null
+    var finishDateTime: OffsetDateTime? = null
         internal set
     var paidPrice: Price? = null
         internal set
 
-    fun finish(clock: Clock, coveredDistance: Distance): Either<Any, Unit> {
+    fun finish(finishDateTime: OffsetDateTime, coveredDistance: Distance): Either<Any, Unit> {
         if (status != STARTED) return RideFinishingError.left()
 
         status = FINISHED
-        endDateTime = now(clock)
+        this.finishDateTime = finishDateTime
         this.coveredDistance = coveredDistance
 
         addEvent(RideFinishedEvent(rideId = id))
@@ -60,7 +58,7 @@ class Ride internal constructor(
             idGenerator: RideIdGenerator,
             customer: RideCustomer,
             vehicle: RideVehicle,
-            clock: Clock,
+            startDateTime: OffsetDateTime,
         ): Either<RideStartingError, Ride> = when {
             !customer.isVerified -> CustomerIsNotVerified.left()
             !vehicle.isInRentalPool -> VehicleNotInRentalPool.left()
@@ -69,7 +67,7 @@ class Ride internal constructor(
                 id = idGenerator.generate(),
                 customerId = customer.id,
                 vehicleId = vehicle.id,
-                startDateTime = now(clock)
+                startDateTime
             ).apply {
                 addEvent(RideStartedEvent(rideId = id))
             }.right()

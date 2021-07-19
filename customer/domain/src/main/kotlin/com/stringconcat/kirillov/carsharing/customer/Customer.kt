@@ -11,7 +11,6 @@ import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.N
 import com.stringconcat.kirillov.carsharing.customer.CustomerStatus.REGISTERED
 import com.stringconcat.kirillov.carsharing.customer.CustomerStatus.REJECTED
 import com.stringconcat.kirillov.carsharing.customer.CustomerStatus.VERIFIED
-import java.time.Clock
 import java.time.LocalDate
 
 class Customer internal constructor(
@@ -42,7 +41,7 @@ class Customer internal constructor(
     companion object {
         fun registerCustomer(
             idGenerator: CustomerIdGenerator,
-            clock: Clock,
+            registrationDate: LocalDate,
             customerAlreadyRegistered: CustomerAlreadyRegistered,
             customerActuallyExists: CustomerActuallyExists,
             fullName: FullName,
@@ -50,14 +49,14 @@ class Customer internal constructor(
             driverLicenseNumber: DriverLicenseNumber,
         ): Either<CustomerRegistrationError, Customer> {
             return when {
-                isCustomerMatureEnough(birthDate, clock).not() -> NotMaturedEnough.left()
+                isCustomerMatureEnough(birthDate, registrationDate).not() -> NotMaturedEnough.left()
                 customerAlreadyRegistered.check(fullName, birthDate) -> AlreadyRegistered.left()
                 customerActuallyExists.check(fullName, birthDate).not() -> ActuallyDoesNotExists.left()
                 else -> Customer(
                     id = idGenerator.generate(),
-                    fullName,
-                    birthDate,
-                    driverLicenseNumber
+                    fullName = fullName,
+                    birthDate = birthDate,
+                    driverLicenseNumber = driverLicenseNumber
                 ).apply {
                     addEvent(CustomerRegistered(value = id))
                 }.right()
@@ -68,8 +67,8 @@ class Customer internal constructor(
 
 private const val MATURITY_AGE = 21L
 
-private fun isCustomerMatureEnough(customerBirthDate: LocalDate, clock: Clock): Boolean =
-    customerBirthDate.plusYears(MATURITY_AGE) < LocalDate.now(clock)
+private fun isCustomerMatureEnough(customerBirthDate: LocalDate, registrationDate: LocalDate): Boolean =
+    customerBirthDate.plusYears(MATURITY_AGE) < registrationDate
 
 sealed class CustomerRegistrationError : BusinessError {
     object NotMaturedEnough : CustomerRegistrationError()
