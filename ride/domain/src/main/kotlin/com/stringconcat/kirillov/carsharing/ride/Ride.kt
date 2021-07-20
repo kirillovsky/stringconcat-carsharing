@@ -7,7 +7,7 @@ import com.stringconcat.kirillov.carsharing.commons.types.base.AggregateRoot
 import com.stringconcat.kirillov.carsharing.commons.types.error.BusinessError
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.Distance
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.Price
-import com.stringconcat.kirillov.carsharing.ride.RideStartingError.CustomerIsNotVerified
+import com.stringconcat.kirillov.carsharing.ride.RideStartingError.CustomerIsRejected
 import com.stringconcat.kirillov.carsharing.ride.RideStartingError.VehicleAlreadyInRent
 import com.stringconcat.kirillov.carsharing.ride.RideStartingError.VehicleNotInRentalPool
 import com.stringconcat.kirillov.carsharing.ride.RideStatus.FINISHED
@@ -60,7 +60,7 @@ class Ride internal constructor(
             vehicle: RideVehicle,
             startDateTime: OffsetDateTime,
         ): Either<RideStartingError, Ride> = when {
-            !customer.isVerified -> CustomerIsNotVerified.left()
+            customer.isRejected -> CustomerIsRejected.left()
             !vehicle.isInRentalPool -> VehicleNotInRentalPool.left()
             vehicleInRent.check(vehicle.id) -> VehicleAlreadyInRent.left()
             else -> Ride(
@@ -80,7 +80,7 @@ enum class RideStatus {
 }
 
 sealed class RideStartingError : BusinessError {
-    object CustomerIsNotVerified : RideStartingError()
+    object CustomerIsRejected : RideStartingError()
     object VehicleNotInRentalPool : RideStartingError()
     object VehicleAlreadyInRent : RideStartingError()
 }

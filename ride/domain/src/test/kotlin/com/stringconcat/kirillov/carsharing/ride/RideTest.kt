@@ -4,7 +4,7 @@ import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomDis
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomPrice
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.toKilometers
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.toPrice
-import com.stringconcat.kirillov.carsharing.ride.RideStartingError.CustomerIsNotVerified
+import com.stringconcat.kirillov.carsharing.ride.RideStartingError.CustomerIsRejected
 import com.stringconcat.kirillov.carsharing.ride.RideStartingError.VehicleAlreadyInRent
 import com.stringconcat.kirillov.carsharing.ride.RideStartingError.VehicleNotInRentalPool
 import com.stringconcat.kirillov.carsharing.ride.RideStatus.FINISHED
@@ -23,7 +23,7 @@ import org.junit.jupiter.params.provider.EnumSource
 
 internal class RideTest {
     private val someIdGenerator = RideIdGenerator { rideId() }
-    private val validCustomer = rideCustomer(verified = true)
+    private val validCustomer = rideCustomer(rejected = false)
     private val validVehicle = rideVehicle(inRentalPool = true)
 
     private val noOneVehicleInRent = RideVehicleInRent { false }
@@ -59,13 +59,13 @@ internal class RideTest {
         val result = Ride.startRide(
             vehicleInRent = noOneVehicleInRent,
             idGenerator = someIdGenerator,
-            customer = rideCustomer(verified = false),
+            customer = rideCustomer(rejected = true),
             vehicle = validVehicle,
             startDateTime = now()
         )
 
         result shouldBeLeft {
-            it shouldBe CustomerIsNotVerified
+            it shouldBe CustomerIsRejected
         }
     }
 

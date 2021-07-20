@@ -9,9 +9,6 @@ import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.A
 import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.AlreadyRegistered
 import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.BirthDateMoreThanRegistrationDate
 import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.NotMaturedEnough
-import com.stringconcat.kirillov.carsharing.customer.CustomerStatus.REGISTERED
-import com.stringconcat.kirillov.carsharing.customer.CustomerStatus.REJECTED
-import com.stringconcat.kirillov.carsharing.customer.CustomerStatus.VERIFIED
 import java.time.LocalDate
 
 class Customer internal constructor(
@@ -20,23 +17,15 @@ class Customer internal constructor(
     val birthDate: LocalDate,
     val driverLicenseNumber: DriverLicenseNumber,
 ) : AggregateRoot<CustomerId>(id) {
-    var status: CustomerStatus = REGISTERED
+    var isRejected: Boolean = false
         internal set
 
     fun reject() {
-        if (status == REJECTED) return
+        if (isRejected) return
 
-        status = REJECTED
+        isRejected = true
 
         addEvent(CustomerRejected(id))
-    }
-
-    fun verify() {
-        if (status == VERIFIED) return
-
-        status = VERIFIED
-
-        addEvent(CustomerVerified(id))
     }
 
     companion object {
@@ -75,8 +64,4 @@ sealed class CustomerRegistrationError : BusinessError {
     object AlreadyRegistered : CustomerRegistrationError()
     object ActuallyDoesNotExists : CustomerRegistrationError()
     object BirthDateMoreThanRegistrationDate : CustomerRegistrationError()
-}
-
-enum class CustomerStatus {
-    REGISTERED, REJECTED, VERIFIED
 }

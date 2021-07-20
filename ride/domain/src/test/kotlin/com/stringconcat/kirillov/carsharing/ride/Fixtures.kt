@@ -5,9 +5,9 @@ import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.Price
 import java.time.OffsetDateTime
 import kotlin.random.Random.Default.nextLong
 
-fun rideCustomer(verified: Boolean = false) =
+fun rideCustomer(rejected: Boolean = false) =
     RideCustomer(id = rideCustomerId()).apply {
-        isVerified = verified
+        isRejected = rejected
     }
 
 fun rideCustomerId() = RideCustomerId(value = nextLong())

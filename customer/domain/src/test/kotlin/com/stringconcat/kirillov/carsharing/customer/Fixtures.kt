@@ -22,14 +22,14 @@ fun customerId() = CustomerId(value = faker.number().randomNumber())
 
 fun customer(
     id: CustomerId = customerId(),
-    customerStatus: CustomerStatus,
+    rejected: Boolean = false,
 ) = Customer(
     id,
     fullName = fullName(),
     birthDate = EPOCH,
     driverLicenseNumber = driverLicenseNumber()
 ).apply {
-    status = customerStatus
+    isRejected = rejected
 }
 
 fun Int.asYearsAge(): Age {

@@ -4,9 +4,6 @@ import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.A
 import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.AlreadyRegistered
 import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.BirthDateMoreThanRegistrationDate
 import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.NotMaturedEnough
-import com.stringconcat.kirillov.carsharing.customer.CustomerStatus.REGISTERED
-import com.stringconcat.kirillov.carsharing.customer.CustomerStatus.REJECTED
-import com.stringconcat.kirillov.carsharing.customer.CustomerStatus.VERIFIED
 import io.kotest.assertions.arrow.either.shouldBeLeft
 import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.collections.shouldContainExactly
@@ -17,9 +14,6 @@ import java.time.LocalDate.MAX
 import java.time.LocalDate.now
 import java.time.Month.JULY
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.EnumSource
-import org.junit.jupiter.params.provider.EnumSource.Mode.EXCLUDE
 
 internal class CustomerTest {
     private val allCustomerAreNotRegistered = CustomerAlreadyRegistered { _, _ -> false }
@@ -49,7 +43,7 @@ internal class CustomerTest {
             it.fullName shouldBe fullName
             it.birthDate shouldBe maturedYetBirthDate
             it.driverLicenseNumber shouldBe driverLicenseNumber
-            it.status shouldBe REGISTERED
+            it.isRejected = false
             it.popEvents().shouldContainExactly(CustomerRegistered(value = id))
         }
     }
@@ -99,14 +93,12 @@ internal class CustomerTest {
 
     @Test
     fun `shouldn't register customer which already registered`() {
-        val customerAlreadyRegistered = CustomerAlreadyRegistered { _, _ -> true }
-
         val customer = Customer.registerCustomer(
             idGenerator = { customerId() },
             registrationDate = now(),
             birthDate = maturedYetBirthDate,
             maturityAge = twentyOneYearsOld,
-            customerAlreadyRegistered = customerAlreadyRegistered,
+            customerAlreadyRegistered = { _, _ -> true },
             customerActuallyExists = allCustomerActuallyExists,
             fullName = fullName(),
             driverLicenseNumber = driverLicenseNumber()
@@ -137,54 +129,27 @@ internal class CustomerTest {
         }
     }
 
-    @ParameterizedTest(name = "customer with status - {0} can be rejected")
-    @EnumSource(value = CustomerStatus::class, mode = EXCLUDE, names = ["REJECTED"])
-    fun `customer with status can be rejected`(customerStatus: CustomerStatus) {
+    @Test
+    fun `customer can be rejected`() {
         val id = customerId()
-        val customer = customer(id, customerStatus)
+        val customer = customer(id, rejected = false)
 
         customer.reject()
 
         customer should {
-            it.status shouldBe REJECTED
+            it.isRejected shouldBe true
             it.popEvents().shouldContainExactly(CustomerRejected(value = id))
         }
     }
 
     @Test
     fun `customer should be rejected twice`() {
-        val customer = customer(customerStatus = REJECTED)
+        val customer = customer(rejected = true)
 
         customer.reject()
 
         customer should {
-            it.status shouldBe REJECTED
-            it.popEvents() shouldBe emptyList()
-        }
-    }
-
-    @ParameterizedTest(name = "customer with status - {0} can be verified")
-    @EnumSource(value = CustomerStatus::class, mode = EXCLUDE, names = ["VERIFIED"])
-    fun `customer with status can be verified`(customerStatus: CustomerStatus) {
-        val id = customerId()
-        val customer = customer(id, customerStatus)
-
-        customer.verify()
-
-        customer should {
-            it.status shouldBe VERIFIED
-            it.popEvents().shouldContainExactly(CustomerVerified(value = id))
-        }
-    }
-
-    @Test
-    fun `customer should be verified twice`() {
-        val customer = customer(customerStatus = VERIFIED)
-
-        customer.verify()
-
-        customer should {
-            it.status shouldBe VERIFIED
+            it.isRejected shouldBe true
             it.popEvents() shouldBe emptyList()
         }
     }
