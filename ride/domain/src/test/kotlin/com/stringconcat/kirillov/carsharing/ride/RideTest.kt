@@ -1,5 +1,7 @@
 package com.stringconcat.kirillov.carsharing.ride
 
+import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomDistance
+import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomPrice
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.toKilometers
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.toPrice
 import com.stringconcat.kirillov.carsharing.ride.RideStartingError.CustomerIsNotVerified
@@ -130,7 +132,7 @@ internal class RideTest {
             coveredDistance = coveredDistance
         )
 
-        val operationResult = ride.finish(finishDateTime = now(), coveredDistance = 111.0.toKilometers())
+        val operationResult = ride.finish(finishDateTime = now(), coveredDistance = randomDistance())
 
         operationResult.shouldBeLeft(RideFinishingError)
         ride should {
@@ -164,7 +166,7 @@ internal class RideTest {
     fun `started ride shouldn't be paid`() {
         val ride = ride(status = STARTED)
 
-        val operationResult = ride.pay(taximeter = { 100500.0.toPrice() })
+        val operationResult = ride.pay(taximeter = { randomPrice() })
 
         operationResult.shouldBeLeft(RidePaidError)
         ride should {
@@ -179,7 +181,7 @@ internal class RideTest {
         val initialPaidPrice = 300.0.toPrice()
         val ride = ride(status = PAID, paidPrice = initialPaidPrice)
 
-        val operationResult = ride.pay(taximeter = { 100500.0.toPrice() })
+        val operationResult = ride.pay(taximeter = { randomPrice() })
 
         operationResult.shouldBeLeft(RidePaidError)
         ride should {

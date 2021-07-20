@@ -10,7 +10,7 @@ import com.stringconcat.kirillov.carsharing.customer.AgeCreationErrors.IllegalYe
 import java.time.LocalDate
 import java.time.Period
 
-data class Age(val yearsCount: Int) : ValueObject, Comparable<Age> {
+data class Age internal constructor(val yearsCount: Int) : ValueObject, Comparable<Age> {
     companion object {
         fun from(yearsCount: Int): Either<IllegalYearsCount, Age> =
             if (yearsCount < 0) {

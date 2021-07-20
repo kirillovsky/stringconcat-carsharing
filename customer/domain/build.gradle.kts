@@ -7,4 +7,5 @@ dependencies {
     testImplementation(Libs.kotestJunit5Runner)
     testImplementation(Libs.kotestArrow)
     testImplementation(Libs.kotlinScriptRuntime)
+    testImplementation(Libs.faker)
 }

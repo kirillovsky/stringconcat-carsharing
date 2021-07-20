@@ -9,6 +9,7 @@ import java.time.LocalDate
 import kotlin.random.Random.Default.nextLong
 
 fun purchasingVehicleId() = PurchasingVehicleId(value = nextLong())
+
 fun purchasingVehicle(
     registrationPlate: RegistrationPlate = registrationPlate(),
     vin: Vin = vin(),

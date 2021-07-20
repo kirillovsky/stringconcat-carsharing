@@ -1,21 +1,24 @@
 package com.stringconcat.kirillov.carsharing.customer
 
 import arrow.core.Either
+import com.github.javafaker.Faker
 import java.time.LocalDate.EPOCH
-import kotlin.random.Random
+import java.util.Locale
+
+private val faker = Faker(Locale.forLanguageTag("ru"))
 
 fun fullName(
-    firstName: String = "ВАСИЛИЙ",
+    firstName: String = faker.name().firstName(),
     middleName: String? = null,
-    secondName: String = "ПУПКИН",
+    secondName: String = faker.name().lastName(),
 ) = FullName(firstName, middleName, secondName)
 
 fun driverLicenseNumber(
-    series: String = "77 77",
-    number: String = "123456",
+    series: String = faker.numerify("3# ##"),
+    number: String = faker.numerify("1#####"),
 ) = DriverLicenseNumber(series, number)
 
-fun customerId() = CustomerId(value = Random.nextLong())
+fun customerId() = CustomerId(value = faker.number().randomNumber())
 
 fun customer(
     id: CustomerId = customerId(),

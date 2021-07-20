@@ -5,6 +5,7 @@ object Versions {
     const val grGit = "4.1.0"
     const val gradleVersions = "0.38.0"
     const val arrowCore = "0.11.0"
+    const val faker = "1.0.2"
 
     const val junit5 = "5.7.2"
     const val detekt = "1.17.0"
@@ -36,4 +37,5 @@ object Libs {
     const val springBootTestStarter = "org.springframework.boot:spring-boot-starter-test"
     const val kotestJunit5Runner = "io.kotest:kotest-runner-junit5:${Versions.kotest}"
     const val kotestArrow = "io.kotest:kotest-assertions-arrow:${Versions.kotest}"
+    const val faker = "com.github.javafaker:javafaker:${Versions.faker}"
 }

@@ -3,20 +3,21 @@ package com.stringconcat.kirillov.carsharing.ride
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.Distance
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.Price
 import java.time.OffsetDateTime
+import kotlin.random.Random.Default.nextLong
 
 fun rideCustomer(verified: Boolean = false) =
     RideCustomer(id = rideCustomerId()).apply {
         isVerified = verified
     }
 
-fun rideCustomerId() = RideCustomerId(value = 101500L)
+fun rideCustomerId() = RideCustomerId(value = nextLong())
 
 fun rideVehicle(inRentalPool: Boolean = false) =
     RideVehicle(id = rideVehicleId()).apply {
         isInRentalPool = inRentalPool
     }
 
-fun rideVehicleId() = RideVehicleId(value = 111500L)
+fun rideVehicleId() = RideVehicleId(value = nextLong())
 
 fun ride(
     id: RideId = rideId(),
@@ -36,4 +37,4 @@ fun ride(
     it.paidPrice = paidPrice
 }
 
-fun rideId() = RideId(value = 1005002L)
+fun rideId() = RideId(value = nextLong())
