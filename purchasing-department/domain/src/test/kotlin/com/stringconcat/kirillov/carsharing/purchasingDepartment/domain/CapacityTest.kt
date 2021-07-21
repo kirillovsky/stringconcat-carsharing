@@ -35,4 +35,9 @@ internal class CapacityTest {
 
         capacity.value shouldBe 5
     }
+
+    @Test
+    fun `capacity should be equals to another capacity with same value`() {
+        Capacity(4) shouldBe Capacity(4)
+    }
 }

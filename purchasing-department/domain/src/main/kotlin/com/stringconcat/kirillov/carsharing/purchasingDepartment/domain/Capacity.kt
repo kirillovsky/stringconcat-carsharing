@@ -6,7 +6,7 @@ import arrow.core.right
 import com.stringconcat.kirillov.carsharing.commons.types.base.ValueObject
 import com.stringconcat.kirillov.carsharing.commons.types.error.BusinessError
 
-class Capacity(val value: Int) : ValueObject {
+data class Capacity internal constructor(val value: Int) : ValueObject {
     companion object {
         fun from(value: Int): Either<IllegalCapacityValueError, Capacity> =
             if (value <= 0) IllegalCapacityValueError.left()
