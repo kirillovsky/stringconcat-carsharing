@@ -15,7 +15,7 @@ class DistanceTest {
         val distance = Distance.ofKilometers(value = expectedValueInKilometers)
 
         distance shouldBeRight {
-            it.value shouldBe expectedValueInKilometers
+            it.kilometers shouldBe expectedValueInKilometers
         }
     }
 
@@ -24,7 +24,7 @@ class DistanceTest {
         val distance = Distance.ofKilometers(value = 1040.356.toBigDecimal())
 
         distance shouldBeRight {
-            it.value shouldBe 1040.4.toBigDecimal()
+            it.kilometers shouldBe 1040.4.toBigDecimal()
         }
     }
 
@@ -43,7 +43,7 @@ class DistanceTest {
         val distance2 = 3.4.toKilometers()
 
         distance1 + distance2 should {
-            it.value shouldBe 8.5.toBigDecimal()
+            it.kilometers shouldBe 8.5.toBigDecimal()
         }
     }
 }

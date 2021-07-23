@@ -1,5 +1,7 @@
 package com.stringconcat.kirillov.carsharing.ride
 
+import arrow.core.left
+import arrow.core.right
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomDistance
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomPrice
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.toKilometers
@@ -152,7 +154,7 @@ internal class RideTest {
             status = FINISHED
         )
 
-        val operationResult = ride.pay(taximeter = { expectedPaidPrice })
+        val operationResult = ride.pay(taximeter = { expectedPaidPrice.right() })
 
         operationResult.shouldBeRight()
         ride should {
@@ -163,10 +165,24 @@ internal class RideTest {
     }
 
     @Test
+    fun `price shouldn't be paid on calculation price error`() {
+        val ride = ride(paidPrice = null, status = FINISHED)
+
+        val operationResult = ride.pay(taximeter = { CalculationRidePriceError.left() })
+
+        operationResult.shouldBeLeft(RidePaidError)
+        ride should {
+            it.status shouldBe FINISHED
+            it.paidPrice shouldBe null
+            it.popEvents() shouldBe emptyList()
+        }
+    }
+
+    @Test
     fun `started ride shouldn't be paid`() {
         val ride = ride(status = STARTED)
 
-        val operationResult = ride.pay(taximeter = { randomPrice() })
+        val operationResult = ride.pay(taximeter = { randomPrice().right() })
 
         operationResult.shouldBeLeft(RidePaidError)
         ride should {
@@ -181,7 +197,7 @@ internal class RideTest {
         val initialPaidPrice = 300.0.toPrice()
         val ride = ride(status = PAID, paidPrice = initialPaidPrice)
 
-        val operationResult = ride.pay(taximeter = { randomPrice() })
+        val operationResult = ride.pay(taximeter = { randomPrice().right() })
 
         operationResult.shouldBeLeft(RidePaidError)
         ride should {
@@ -189,5 +205,13 @@ internal class RideTest {
             it.paidPrice shouldBe initialPaidPrice
             it.popEvents() shouldBe emptyList()
         }
+    }
+
+    @ParameterizedTest(name = "ride should be finished for statuses - {0}")
+    @EnumSource(names = ["FINISHED", "PAID"])
+    fun `ride should be finished for statuses`(finishedStatus: RideStatus) {
+        val ride = ride(status = finishedStatus)
+
+        ride.isFinished() shouldBe true
     }
 }

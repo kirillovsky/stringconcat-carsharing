@@ -39,4 +39,20 @@ internal class PriceTest {
     fun `price should be equals to another with same value`() {
         Price(value = 0.01.toBigDecimal()) shouldBe Price(value = "0.01".toBigDecimal())
     }
+
+    @Test
+    fun `price should be multiplied to big decimal value`() {
+        val price = Price(value = 10.33.toBigDecimal()) * 0.333.toBigDecimal()
+
+        price shouldBeRight {
+            3.44.toPrice()
+        }
+    }
+
+    @Test
+    fun `price shouldn't be multiplied to negative value`() {
+        val result = randomPrice() * (-19.2).toBigDecimal()
+
+        result shouldBeLeft NegativePriceValueError
+    }
 }

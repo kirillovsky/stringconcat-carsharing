@@ -10,18 +10,18 @@ import java.math.RoundingMode.CEILING
 
 private const val SCALE = 1
 
-data class Distance internal constructor(val value: BigDecimal) {
+data class Distance internal constructor(val kilometers: BigDecimal) {
     companion object {
         fun ofKilometers(value: BigDecimal): Either<NegativeDistanceValueError, Distance> =
             if (value < ZERO) {
                 NegativeDistanceValueError.left()
             } else {
-                Distance(value = value.setScale(SCALE, CEILING)).right()
+                Distance(kilometers = value.setScale(SCALE, CEILING)).right()
             }
     }
 
     operator fun plus(anotherDistance: Distance): Distance =
-        Distance(value + anotherDistance.value)
+        Distance(kilometers + anotherDistance.kilometers)
 
     object NegativeDistanceValueError : BusinessError
 }

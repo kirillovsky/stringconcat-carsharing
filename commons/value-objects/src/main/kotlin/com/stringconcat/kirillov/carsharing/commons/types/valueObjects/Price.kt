@@ -12,6 +12,9 @@ import java.math.RoundingMode.CEILING
 private const val SCALE = 2
 
 data class Price internal constructor(val value: BigDecimal) : ValueObject {
+    operator fun times(multiplier: BigDecimal): Either<NegativePriceValueError, Price> =
+        from(value * multiplier)
+
     companion object {
         fun from(value: BigDecimal): Either<NegativePriceValueError, Price> =
             if (value < ZERO) {

@@ -30,6 +30,8 @@ class Ride internal constructor(
     var paidPrice: Price? = null
         internal set
 
+    fun isFinished(): Boolean = status == FINISHED || status == PAID
+
     fun finish(finishDateTime: OffsetDateTime, coveredDistance: Distance): Either<Any, Unit> {
         if (status != STARTED) return RideFinishingError.left()
 
@@ -44,12 +46,14 @@ class Ride internal constructor(
     fun pay(taximeter: Taximeter): Either<Any, Unit> {
         if (status != FINISHED) return RidePaidError.left()
 
-        status = PAID
-        paidPrice = taximeter.calculatePrice(ride = this)
+        return taximeter.calculatePrice(ride = this)
+            .map { calculatedPrice ->
+                status = PAID
+                paidPrice = calculatedPrice
 
-        addEvent(RidePaidEvent(rideId = id))
-
-        return Unit.right()
+                addEvent(RidePaidEvent(rideId = id))
+            }
+            .mapLeft { RidePaidError }
     }
 
     companion object {
