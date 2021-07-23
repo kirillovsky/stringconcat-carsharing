@@ -1,0 +1,16 @@
+plugins {
+    id ("java-test-fixtures")
+}
+
+dependencies {
+    implementation(project(":commons:ddd-types"))
+    implementation(Libs.arrowCore)
+
+    testImplementation(Libs.kotestJunit5Runner)
+    testImplementation(Libs.kotestArrow)
+    testImplementation(Libs.kotlinScriptRuntime)
+    testImplementation(Libs.junit5Params)
+
+    testFixturesImplementation(Libs.arrowCore)
+    testFixturesImplementation(Libs.faker)
+}

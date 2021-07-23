@@ -3,6 +3,8 @@ comments:
     active: false
   UndocumentedPublicFunction:
     active: false
+  UndocumentedPublicProperty:
+    active: false
 
 style:
   NewLineAtEndOfFile:
@@ -11,6 +13,8 @@ style:
     excludeImports: [ ]
     active: true
   FunctionOnlyReturningConstant:
+    active: false
+  UnnecessaryAbstractClass:
     active: false
 
 formatting:
@@ -35,3 +39,10 @@ naming:
 performance:
   SpreadOperator:
     active: false
+
+
+complexity:
+  LongParameterList:
+    functionThreshold: 12
+    constructorThreshold: 12
+    ignoreDefaultParameters: true

@@ -27,11 +27,6 @@ repositories {
     mavenCentral()
 }
 
-allprojects {
-    group = "ru.kirillov.stringconcat"
-    version = "0.0.1-SNAPSHOT"
-}
-
 subprojects {
     apply {
         plugin("kotlin")
@@ -47,7 +42,12 @@ subprojects {
     }
 
     dependencies {
+        implementation(Libs.kotlinStdlib)
         implementation(Libs.kotlinStdlibJdk8)
+        implementation(Libs.kotlinReflect)
+
+        testImplementation(Libs.junit5Api)
+        testImplementation(Libs.junit5Jupiter)
     }
 
     val checkNonReleaseVersion = project.properties["checkNonReleaseVersion"] == "true"
@@ -70,7 +70,8 @@ subprojects {
         config = files(rootDir.resolve("detekt/detekt-config.yml"))
         input = files(
             DEFAULT_SRC_DIR_KOTLIN,
-            "src/test/kotlin"
+            "src/test/kotlin",
+            "src/testFixtures/kotlin"
         )
 
         reports {
