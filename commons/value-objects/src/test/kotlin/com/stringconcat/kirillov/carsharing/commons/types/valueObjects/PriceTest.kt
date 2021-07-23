@@ -45,7 +45,7 @@ internal class PriceTest {
         val price = Price(value = 10.33.toBigDecimal()) * 0.333.toBigDecimal()
 
         price shouldBeRight {
-            3.44.toPrice()
+            it shouldBe 3.44.toPrice()
         }
     }
 
