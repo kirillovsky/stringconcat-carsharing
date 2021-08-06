@@ -20,8 +20,6 @@ import io.kotest.matchers.shouldBe
 import java.time.OffsetDateTime.MAX
 import java.time.OffsetDateTime.now
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.EnumSource
 
 internal class RideTest {
     private val someIdGenerator = RideIdGenerator { rideId() }
@@ -49,9 +47,6 @@ internal class RideTest {
             it.vehicleId shouldBe validVehicle.id
             it.startDateTime shouldBe expectedStartDateTime
             it.status shouldBe STARTED
-            it.finishDateTime shouldBe null
-            it.coveredDistance shouldBe null
-            it.paidPrice shouldBe null
             it.popEvents().shouldContainExactly(RideStartedEvent(rideId = expectedId))
         }
     }
@@ -105,7 +100,7 @@ internal class RideTest {
     @Test
     fun `started ride can be finished`() {
         val expectedRideId = rideId()
-        val ride = ride(id = expectedRideId, status = STARTED)
+        val ride = startedRide(id = expectedRideId)
         val expectedEndDateTime = now()
         val expectedCoveredDistance = 101.0.toKilometers()
 
@@ -123,24 +118,45 @@ internal class RideTest {
         }
     }
 
-    @ParameterizedTest(name = "ride should not be finished if status already is {0}")
-    @EnumSource(names = ["FINISHED", "PAID"])
-    fun `ride should not be finished if status already is`(status: RideStatus) {
+    @Test
+    fun `ride shouldn't be finished if it already finished`() {
         val endDateTime = MAX
         val coveredDistance = 1.0.toKilometers()
-        val ride = ride(
-            status = status,
-            endDateTime = endDateTime,
-            coveredDistance = coveredDistance
+        val ride = finishedRide(
+            finishedDateTime = endDateTime,
+            coveredDistance = coveredDistance,
         )
 
         val operationResult = ride.finish(finishDateTime = now(), coveredDistance = randomDistance())
 
         operationResult.shouldBeLeft(RideFinishingError)
         ride should {
-            it.status shouldBe status
+            it.status shouldBe FINISHED
             it.finishDateTime shouldBe endDateTime
             it.coveredDistance shouldBe coveredDistance
+            it.popEvents() shouldBe emptyList()
+        }
+    }
+
+    @Test
+    fun `ride shouldn't be finished if it already paid`() {
+        val endDateTime = MAX
+        val coveredDistance = 1.0.toKilometers()
+        val paidPrice = randomPrice()
+        val ride = paidRide(
+            finishedDateTime = endDateTime,
+            coveredDistance = coveredDistance,
+            paidPrice = paidPrice
+        )
+
+        val operationResult = ride.finish(finishDateTime = now(), coveredDistance = randomDistance())
+
+        operationResult.shouldBeLeft(RideFinishingError)
+        ride should {
+            it.status shouldBe PAID
+            it.finishDateTime shouldBe endDateTime
+            it.coveredDistance shouldBe coveredDistance
+            it.paidPrice shouldBe paidPrice
             it.popEvents() shouldBe emptyList()
         }
     }
@@ -149,10 +165,7 @@ internal class RideTest {
     fun `finished price can be paid`() {
         val expectedRideId = rideId()
         val expectedPaidPrice = 102.10.toPrice()
-        val ride = ride(
-            id = expectedRideId,
-            status = FINISHED
-        )
+        val ride = finishedRide(id = expectedRideId)
 
         val operationResult = ride.pay(taximeter = { expectedPaidPrice.right() })
 
@@ -166,28 +179,30 @@ internal class RideTest {
 
     @Test
     fun `price shouldn't be paid on calculation price error`() {
-        val ride = ride(paidPrice = null, status = FINISHED)
+        val finishDateTime = now()
+        val coveredDistance = randomDistance()
+        val ride = finishedRide(finishedDateTime = finishDateTime, coveredDistance = coveredDistance)
 
         val operationResult = ride.pay(taximeter = { CalculationRidePriceError.left() })
 
         operationResult.shouldBeLeft(RidePaidError)
         ride should {
             it.status shouldBe FINISHED
-            it.paidPrice shouldBe null
+            it.finishDateTime shouldBe finishDateTime
+            it.coveredDistance shouldBe coveredDistance
             it.popEvents() shouldBe emptyList()
         }
     }
 
     @Test
     fun `started ride shouldn't be paid`() {
-        val ride = ride(status = STARTED)
+        val ride = startedRide()
 
         val operationResult = ride.pay(taximeter = { randomPrice().right() })
 
         operationResult.shouldBeLeft(RidePaidError)
         ride should {
             it.status shouldBe STARTED
-            it.paidPrice shouldBe null
             it.popEvents() shouldBe emptyList()
         }
     }
@@ -195,7 +210,7 @@ internal class RideTest {
     @Test
     fun `paid ride shouldn't will pay again`() {
         val initialPaidPrice = 300.0.toPrice()
-        val ride = ride(status = PAID, paidPrice = initialPaidPrice)
+        val ride = paidRide(paidPrice = initialPaidPrice)
 
         val operationResult = ride.pay(taximeter = { randomPrice().right() })
 
@@ -207,11 +222,13 @@ internal class RideTest {
         }
     }
 
-    @ParameterizedTest(name = "ride should be finished for statuses - {0}")
-    @EnumSource(names = ["FINISHED", "PAID"])
-    fun `ride should be finished for statuses`(finishedStatus: RideStatus) {
-        val ride = ride(status = finishedStatus)
+    @Test
+    fun `isFinished should be true for paid ride`() {
+        paidRide().isFinished() shouldBe true
+    }
 
-        ride.isFinished() shouldBe true
+    @Test
+    fun `isFinished should be true for finished ride`() {
+        finishedRide().isFinished() shouldBe true
     }
 }

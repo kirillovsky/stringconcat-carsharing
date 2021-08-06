@@ -12,11 +12,14 @@ fun maintenanceVehicle(
     id: MaintenanceVehicleId,
     coveredMileage: Distance = randomDistance(),
     broken: Boolean = false,
-) = MaintenanceVehicle(
-    id,
-    model = vehicleModel(),
-    vin = vin(),
-    coveredMileage = coveredMileage,
-).also {
-    it.broken = broken
-}
+) = MaintenanceVehicle
+    .addVehicleToInventory(
+        id,
+        model = vehicleModel(),
+        vin = vin(),
+        coveredMileage = coveredMileage,
+    ).apply {
+        if (broken) detectFault()
+
+        popEvents()
+    }

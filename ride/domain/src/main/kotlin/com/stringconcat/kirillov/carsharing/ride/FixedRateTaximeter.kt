@@ -11,11 +11,8 @@ class FixedRateTaximeter(private val ratePerDistance: Price) : Taximeter {
         if (ride.isFinished().not()) {
             CalculationRidePriceError.left()
         } else {
-            ride.coveredDistance
-                .rightIfNotNull { }
-                .flatMap {
-                    ratePerDistance.times(it.kilometers)
-                }
+            ratePerDistance
+                .times(ride.coveredDistance.kilometers)
                 .mapLeft { CalculationRidePriceError }
         }
 }

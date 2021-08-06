@@ -20,6 +20,7 @@ object Plugins {
     const val gradleVersions = "com.github.ben-manes.versions"
     const val detekt = "io.gitlab.arturbosch.detekt"
     const val detektFormatting = "io.gitlab.arturbosch.detekt:detekt-formatting"
+    const val javaTestFixtures = "java-test-fixtures"
 }
 
 object Libs {

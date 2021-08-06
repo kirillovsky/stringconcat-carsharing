@@ -23,16 +23,16 @@ class Ride internal constructor(
 ) : AggregateRoot<RideId>(id) {
     var status: RideStatus = STARTED
         internal set
-    var coveredDistance: Distance? = null
+    lateinit var coveredDistance: Distance
         internal set
-    var finishDateTime: OffsetDateTime? = null
+    lateinit var finishDateTime: OffsetDateTime
         internal set
-    var paidPrice: Price? = null
+    lateinit var paidPrice: Price
         internal set
 
     fun isFinished(): Boolean = status == FINISHED || status == PAID
 
-    fun finish(finishDateTime: OffsetDateTime, coveredDistance: Distance): Either<Any, Unit> {
+    fun finish(finishDateTime: OffsetDateTime, coveredDistance: Distance): Either<RideFinishingError, Unit> {
         if (status != STARTED) return RideFinishingError.left()
 
         status = FINISHED
@@ -43,7 +43,7 @@ class Ride internal constructor(
         return Unit.right()
     }
 
-    fun pay(taximeter: Taximeter): Either<Any, Unit> {
+    fun pay(taximeter: Taximeter): Either<RidePaidError, Unit> {
         if (status != FINISHED) return RidePaidError.left()
 
         return taximeter.calculatePrice(ride = this)
