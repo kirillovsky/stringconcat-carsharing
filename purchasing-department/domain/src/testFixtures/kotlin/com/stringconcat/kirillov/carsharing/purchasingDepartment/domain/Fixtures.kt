@@ -6,20 +6,20 @@ import com.stringconcat.kirillov.carsharing.commons.types.error.failOnBusinessEr
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.RegistrationPlate
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.Vin
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.registrationPlate
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.vehicleModel
+import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomVehicleModel
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.vin
 
 private val faker = Faker()
 
-fun purchasingVehicleId() = PurchasingVehicleId(value = faker.number().randomNumber())
+fun randomPurchasingVehicleId() = PurchasingVehicleId(value = faker.number().randomNumber())
 
 fun purchasingVehicle(
     registrationPlate: RegistrationPlate = registrationPlate(),
     vin: Vin = vin(),
 ) = PurchasingVehicle
     .addVehicleToBalance(
-        idGenerator = { purchasingVehicleId() },
-        model = vehicleModel(),
+        idGenerator = { randomPurchasingVehicleId() },
+        model = randomVehicleModel(),
         registrationPlate,
         vin,
         capacity = randomCapacity(),

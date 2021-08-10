@@ -35,11 +35,13 @@ naming:
   InvalidPackageDeclaration:
     active: false
     excludes: [ '*.kts' ]
+  MatchingDeclarationName:
+    active: true
+    excludes: [ '**/testFixtures/**/Fixtures.kt',  '**/test/**/Fixtures.kt' ]
 
 performance:
   SpreadOperator:
     active: false
-
 
 complexity:
   LongParameterList:

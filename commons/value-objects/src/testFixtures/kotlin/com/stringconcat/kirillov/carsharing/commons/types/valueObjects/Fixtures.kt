@@ -6,7 +6,7 @@ import com.stringconcat.kirillov.carsharing.commons.types.error.failOnBusinessEr
 
 private val faker = Faker()
 
-fun vehicleModel(): VehicleModel {
+fun randomVehicleModel(): VehicleModel {
     val maker = faker.resolve("vehicle.makes")
 
     return VehicleModel.from(
