@@ -1,7 +1,7 @@
 package com.stringconcat.kirillov.carsharing.maintenance.domain
 
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.toKilometers
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.vehicleModel
+import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomVehicleModel
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.vin
 import com.stringconcat.kirillov.carsharing.maintenance.domain.MaintenanceVehicleEvents.VehicleAddedToMaintenanceInventory
 import com.stringconcat.kirillov.carsharing.maintenance.domain.MaintenanceVehicleEvents.VehicleBroken
@@ -16,7 +16,7 @@ internal class MaintenanceVehicleTest {
     @Test
     fun `should add vehicle to inventory`() {
         val expectedId = maintenanceVehicleId()
-        val expectedModel = vehicleModel()
+        val expectedModel = randomVehicleModel()
         val expectedVin = vin()
         val expectedMileage = 1.0.toKilometers()
 

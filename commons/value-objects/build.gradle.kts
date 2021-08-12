@@ -1,5 +1,5 @@
 plugins {
-    id ("java-test-fixtures")
+    id(Plugins.javaTestFixtures)
 }
 
 dependencies {
@@ -11,6 +11,7 @@ dependencies {
     testImplementation(Libs.kotlinScriptRuntime)
     testImplementation(Libs.junit5Params)
 
+    testFixturesImplementation(testFixtures(project(":commons:ddd-types")))
     testFixturesImplementation(Libs.arrowCore)
     testFixturesImplementation(Libs.faker)
 }

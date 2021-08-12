@@ -1,7 +1,7 @@
 package com.stringconcat.kirillov.carsharing.purchasingDepartment.domain
 
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.registrationPlate
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.vehicleModel
+import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomVehicleModel
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.vin
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.Capacity.Companion.five
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.PurchasingDepartmentEvents.VehicleAddedToPurchasingBalance
@@ -17,9 +17,9 @@ import org.junit.jupiter.api.Test
 internal class PurchasingVehicleTest {
     @Test
     fun `should add vehicle to balance`() {
-        val expectedId = purchasingVehicleId()
+        val expectedId = randomPurchasingVehicleId()
         val expectedCapacity = five()
-        val expectedModel = vehicleModel()
+        val expectedModel = randomVehicleModel()
         val expectedRegistrationPlate = registrationPlate()
         val expectedVin = vin()
 
@@ -50,8 +50,8 @@ internal class PurchasingVehicleTest {
         val anotherVin = vin("JJHJU81VCBU266113")
 
         val vehicle = PurchasingVehicle.addVehicleToBalance(
-            idGenerator = { purchasingVehicleId() },
-            model = vehicleModel(),
+            idGenerator = { randomPurchasingVehicleId() },
+            model = randomVehicleModel(),
             registrationPlate = existsRegistrationPlate,
             vin = oneVin,
             capacity = five(),
@@ -72,8 +72,8 @@ internal class PurchasingVehicleTest {
         val anotherRegistrationPlate = registrationPlate(series = "уму", number = "750", regionCode = "179")
 
         val vehicle = PurchasingVehicle.addVehicleToBalance(
-            idGenerator = { purchasingVehicleId() },
-            model = vehicleModel(),
+            idGenerator = { randomPurchasingVehicleId() },
+            model = randomVehicleModel(),
             registrationPlate = oneRegistrationPlate,
             vin = existsVin,
             capacity = five(),
