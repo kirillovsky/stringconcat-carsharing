@@ -1,5 +1,5 @@
 plugins {
-    id("java-test-fixtures")
+    id(Plugins.javaTestFixtures)
     idea
 }
 
