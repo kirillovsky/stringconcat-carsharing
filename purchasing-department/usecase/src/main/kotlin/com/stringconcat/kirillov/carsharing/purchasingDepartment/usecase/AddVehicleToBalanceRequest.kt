@@ -25,7 +25,7 @@ data class AddVehicleToBalanceRequest internal constructor(
             registrationPlateData: RegistrationPlateDate,
             vinData: String,
             capacityData: Int,
-        ): Either<Any, AddVehicleToBalanceRequest> {
+        ): Either<InvalidVehicleParameters, AddVehicleToBalanceRequest> {
             return tupled(
                 modelData.run { VehicleModel.from(name, maker) },
                 registrationPlateData.run { RegistrationPlate.from(series, number, regionCode) },
