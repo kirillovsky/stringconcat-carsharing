@@ -9,9 +9,10 @@ import com.stringconcat.kirillov.carsharing.customer.CreateFullNameError.Invalid
 import com.stringconcat.kirillov.carsharing.customer.CreateFullNameError.InvalidMiddleName
 import com.stringconcat.kirillov.carsharing.customer.CreateFullNameError.InvalidSecondName
 
-private val FIRST_NAME_PATTERN = "[А-Я]+".toRegex()
-private val MIDDLE_NAME_PATTERN = "[А-Я]+".toRegex()
-private val SECOND_NAME_PATTERN = "[А-Я]+(-[А-Я]+)?".toRegex()
+private const val CYRILLIC_SYMBOLS_GROUP = "[А-ЯЁ]"
+private val FIRST_NAME_PATTERN = "$CYRILLIC_SYMBOLS_GROUP+".toRegex()
+private val MIDDLE_NAME_PATTERN = "$CYRILLIC_SYMBOLS_GROUP+".toRegex()
+private val SECOND_NAME_PATTERN = "$CYRILLIC_SYMBOLS_GROUP+(-$CYRILLIC_SYMBOLS_GROUP+)?".toRegex()
 
 data class FullName internal constructor(
     val firstName: String,
