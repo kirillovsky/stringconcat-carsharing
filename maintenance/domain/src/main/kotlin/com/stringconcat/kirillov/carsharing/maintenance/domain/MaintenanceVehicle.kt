@@ -2,6 +2,7 @@ package com.stringconcat.kirillov.carsharing.maintenance.domain
 
 import com.stringconcat.kirillov.carsharing.commons.types.base.AggregateRoot
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.Distance
+import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.RegistrationPlate
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.VehicleModel
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.Vin
 import com.stringconcat.kirillov.carsharing.maintenance.domain.MaintenanceVehicleEvents.VehicleAddedToMaintenanceInventory
@@ -13,6 +14,7 @@ class MaintenanceVehicle internal constructor(
     id: MaintenanceVehicleId,
     val model: VehicleModel,
     val vin: Vin,
+    val registrationPlate: RegistrationPlate,
     coveredMileage: Distance,
 ) : AggregateRoot<MaintenanceVehicleId>(id) {
     companion object {
@@ -20,8 +22,9 @@ class MaintenanceVehicle internal constructor(
             id: MaintenanceVehicleId,
             model: VehicleModel,
             vin: Vin,
+            registrationPlate: RegistrationPlate,
             coveredMileage: Distance,
-        ) = MaintenanceVehicle(id, model, vin, coveredMileage).apply {
+        ) = MaintenanceVehicle(id, model, vin, registrationPlate, coveredMileage).apply {
             addEvent(
                 VehicleAddedToMaintenanceInventory(vehicleId = id)
             )

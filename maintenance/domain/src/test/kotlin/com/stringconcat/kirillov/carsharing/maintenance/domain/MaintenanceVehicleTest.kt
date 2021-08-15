@@ -2,6 +2,7 @@ package com.stringconcat.kirillov.carsharing.maintenance.domain
 
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.toKilometers
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomVehicleModel
+import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.registrationPlate
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.vin
 import com.stringconcat.kirillov.carsharing.maintenance.domain.MaintenanceVehicleEvents.VehicleAddedToMaintenanceInventory
 import com.stringconcat.kirillov.carsharing.maintenance.domain.MaintenanceVehicleEvents.VehicleBroken
@@ -15,15 +16,17 @@ import org.junit.jupiter.api.Test
 internal class MaintenanceVehicleTest {
     @Test
     fun `should add vehicle to inventory`() {
-        val expectedId = maintenanceVehicleId()
+        val expectedId = randomMaintenanceVehicleId()
         val expectedModel = randomVehicleModel()
         val expectedVin = vin()
         val expectedMileage = 1.0.toKilometers()
+        val expectedRegistrationPlate = registrationPlate()
 
         val vehicle = MaintenanceVehicle.addVehicleToInventory(
             id = expectedId,
             model = expectedModel,
             vin = expectedVin,
+            registrationPlate = expectedRegistrationPlate,
             coveredMileage = expectedMileage
         )
 
@@ -33,6 +36,7 @@ internal class MaintenanceVehicleTest {
             it.vin shouldBe expectedVin
             it.coveredMileage shouldBe expectedMileage
             it.broken shouldBe false
+            it.registrationPlate shouldBe expectedRegistrationPlate
             it.popEvents().shouldContainExactly(
                 VehicleAddedToMaintenanceInventory(vehicleId = expectedId)
             )
@@ -41,7 +45,7 @@ internal class MaintenanceVehicleTest {
 
     @Test
     fun `should increase vehicle own mileage`() {
-        val id = maintenanceVehicleId()
+        val id = randomMaintenanceVehicleId()
         val additionalMileage = 4.0.toKilometers()
         val vehicle = maintenanceVehicle(id, coveredMileage = 5.0.toKilometers())
 
@@ -57,7 +61,7 @@ internal class MaintenanceVehicleTest {
 
     @Test
     fun `should detect fault`() {
-        val id = maintenanceVehicleId()
+        val id = randomMaintenanceVehicleId()
         val vehicle = maintenanceVehicle(id)
 
         vehicle.detectFault()
@@ -72,7 +76,7 @@ internal class MaintenanceVehicleTest {
 
     @Test
     fun `vehicle shouldn be broken twice`() {
-        val id = maintenanceVehicleId()
+        val id = randomMaintenanceVehicleId()
         val vehicle = maintenanceVehicle(id, broken = true)
 
         vehicle.detectFault()
@@ -85,7 +89,7 @@ internal class MaintenanceVehicleTest {
 
     @Test
     fun `should repair broken vehicle`() {
-        val id = maintenanceVehicleId()
+        val id = randomMaintenanceVehicleId()
         val vehicle = maintenanceVehicle(id, broken = true)
 
         vehicle.repair()
@@ -100,7 +104,7 @@ internal class MaintenanceVehicleTest {
 
     @Test
     fun `shouldn't repair non-broken vehicle`() {
-        val id = maintenanceVehicleId()
+        val id = randomMaintenanceVehicleId()
         val vehicle = maintenanceVehicle(id, broken = false)
 
         vehicle.repair()
