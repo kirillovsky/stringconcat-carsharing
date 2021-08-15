@@ -37,10 +37,10 @@ data class AddVehicleToBalanceRequest internal constructor(
         }
     }
 
-    data class InvalidVehicleParameters(val message: String)
+    class VehicleModeData(val maker: String, val name: String)
 
-    class VehicleModeData internal constructor(val maker: String, val name: String)
-    class RegistrationPlateDate internal constructor(val number: String, val regionCode: String, val series: String)
+    class RegistrationPlateDate(val number: String, val regionCode: String, val series: String)
+    data class InvalidVehicleParameters(val message: String)
 }
 
 private fun BusinessError.toErrorMessage(): InvalidVehicleParameters =
@@ -49,5 +49,5 @@ private fun BusinessError.toErrorMessage(): InvalidVehicleParameters =
         is CreateRegistrationPlateError -> InvalidVehicleParameters("Invalid registrationPlate")
         is CreateVinError -> InvalidVehicleParameters("Invalid vin")
         is IllegalCapacityValueError -> InvalidVehicleParameters("Invalid capacity")
-        else -> throw IllegalStateException("Unexpected business error received - $this")
+        else -> error("Unexpected business error received - $this")
     }

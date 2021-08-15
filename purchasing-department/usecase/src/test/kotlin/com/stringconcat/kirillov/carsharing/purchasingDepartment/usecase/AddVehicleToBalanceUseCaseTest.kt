@@ -28,8 +28,8 @@ internal class AddVehicleToBalanceUseCaseTest {
 
         val result = AddVehicleToBalanceUseCase(
             idGenerator = { vehicleId },
-            purchasingVehicleExtractor = { emptyList() },
-            purchasingVehiclePersister = persister
+            vehicleExtractor = { emptyList() },
+            vehiclePersister = persister
         ).execute(
             AddVehicleToBalanceRequest(
                 model = model,
@@ -60,10 +60,10 @@ internal class AddVehicleToBalanceUseCaseTest {
 
         val result = AddVehicleToBalanceUseCase(
             idGenerator = { randomPurchasingVehicleId() },
-            purchasingVehicleExtractor = {
+            vehicleExtractor = {
                 listOf(purchasingVehicle(registrationPlate = existingRegistrationPlate))
             },
-            purchasingVehiclePersister = persister
+            vehiclePersister = persister
         ).execute(
             addVehicleToBalanceRequest(registrationPlate = existingRegistrationPlate)
         )
@@ -81,10 +81,10 @@ internal class AddVehicleToBalanceUseCaseTest {
 
         val result = AddVehicleToBalanceUseCase(
             idGenerator = { randomPurchasingVehicleId() },
-            purchasingVehicleExtractor = {
+            vehicleExtractor = {
                 listOf(purchasingVehicle(vin = existingVin))
             },
-            purchasingVehiclePersister = persister
+            vehiclePersister = persister
         ).execute(
             addVehicleToBalanceRequest(vin = existingVin)
         )
