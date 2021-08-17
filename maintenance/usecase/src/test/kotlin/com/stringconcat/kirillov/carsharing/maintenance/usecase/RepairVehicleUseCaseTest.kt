@@ -1,6 +1,5 @@
 package com.stringconcat.kirillov.carsharing.maintenance.usecase
 
-import com.stringconcat.kirillov.carsharing.maintenance.domain.MaintenanceVehicleEvents
 import com.stringconcat.kirillov.carsharing.maintenance.domain.MaintenanceVehicleEvents.VehicleRepaired
 import com.stringconcat.kirillov.carsharing.maintenance.domain.maintenanceVehicle
 import com.stringconcat.kirillov.carsharing.maintenance.domain.randomMaintenanceVehicleId

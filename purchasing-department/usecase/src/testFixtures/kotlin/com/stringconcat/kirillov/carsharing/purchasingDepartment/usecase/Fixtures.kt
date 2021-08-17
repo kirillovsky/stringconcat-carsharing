@@ -1,7 +1,6 @@
 package com.stringconcat.kirillov.carsharing.purchasingDepartment.usecase
 
 import arrow.core.getOrHandle
-import com.stringconcat.kirillov.carsharing.commons.types.error.failOnBusinessError
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.RegistrationPlate
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.Vin
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomVehicleModel

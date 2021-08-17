@@ -2,7 +2,6 @@ package com.stringconcat.kirillov.carsharing.maintenance.usecase
 
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomDistance
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.toKilometers
-import com.stringconcat.kirillov.carsharing.maintenance.domain.MaintenanceVehicleEvents
 import com.stringconcat.kirillov.carsharing.maintenance.domain.MaintenanceVehicleEvents.VehicleCoveredMileageIncreased
 import com.stringconcat.kirillov.carsharing.maintenance.domain.maintenanceVehicle
 import com.stringconcat.kirillov.carsharing.maintenance.domain.randomMaintenanceVehicleId

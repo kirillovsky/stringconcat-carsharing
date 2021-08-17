@@ -44,14 +44,12 @@ data class AddVehicleToInventoryRequest internal constructor(
                     registrationPlate
                 )
             }.mapLeft(BusinessError::toErrorMessage)
-
     }
 
     class VehicleModelData(val maker: String, val name: String)
 
     class RegistrationPlateData(val number: String, val regionCode: String, val series: String)
     data class InvalidVehicleParameters(val message: String)
-
 }
 
 private fun BusinessError.toErrorMessage(): InvalidVehicleParameters =
