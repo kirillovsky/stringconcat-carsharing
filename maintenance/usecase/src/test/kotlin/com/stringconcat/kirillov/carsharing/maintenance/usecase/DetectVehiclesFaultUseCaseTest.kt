@@ -1,0 +1,54 @@
+package com.stringconcat.kirillov.carsharing.maintenance.usecase
+
+import com.stringconcat.kirillov.carsharing.maintenance.domain.MaintenanceVehicleEvents
+import com.stringconcat.kirillov.carsharing.maintenance.domain.maintenanceVehicle
+import com.stringconcat.kirillov.carsharing.maintenance.domain.randomMaintenanceVehicleId
+import io.kotest.assertions.arrow.either.shouldBeLeft
+import io.kotest.assertions.arrow.either.shouldBeRight
+import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.should
+import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.Test
+
+internal class DetectVehiclesFaultUseCaseTest {
+    @Test
+    fun `should detect fault on finding maintenance vehicle`() {
+        val existingMaintenanceVehicleId = randomMaintenanceVehicleId()
+        val maintenanceVehicle = maintenanceVehicle(id = existingMaintenanceVehicleId, broken = false)
+        val persister = FakeMaintenanceVehiclePersister()
+        val usecase = DetectVehiclesFaultUseCase(
+            persister = persister,
+            vehicleExtractor = FakeMaintenanceVehicleExtractor().apply {
+                put(existingMaintenanceVehicleId, maintenanceVehicle)
+            }
+        )
+
+        val result = usecase.execute(existingMaintenanceVehicleId)
+
+        result.shouldBeRight()
+        persister[existingMaintenanceVehicleId] should {
+            it.shouldNotBeNull()
+            it.broken shouldBe true
+            it.popEvents().shouldContainExactly(
+                MaintenanceVehicleEvents.VehicleBroken(vehicleId = existingMaintenanceVehicleId)
+            )
+        }
+    }
+
+    @Test
+    fun `shouldn't detect fault if vehicle wasn't found`() {
+        val persister = FakeMaintenanceVehiclePersister()
+        val usecase = DetectVehiclesFaultUseCase(
+            persister = persister,
+            vehicleExtractor = FakeMaintenanceVehicleExtractor()
+        )
+        val notFoundVehicleId = randomMaintenanceVehicleId()
+
+        val result = usecase.execute(id = notFoundVehicleId)
+
+        persister[notFoundVehicleId].shouldBeNull()
+        result shouldBeLeft DetectVehiclesFaultUseCaseError.VehicleNotFound
+    }
+}
