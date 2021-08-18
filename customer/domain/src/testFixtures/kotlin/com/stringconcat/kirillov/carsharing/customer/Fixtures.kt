@@ -19,12 +19,14 @@ fun fullName(
 fun driverLicenseNumber(
     series: String = faker.numerify("3# ##"),
     number: String = faker.numerify("1#####"),
-) = DriverLicenseNumber(series, number)
+) = DriverLicenseNumber
+    .from(series, number)
+    .getOrHandle(::failOnBusinessError)
 
-fun customerId() = CustomerId(value = faker.number().randomNumber())
+fun randomCustomerId() = CustomerId(value = faker.number().randomNumber())
 
 fun customer(
-    id: CustomerId = customerId(),
+    id: CustomerId = randomCustomerId(),
     rejected: Boolean = false,
 ): Customer {
     val age = randomAge()

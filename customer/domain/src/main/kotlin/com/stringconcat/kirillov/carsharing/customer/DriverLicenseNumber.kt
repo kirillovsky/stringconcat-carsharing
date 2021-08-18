@@ -11,7 +11,7 @@ import com.stringconcat.kirillov.carsharing.customer.DriverLicenseNumberError.Il
 private val SERIES_FORMAT = "[1-9][0-9] [0-9]{2}".toRegex()
 private val NUMBER_FORMAT = "[0-9]{6}".toRegex()
 
-data class DriverLicenseNumber(val series: String, val number: String) : ValueObject {
+data class DriverLicenseNumber internal constructor(val series: String, val number: String) : ValueObject {
     companion object {
         fun from(series: String, number: String): Either<DriverLicenseNumberError, DriverLicenseNumber> {
             return when {

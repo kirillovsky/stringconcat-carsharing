@@ -11,7 +11,7 @@ import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.VehicleMo
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.Vin
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.Capacity
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.Capacity.IllegalCapacityValueError
-import com.stringconcat.kirillov.carsharing.purchasingDepartment.usecase.AddVehicleToBalanceRequest.InvalidVehicleParameters
+import com.stringconcat.kirillov.carsharing.purchasingDepartment.usecase.AddVehicleToBalanceRequest.InvalidAddVehicleToBalanceParameters
 
 data class AddVehicleToBalanceRequest internal constructor(
     val model: VehicleModel,
@@ -25,7 +25,7 @@ data class AddVehicleToBalanceRequest internal constructor(
             registrationPlateData: RegistrationPlateDate,
             vinData: String,
             capacityData: Int,
-        ): Either<InvalidVehicleParameters, AddVehicleToBalanceRequest> {
+        ): Either<InvalidAddVehicleToBalanceParameters, AddVehicleToBalanceRequest> {
             return tupled(
                 modelData.run { VehicleModel.from(name, maker) },
                 registrationPlateData.run { RegistrationPlate.from(series, number, regionCode) },
@@ -40,14 +40,14 @@ data class AddVehicleToBalanceRequest internal constructor(
     class VehicleModeData(val maker: String, val name: String)
 
     class RegistrationPlateDate(val number: String, val regionCode: String, val series: String)
-    data class InvalidVehicleParameters(val message: String)
+    data class InvalidAddVehicleToBalanceParameters(val message: String)
 }
 
-private fun BusinessError.toErrorMessage(): InvalidVehicleParameters =
+private fun BusinessError.toErrorMessage(): InvalidAddVehicleToBalanceParameters =
     when (this) {
-        is CreateVehicleModelError -> InvalidVehicleParameters("Invalid model")
-        is CreateRegistrationPlateError -> InvalidVehicleParameters("Invalid registrationPlate")
-        is CreateVinError -> InvalidVehicleParameters("Invalid vin")
-        is IllegalCapacityValueError -> InvalidVehicleParameters("Invalid capacity")
+        is CreateVehicleModelError -> InvalidAddVehicleToBalanceParameters("Invalid model")
+        is CreateRegistrationPlateError -> InvalidAddVehicleToBalanceParameters("Invalid registrationPlate")
+        is CreateVinError -> InvalidAddVehicleToBalanceParameters("Invalid vin")
+        is IllegalCapacityValueError -> InvalidAddVehicleToBalanceParameters("Invalid capacity")
         else -> error("Unexpected business error received - $this")
     }

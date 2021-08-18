@@ -23,7 +23,7 @@ internal class CustomerTest {
 
     @Test
     fun `should register customer`() {
-        val id = customerId()
+        val id = randomCustomerId()
         val fullName = fullName()
         val driverLicenseNumber = driverLicenseNumber()
 
@@ -54,7 +54,7 @@ internal class CustomerTest {
         val birthDate = MAX
 
         val customer = Customer.registerCustomer(
-            idGenerator = { customerId() },
+            idGenerator = { randomCustomerId() },
             registrationDate = registrationDate,
             birthDate = birthDate,
             maturityAge = twentyOneYearsOld,
@@ -76,7 +76,7 @@ internal class CustomerTest {
         val twentyTwoYearsOld = 22.asYearsAge()
 
         val customer = Customer.registerCustomer(
-            idGenerator = { customerId() },
+            idGenerator = { randomCustomerId() },
             registrationDate = currentDate,
             birthDate = notMaturedYetBirthDate,
             maturityAge = twentyTwoYearsOld,
@@ -94,7 +94,7 @@ internal class CustomerTest {
     @Test
     fun `shouldn't register customer which already registered`() {
         val customer = Customer.registerCustomer(
-            idGenerator = { customerId() },
+            idGenerator = { randomCustomerId() },
             registrationDate = now(),
             birthDate = maturedYetBirthDate,
             maturityAge = twentyOneYearsOld,
@@ -114,7 +114,7 @@ internal class CustomerTest {
         val customerActuallyDoesNotExists = CustomerActuallyExists { _, _ -> false }
 
         val customer = Customer.registerCustomer(
-            idGenerator = { customerId() },
+            idGenerator = { randomCustomerId() },
             registrationDate = now(),
             birthDate = maturedYetBirthDate,
             maturityAge = twentyOneYearsOld,
@@ -131,7 +131,7 @@ internal class CustomerTest {
 
     @Test
     fun `customer can be rejected`() {
-        val id = customerId()
+        val id = randomCustomerId()
         val customer = customer(id, rejected = false)
 
         customer.reject()
