@@ -22,7 +22,7 @@ import java.time.OffsetDateTime.now
 import org.junit.jupiter.api.Test
 
 internal class RideTest {
-    private val someIdGenerator = RideIdGenerator { rideId() }
+    private val someIdGenerator = RideIdGenerator { randomRideId() }
     private val validCustomer = rideCustomer(rejected = false)
     private val validVehicle = rideVehicle(inRentalPool = true)
 
@@ -30,7 +30,7 @@ internal class RideTest {
 
     @Test
     fun `should start ride`() {
-        val expectedId = rideId()
+        val expectedId = randomRideId()
         val expectedStartDateTime = now()
 
         val ride = Ride.startRide(
@@ -99,7 +99,7 @@ internal class RideTest {
 
     @Test
     fun `started ride can be finished`() {
-        val expectedRideId = rideId()
+        val expectedRideId = randomRideId()
         val ride = startedRide(id = expectedRideId)
         val expectedEndDateTime = now()
         val expectedCoveredDistance = 101.0.toKilometers()
@@ -163,7 +163,7 @@ internal class RideTest {
 
     @Test
     fun `finished price can be paid`() {
-        val expectedRideId = rideId()
+        val expectedRideId = randomRideId()
         val expectedPaidPrice = 102.10.toPrice()
         val ride = finishedRide(id = expectedRideId)
 

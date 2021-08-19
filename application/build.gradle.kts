@@ -5,13 +5,18 @@ dependencies {
     implementation(project(":maintenance:usecase"))
     implementation(project(":purchasing-department:domain"))
     implementation(project(":purchasing-department:usecase"))
+    implementation(project(":ride:domain"))
+    implementation(project(":ride:usecase"))
     implementation(Libs.arrowCore)
 
     testImplementation(testFixtures(project(":commons:value-objects")))
     testImplementation(testFixtures(project(":maintenance:domain")))
     testImplementation(testFixtures(project(":purchasing-department:domain")))
     testImplementation(testFixtures(project(":purchasing-department:usecase")))
+    testImplementation(testFixtures(project(":ride:domain")))
+    testImplementation(testFixtures(project(":ride:usecase")))
     testImplementation(Libs.kotestJunit5Runner)
+    testImplementation(Libs.junit5Params)
     testImplementation(Libs.kotestArrow)
     testImplementation(Libs.kotlinScriptRuntime)
 }

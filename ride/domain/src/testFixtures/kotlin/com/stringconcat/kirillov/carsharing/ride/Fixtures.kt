@@ -26,7 +26,7 @@ fun rideVehicle(inRentalPool: Boolean = false) =
 fun rideVehicleId() = RideVehicleId(value = nextLong())
 
 fun startedRide(
-    id: RideId = rideId(),
+    id: RideId = randomRideId(),
 ) = Ride
     .startRide(
         idGenerator = { id },
@@ -39,7 +39,7 @@ fun startedRide(
     }
 
 fun finishedRide(
-    id: RideId = rideId(),
+    id: RideId = randomRideId(),
     finishedDateTime: OffsetDateTime = now(),
     coveredDistance: Distance = randomDistance(),
 ) = startedRide(id).apply {
@@ -61,4 +61,4 @@ fun paidRide(
     popEvents()
 }
 
-fun rideId() = RideId(value = nextLong())
+fun randomRideId() = RideId(value = nextLong())

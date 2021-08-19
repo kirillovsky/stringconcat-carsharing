@@ -9,6 +9,7 @@ import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.Purchasi
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.purchasingVehicle
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.randomPurchasingVehicleId
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.usecase.FakePurchasingVehicleExtractor
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.should
@@ -17,12 +18,12 @@ import org.junit.jupiter.api.Test
 
 internal class AddVehicleToInventoryRuleTest {
     @Test
-    fun `handle should add vehicle to maintenance inventory with extracted purchasing vehicle params`() {
-        val fakeAddVehicleToInventoryUseCase = FakeAddVehicleToInventoryUseCase()
+    fun `should add vehicle to maintenance inventory with extracted purchasing vehicle params`() {
+        val usecase = MockAddVehicleToInventoryUseCase()
         val purchasingVehicleId = randomPurchasingVehicleId()
         val purchasingVehicle = purchasingVehicle(id = purchasingVehicleId)
         val rule = AddVehicleToInventoryRule(
-            addVehicleToInventory = fakeAddVehicleToInventoryUseCase,
+            addVehicleToInventory = usecase,
             purchasingVehicleExtractor = FakePurchasingVehicleExtractor().apply {
                 put(purchasingVehicleId, purchasingVehicle)
             }
@@ -30,7 +31,7 @@ internal class AddVehicleToInventoryRuleTest {
 
         rule.handle(VehicleAddedToPurchasingBalance(vehicleId = purchasingVehicleId))
 
-        fakeAddVehicleToInventoryUseCase.receivedRequest should {
+        usecase.receivedRequest should {
             it.shouldNotBeNull()
             it.vin shouldBe purchasingVehicle.vin
             it.id shouldBe MaintenanceVehicleId(purchasingVehicleId.value)
@@ -41,20 +42,24 @@ internal class AddVehicleToInventoryRuleTest {
     }
 
     @Test
-    fun `handle shouldn't add vehicle to maintenance inventorye if unable to extract purchasing vehicle`() {
-        val fakeAddVehicleToInventoryUseCase = FakeAddVehicleToInventoryUseCase()
+    fun `shouldn't add vehicle to maintenance inventory if unable to extract purchasing vehicle`() {
+        val usecase = MockAddVehicleToInventoryUseCase()
         val rule = AddVehicleToInventoryRule(
-            addVehicleToInventory = fakeAddVehicleToInventoryUseCase,
+            addVehicleToInventory = usecase,
             purchasingVehicleExtractor = FakePurchasingVehicleExtractor()
         )
+        val vehicleId = randomPurchasingVehicleId()
 
-        rule.handle(VehicleAddedToPurchasingBalance(vehicleId = randomPurchasingVehicleId()))
+        val exception = shouldThrow<IllegalStateException> {
+            rule.handle(VehicleAddedToPurchasingBalance(vehicleId = vehicleId))
+        }
 
-        fakeAddVehicleToInventoryUseCase.receivedRequest.shouldBeNull()
+        usecase.receivedRequest.shouldBeNull()
+        exception.message shouldBe "Unable to find purchasing vehicle by id=$vehicleId"
     }
 }
 
-private class FakeAddVehicleToInventoryUseCase : AddVehicleToInventory {
+private class MockAddVehicleToInventoryUseCase : AddVehicleToInventory {
     var receivedRequest: AddVehicleToInventoryRequest? = null
 
     override fun execute(request: AddVehicleToInventoryRequest): MaintenanceVehicleId {

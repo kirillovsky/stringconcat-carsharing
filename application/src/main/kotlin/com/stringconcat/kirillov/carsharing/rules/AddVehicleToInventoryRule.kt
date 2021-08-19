@@ -1,6 +1,7 @@
 package com.stringconcat.kirillov.carsharing.rules
 
 import arrow.core.flatMap
+import arrow.core.getOrHandle
 import arrow.core.rightIfNotNull
 import com.stringconcat.kirillov.carsharing.listeners.DomainEventListener
 import com.stringconcat.kirillov.carsharing.maintenance.usecase.AddVehicleToInventory
@@ -17,7 +18,7 @@ class AddVehicleToInventoryRule(
 
     override fun handle(event: VehicleAddedToPurchasingBalance) {
         purchasingVehicleExtractor.getById(event.vehicleId).rightIfNotNull {
-            "Unable to find purchasingVehicle by id - ${event.vehicleId}"
+            "Unable to find purchasing vehicle by id=${event.vehicleId}"
         }.flatMap {
             AddVehicleToInventoryRequest.from(
                 id = event.vehicleId.value,
@@ -27,9 +28,11 @@ class AddVehicleToInventoryRule(
                 },
                 vinCode = it.vin.code,
                 coveredMileageValue = ZERO
+            ).mapLeft(
+                AddVehicleToInventoryRequest.InvalidVehicleParameters::message
             )
-        }.map(addVehicleToInventory::execute).mapLeft {
-            print("AddVehicleToInventoryRule. Unable to create addVehicleToInventoryRequest cause: $it")
-        }
+        }.map(
+            addVehicleToInventory::execute
+        ).getOrHandle(::error)
     }
 }
