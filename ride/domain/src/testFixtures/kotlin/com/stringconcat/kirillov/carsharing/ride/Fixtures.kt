@@ -2,7 +2,6 @@ package com.stringconcat.kirillov.carsharing.ride
 
 import arrow.core.Either
 import arrow.core.getOrHandle
-import arrow.core.right
 import com.stringconcat.kirillov.carsharing.commons.types.error.failOnBusinessError
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.Distance
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.Price
@@ -12,28 +11,33 @@ import java.time.OffsetDateTime
 import java.time.OffsetDateTime.now
 import kotlin.random.Random.Default.nextLong
 
-fun rideCustomer(rejected: Boolean = false) =
-    RideCustomer(id = randomRideCustomerId()).apply {
-        if (rejected) reject()
-    }
+fun rideCustomer(
+    id: RideCustomerId = randomRideCustomerId(),
+    rejected: Boolean = false
+) = RideCustomer(id).apply {
+    if (rejected) reject()
+}
 
 fun randomRideCustomerId() = RideCustomerId(value = nextLong())
 
-fun rideVehicle(inRentalPool: Boolean = false) =
-    RideVehicle(id = rideVehicleId()).apply {
-        if (!inRentalPool) removeFromRentalPool()
-    }
+fun rideVehicle(
+    id: RideVehicleId = randomRideVehicleId(),
+    inRentalPool: Boolean = false
+) = RideVehicle(id).apply {
+    if (!inRentalPool) removeFromRentalPool()
+}
 
-fun rideVehicleId() = RideVehicleId(value = nextLong())
+fun randomRideVehicleId() = RideVehicleId(value = nextLong())
 
 fun startedRide(
     id: RideId = randomRideId(),
+    vehicleId: RideVehicleId = randomRideVehicleId()
 ) = Ride
     .startRide(
         idGenerator = { id },
         vehicleInRent = { false },
         customer = rideCustomer(rejected = false),
-        vehicle = rideVehicle(inRentalPool = true),
+        vehicle = rideVehicle(id = vehicleId, inRentalPool = true),
         startDateTime = now()
     ).getOrHandle(::failOnBusinessError).apply {
         popEvents()
@@ -50,14 +54,16 @@ fun finishedRide(
 }
 
 fun paidRide(
+    id: RideId = randomRideId(),
     finishedDateTime: OffsetDateTime = now(),
     coveredDistance: Distance = randomDistance(),
     paidPrice: Price = randomPrice(),
 ) = finishedRide(
+    id = id,
     finishedDateTime = finishedDateTime,
     coveredDistance = coveredDistance,
 ).apply {
-    pay(taximeter = { paidPrice.right() }).getOrHandle(::failOnBusinessError)
+    pay(paidPrice).getOrHandle(::failOnBusinessError)
 
     popEvents()
 }

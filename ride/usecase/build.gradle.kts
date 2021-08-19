@@ -14,6 +14,7 @@ dependencies {
     testImplementation(Libs.kotestArrow)
     testImplementation(Libs.kotlinScriptRuntime)
 
+    testFixturesImplementation(project(":commons:ddd-types"))
     testFixturesImplementation(project(":commons:value-objects"))
     testFixturesImplementation(project(":ride:domain"))
     testFixturesImplementation(Libs.arrowCore)

@@ -12,7 +12,7 @@ import com.stringconcat.kirillov.carsharing.ride.RideFinishedEvent
 import com.stringconcat.kirillov.carsharing.ride.finishedRide
 import com.stringconcat.kirillov.carsharing.ride.randomRideId
 import com.stringconcat.kirillov.carsharing.ride.startedRide
-import com.stringconcat.kirillov.carsharing.ride.usecase.FakeRideExtractor
+import com.stringconcat.kirillov.carsharing.ride.usecase.InMemoryRideRepository
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.should
@@ -24,7 +24,7 @@ internal class SendCoveredDistanceRuleTest {
     fun `should increase maintenance vehicle covered mileage by ride covered distance`() {
         val usecase = MockIncreaseVehicleMileageUseCase(result = Unit.right())
         val ride = finishedRide()
-        val rideExtractor = FakeRideExtractor().apply {
+        val rideExtractor = InMemoryRideRepository().apply {
             put(ride.id, ride)
         }
         val rule = SendCoveredDistanceRule(
@@ -45,7 +45,7 @@ internal class SendCoveredDistanceRuleTest {
         val usecase = MockIncreaseVehicleMileageUseCase(result = Unit.right())
         val rule = SendCoveredDistanceRule(
             increaseVehicleMileage = usecase,
-            rideExtractor = FakeRideExtractor()
+            rideExtractor = InMemoryRideRepository()
         )
         val rideId = randomRideId()
 
@@ -66,7 +66,7 @@ internal class SendCoveredDistanceRuleTest {
         val startedRide = startedRide()
         val rule = SendCoveredDistanceRule(
             increaseVehicleMileage = usecase,
-            rideExtractor = FakeRideExtractor().apply {
+            rideExtractor = InMemoryRideRepository().apply {
                 put(startedRide.id, startedRide)
             }
         )
@@ -89,7 +89,7 @@ internal class SendCoveredDistanceRuleTest {
         val finishedRide = finishedRide()
         val rule = SendCoveredDistanceRule(
             increaseVehicleMileage = usecase,
-            rideExtractor = FakeRideExtractor().apply {
+            rideExtractor = InMemoryRideRepository().apply {
                 put(finishedRide.id, finishedRide)
             }
         )

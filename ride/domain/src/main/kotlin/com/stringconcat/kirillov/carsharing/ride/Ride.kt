@@ -32,8 +32,8 @@ class Ride internal constructor(
 
     fun isFinished(): Boolean = status == FINISHED || status == PAID
 
-    fun finish(finishDateTime: OffsetDateTime, coveredDistance: Distance): Either<RideFinishingError, Unit> {
-        if (status != STARTED) return RideFinishingError.left()
+    fun finish(finishDateTime: OffsetDateTime, coveredDistance: Distance): Either<RideAlreadyFinishedError, Unit> {
+        if (status != STARTED) return RideAlreadyFinishedError.left()
 
         status = FINISHED
         this.finishDateTime = finishDateTime
@@ -43,17 +43,14 @@ class Ride internal constructor(
         return Unit.right()
     }
 
-    fun pay(taximeter: Taximeter): Either<RidePaidError, Unit> {
-        if (status != FINISHED) return RidePaidError.left()
+    fun pay(price: Price): Either<RideNotInFinishStatusError, Unit> {
+        if (status != FINISHED) return RideNotInFinishStatusError.left()
 
-        return taximeter.calculatePrice(ride = this)
-            .map { calculatedPrice ->
-                status = PAID
-                paidPrice = calculatedPrice
+        status = PAID
+        paidPrice = price
+        addEvent(RidePaidEvent(rideId = id))
 
-                addEvent(RidePaidEvent(rideId = id))
-            }
-            .mapLeft { RidePaidError }
+        return Unit.right()
     }
 
     companion object {
@@ -89,5 +86,5 @@ sealed class RideStartingError : BusinessError {
     object VehicleAlreadyInRent : RideStartingError()
 }
 
-object RideFinishingError : BusinessError
-object RidePaidError : BusinessError
+object RideAlreadyFinishedError : BusinessError
+object RideNotInFinishStatusError : BusinessError

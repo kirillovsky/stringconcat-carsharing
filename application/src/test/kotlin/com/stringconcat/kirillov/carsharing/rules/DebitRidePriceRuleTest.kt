@@ -9,7 +9,7 @@ import com.stringconcat.kirillov.carsharing.ride.RideFinishedEvent
 import com.stringconcat.kirillov.carsharing.ride.StubTaximeter
 import com.stringconcat.kirillov.carsharing.ride.finishedRide
 import com.stringconcat.kirillov.carsharing.ride.randomRideId
-import com.stringconcat.kirillov.carsharing.ride.usecase.FakeRideExtractor
+import com.stringconcat.kirillov.carsharing.ride.usecase.InMemoryRideRepository
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.should
@@ -24,7 +24,7 @@ internal class DebitRidePriceRuleTest {
         val acquirer = MockAcquirer()
         val ride = finishedRide()
         val rule = DebitRidePriceRule(
-            rideExtractor = FakeRideExtractor().apply {
+            rideExtractor = InMemoryRideRepository().apply {
                 put(ride.id, ride)
             },
             taximeter = taximeter,
@@ -45,7 +45,7 @@ internal class DebitRidePriceRuleTest {
         val acquirer = MockAcquirer()
         val taximeter = StubTaximeter(result = randomPrice().right())
         val rule = DebitRidePriceRule(
-            rideExtractor = FakeRideExtractor(),
+            rideExtractor = InMemoryRideRepository(),
             taximeter = taximeter,
             acquirer = acquirer
         )
@@ -69,7 +69,7 @@ internal class DebitRidePriceRuleTest {
         val taximeter = StubTaximeter(result = CalculationRidePriceError.left())
         val acquirer = MockAcquirer()
         val rule = DebitRidePriceRule(
-            rideExtractor = FakeRideExtractor().apply {
+            rideExtractor = InMemoryRideRepository().apply {
                 put(ride.id, ride)
             },
             taximeter = taximeter,

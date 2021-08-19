@@ -10,7 +10,7 @@ import com.stringconcat.kirillov.carsharing.maintenance.domain.MaintenanceVehicl
 import com.stringconcat.kirillov.carsharing.maintenance.usecase.IncreaseVehicleMileage
 import com.stringconcat.kirillov.carsharing.maintenance.usecase.IncreaseVehicleMileageUseCaseError
 import com.stringconcat.kirillov.carsharing.ride.RideFinishedEvent
-import com.stringconcat.kirillov.carsharing.ride.usecase.RideExtractor
+import com.stringconcat.kirillov.carsharing.ride.usecase.ride.RideExtractor
 
 class SendCoveredDistanceRule(
     private val increaseVehicleMileage: IncreaseVehicleMileage,
