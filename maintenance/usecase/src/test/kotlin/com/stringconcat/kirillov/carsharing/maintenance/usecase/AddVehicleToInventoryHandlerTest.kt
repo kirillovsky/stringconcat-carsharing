@@ -22,11 +22,11 @@ internal class AddVehicleToInventoryHandlerTest {
         val vin = vin()
         val coveredMileage = randomDistance()
         val registrationPlate = registrationPlate()
-        val persister = FakeMaintenanceVehiclePersister()
+        val repo = InMemoryMaintenanceVehicleRepository()
 
         val id = AddVehicleToInventoryHandler(
-            vehiclePersister = persister,
-            vehicleExtractor = FakeMaintenanceVehicleExtractor()
+            vehiclePersister = repo,
+            vehicleExtractor = repo
         ).execute(
             AddVehicleToInventoryRequest(
                 id = vehicleId,
@@ -38,7 +38,7 @@ internal class AddVehicleToInventoryHandlerTest {
         )
 
         id shouldBe vehicleId
-        persister[vehicleId] should {
+        repo[vehicleId] should {
             it.shouldNotBeNull()
             it.id shouldBe vehicleId
             it.vin shouldBe vin
@@ -52,12 +52,12 @@ internal class AddVehicleToInventoryHandlerTest {
 
     @Test
     fun `shouldn't create vehicle if it already exists`() {
-        val persister = FakeMaintenanceVehiclePersister()
+        val persister = InMemoryMaintenanceVehicleRepository()
         val existingVehicle = maintenanceVehicle()
 
         val id = AddVehicleToInventoryHandler(
             vehiclePersister = persister,
-            vehicleExtractor = FakeMaintenanceVehicleExtractor().apply {
+            vehicleExtractor = InMemoryMaintenanceVehicleRepository().apply {
                 put(existingVehicle.id, existingVehicle)
             }
         ).execute(

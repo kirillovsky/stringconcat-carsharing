@@ -8,7 +8,7 @@ import com.stringconcat.kirillov.carsharing.maintenance.usecase.AddVehicleToInve
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.PurchasingDepartmentEvents.VehicleAddedToPurchasingBalance
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.purchasingVehicle
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.randomPurchasingVehicleId
-import com.stringconcat.kirillov.carsharing.purchasingDepartment.usecase.FakePurchasingVehicleExtractor
+import com.stringconcat.kirillov.carsharing.purchasingDepartment.usecase.InMemoryPurchasingVehicleRepository
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
@@ -24,7 +24,7 @@ internal class AddVehicleToInventoryRuleTest {
         val purchasingVehicle = purchasingVehicle(id = purchasingVehicleId)
         val rule = AddVehicleToInventoryRule(
             addVehicleToInventory = usecase,
-            purchasingVehicleExtractor = FakePurchasingVehicleExtractor().apply {
+            purchasingVehicleExtractor = InMemoryPurchasingVehicleRepository().apply {
                 put(purchasingVehicleId, purchasingVehicle)
             }
         )
@@ -46,7 +46,7 @@ internal class AddVehicleToInventoryRuleTest {
         val usecase = MockAddVehicleToInventoryUseCase()
         val rule = AddVehicleToInventoryRule(
             addVehicleToInventory = usecase,
-            purchasingVehicleExtractor = FakePurchasingVehicleExtractor()
+            purchasingVehicleExtractor = InMemoryPurchasingVehicleRepository()
         )
         val vehicleId = randomPurchasingVehicleId()
 

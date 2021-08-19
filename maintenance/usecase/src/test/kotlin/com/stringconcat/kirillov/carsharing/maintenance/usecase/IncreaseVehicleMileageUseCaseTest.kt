@@ -20,10 +20,10 @@ internal class IncreaseVehicleMileageUseCaseTest {
         val existingVehicleId = randomMaintenanceVehicleId()
         val initialCoveredDistance = 100_000.0.toKilometers()
         val vehicle = maintenanceVehicle(id = existingVehicleId, coveredMileage = initialCoveredDistance)
-        val persister = FakeMaintenanceVehiclePersister()
+        val persister = InMemoryMaintenanceVehicleRepository()
         val usecase = IncreaseVehicleMileageUseCase(
             persister = persister,
-            vehicleExtractor = FakeMaintenanceVehicleExtractor().apply {
+            vehicleExtractor = InMemoryMaintenanceVehicleRepository().apply {
                 put(existingVehicleId, vehicle)
             }
         )
@@ -43,16 +43,16 @@ internal class IncreaseVehicleMileageUseCaseTest {
 
     @Test
     fun `shouldn't increase mileage if vehicle not found`() {
-        val persister = FakeMaintenanceVehiclePersister()
+        val repo = InMemoryMaintenanceVehicleRepository()
         val useCase = IncreaseVehicleMileageUseCase(
-            persister = persister,
-            vehicleExtractor = FakeMaintenanceVehicleExtractor()
+            persister = repo,
+            vehicleExtractor = repo
         )
         val notFoundVehicleId = randomMaintenanceVehicleId()
 
         val result = useCase.execute(id = notFoundVehicleId, addendum = randomDistance())
 
         result shouldBeLeft IncreaseVehicleMileageUseCaseError.VehicleNotFound
-        persister[notFoundVehicleId].shouldBeNull()
+        repo[notFoundVehicleId].shouldBeNull()
     }
 }

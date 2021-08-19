@@ -11,7 +11,7 @@ internal class ExtractedCustomerAlreadyExistsTest {
         val notFoundBirthDate = LocalDate.now()
 
         val result = ExtractedCustomerAlreadyExists(
-            extractor = FakeCustomerExtractor()
+            extractor = InMemoryCustomerRepository()
         ).check(fullName = notFoundFullName, birthDate = notFoundBirthDate)
 
         result shouldBe false
@@ -22,7 +22,9 @@ internal class ExtractedCustomerAlreadyExistsTest {
         val customer = customer()
 
         val result = ExtractedCustomerAlreadyExists(
-            extractor = FakeCustomerExtractor(customer)
+            extractor = InMemoryCustomerRepository().apply {
+                put(customer.id, customer)
+            }
         ).check(fullName = customer.fullName, birthDate = customer.birthDate)
 
         result shouldBe true

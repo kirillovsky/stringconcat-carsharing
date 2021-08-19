@@ -17,10 +17,10 @@ internal class DetectVehiclesFaultUseCaseTest {
     fun `should detect fault on finding maintenance vehicle`() {
         val existingMaintenanceVehicleId = randomMaintenanceVehicleId()
         val maintenanceVehicle = maintenanceVehicle(id = existingMaintenanceVehicleId, broken = false)
-        val persister = FakeMaintenanceVehiclePersister()
+        val persister = InMemoryMaintenanceVehicleRepository()
         val usecase = DetectVehiclesFaultUseCase(
             persister = persister,
-            vehicleExtractor = FakeMaintenanceVehicleExtractor().apply {
+            vehicleExtractor = InMemoryMaintenanceVehicleRepository().apply {
                 put(existingMaintenanceVehicleId, maintenanceVehicle)
             }
         )
@@ -39,16 +39,16 @@ internal class DetectVehiclesFaultUseCaseTest {
 
     @Test
     fun `shouldn't detect fault if vehicle wasn't found`() {
-        val persister = FakeMaintenanceVehiclePersister()
+        val repo = InMemoryMaintenanceVehicleRepository()
         val usecase = DetectVehiclesFaultUseCase(
-            persister = persister,
-            vehicleExtractor = FakeMaintenanceVehicleExtractor()
+            persister = repo,
+            vehicleExtractor = repo
         )
         val notFoundVehicleId = randomMaintenanceVehicleId()
 
         val result = usecase.execute(id = notFoundVehicleId)
 
-        persister[notFoundVehicleId].shouldBeNull()
+        repo[notFoundVehicleId].shouldBeNull()
         result shouldBeLeft DetectVehiclesFaultUseCaseError.VehicleNotFound
     }
 }

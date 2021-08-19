@@ -25,7 +25,7 @@ internal class RegisterCustomerUseCaseTest {
 
     @Test
     fun `should register customer`() {
-        val persister = FakeCustomerPersister()
+        val persister = InMemoryCustomerRepository()
         val usecase = RegisterCustomerUseCase(
             idGenerator = { customerId },
             maturityAge = maturityAge,
@@ -51,7 +51,7 @@ internal class RegisterCustomerUseCaseTest {
 
     @Test
     fun `shouldn't register customer if it not matured enough`() {
-        val persister = FakeCustomerPersister()
+        val persister = InMemoryCustomerRepository()
         val usecase = RegisterCustomerUseCase(
             idGenerator = { customerId },
             maturityAge = maturityAge,
@@ -70,7 +70,7 @@ internal class RegisterCustomerUseCaseTest {
 
     @Test
     fun `shouldn't register customer if customer with same fullName and birthDate already registered`() {
-        val persister = FakeCustomerPersister()
+        val persister = InMemoryCustomerRepository()
         val existingCustomerFullName = fullName
         val existingCustomerBirthDate = LocalDate.of(1999, AUGUST, 13)
         val usecase = RegisterCustomerUseCase(
@@ -98,7 +98,7 @@ internal class RegisterCustomerUseCaseTest {
 
     @Test
     fun `shouldn't create customer if it is not actually exists`() {
-        val persister = FakeCustomerPersister()
+        val persister = InMemoryCustomerRepository()
         val notExistsCustomerBirthDate = LocalDate.of(2000, MARCH, 2)
         val notExistsCustomerFullName = fullName()
         val usecase = RegisterCustomerUseCase(
@@ -126,7 +126,7 @@ internal class RegisterCustomerUseCaseTest {
 
     @Test
     fun `shouldn't create customer if birthDate more than registration date`() {
-        val persister = FakeCustomerPersister()
+        val persister = InMemoryCustomerRepository()
         val moreBirthDate = LocalDate.of(2000, AUGUST, 1)
         val lessRegistrationDate = LocalDate.of(1993, AUGUST, 1)
         val usecase = RegisterCustomerUseCase(
