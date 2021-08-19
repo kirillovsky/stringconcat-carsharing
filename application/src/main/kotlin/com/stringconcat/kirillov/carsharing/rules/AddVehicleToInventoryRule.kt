@@ -14,8 +14,6 @@ class AddVehicleToInventoryRule(
     private val addVehicleToInventory: AddVehicleToInventory,
     private val purchasingVehicleExtractor: PurchasingVehicleExtractor
 ) : DomainEventListener<VehicleAddedToPurchasingBalance> {
-    override fun eventType() = VehicleAddedToPurchasingBalance::class
-
     override fun handle(event: VehicleAddedToPurchasingBalance) {
         purchasingVehicleExtractor.getById(event.vehicleId).rightIfNotNull {
             "Unable to find purchasing vehicle by id=${event.vehicleId}"

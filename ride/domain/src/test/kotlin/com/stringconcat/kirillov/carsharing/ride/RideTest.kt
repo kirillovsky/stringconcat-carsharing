@@ -15,6 +15,7 @@ import com.stringconcat.kirillov.carsharing.ride.RideStatus.STARTED
 import io.kotest.assertions.arrow.either.shouldBeLeft
 import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import java.time.OffsetDateTime.MAX
@@ -166,8 +167,8 @@ internal class RideTest {
         val expectedRideId = randomRideId()
         val expectedPaidPrice = 102.10.toPrice()
         val ride = finishedRide(id = expectedRideId)
-
-        val operationResult = ride.pay(taximeter = { expectedPaidPrice.right() })
+        val taximeter = StubTaximeter(result = expectedPaidPrice.right())
+        val operationResult = ride.pay(taximeter)
 
         operationResult.shouldBeRight()
         ride should {
@@ -175,6 +176,7 @@ internal class RideTest {
             it.paidPrice shouldBe expectedPaidPrice
             it.popEvents().shouldContainExactly(RidePaidEvent(rideId = expectedRideId))
         }
+        taximeter.receivedRide shouldBe ride
     }
 
     @Test
@@ -182,8 +184,8 @@ internal class RideTest {
         val finishDateTime = now()
         val coveredDistance = randomDistance()
         val ride = finishedRide(finishedDateTime = finishDateTime, coveredDistance = coveredDistance)
-
-        val operationResult = ride.pay(taximeter = { CalculationRidePriceError.left() })
+        val taximeter = StubTaximeter(result = CalculationRidePriceError.left())
+        val operationResult = ride.pay(taximeter)
 
         operationResult.shouldBeLeft(RidePaidError)
         ride should {
@@ -192,27 +194,29 @@ internal class RideTest {
             it.coveredDistance shouldBe coveredDistance
             it.popEvents() shouldBe emptyList()
         }
+        taximeter.receivedRide shouldBe ride
     }
 
     @Test
     fun `started ride shouldn't be paid`() {
         val ride = startedRide()
-
-        val operationResult = ride.pay(taximeter = { randomPrice().right() })
+        val taximeter = StubTaximeter(result = randomPrice().right())
+        val operationResult = ride.pay(taximeter)
 
         operationResult.shouldBeLeft(RidePaidError)
         ride should {
             it.status shouldBe STARTED
             it.popEvents() shouldBe emptyList()
         }
+        taximeter.receivedRide.shouldBeNull()
     }
 
     @Test
     fun `paid ride shouldn't will pay again`() {
         val initialPaidPrice = 300.0.toPrice()
         val ride = paidRide(paidPrice = initialPaidPrice)
-
-        val operationResult = ride.pay(taximeter = { randomPrice().right() })
+        val taximeter = StubTaximeter(result = randomPrice().right())
+        val operationResult = ride.pay(taximeter)
 
         operationResult.shouldBeLeft(RidePaidError)
         ride should {
@@ -220,6 +224,7 @@ internal class RideTest {
             it.paidPrice shouldBe initialPaidPrice
             it.popEvents() shouldBe emptyList()
         }
+        taximeter.receivedRide.shouldBeNull()
     }
 
     @Test

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 internal class RideCustomerTest {
     @Test
     fun `ride customer should contains id and is not verified`() {
-        val expectedId = rideCustomerId()
+        val expectedId = randomRideCustomerId()
 
         val customer = RideCustomer(id = expectedId)
 

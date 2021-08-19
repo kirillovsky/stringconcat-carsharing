@@ -11,14 +11,11 @@ import com.stringconcat.kirillov.carsharing.maintenance.usecase.IncreaseVehicleM
 import com.stringconcat.kirillov.carsharing.maintenance.usecase.IncreaseVehicleMileageUseCaseError
 import com.stringconcat.kirillov.carsharing.ride.RideFinishedEvent
 import com.stringconcat.kirillov.carsharing.ride.usecase.RideExtractor
-import kotlin.reflect.KClass
 
 class SendCoveredDistanceRule(
     private val increaseVehicleMileage: IncreaseVehicleMileage,
     private val rideExtractor: RideExtractor
 ) : DomainEventListener<RideFinishedEvent> {
-    override fun eventType(): KClass<RideFinishedEvent> = RideFinishedEvent::class
-
     override fun handle(event: RideFinishedEvent) {
         rideExtractor.getBy(event.rideId)
             .rightIfNotNull { "Unable to find ride by id=${event.rideId}" }

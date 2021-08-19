@@ -1,5 +1,6 @@
 package com.stringconcat.kirillov.carsharing.ride
 
+import arrow.core.Either
 import arrow.core.getOrHandle
 import arrow.core.right
 import com.stringconcat.kirillov.carsharing.commons.types.error.failOnBusinessError
@@ -12,11 +13,11 @@ import java.time.OffsetDateTime.now
 import kotlin.random.Random.Default.nextLong
 
 fun rideCustomer(rejected: Boolean = false) =
-    RideCustomer(id = rideCustomerId()).apply {
+    RideCustomer(id = randomRideCustomerId()).apply {
         if (rejected) reject()
     }
 
-fun rideCustomerId() = RideCustomerId(value = nextLong())
+fun randomRideCustomerId() = RideCustomerId(value = nextLong())
 
 fun rideVehicle(inRentalPool: Boolean = false) =
     RideVehicle(id = rideVehicleId()).apply {
@@ -62,3 +63,13 @@ fun paidRide(
 }
 
 fun randomRideId() = RideId(value = nextLong())
+
+class StubTaximeter(private val result: Either<CalculationRidePriceError, Price>) : Taximeter {
+    var receivedRide: Ride? = null
+        private set
+
+    override fun calculatePrice(ride: Ride): Either<CalculationRidePriceError, Price> {
+        receivedRide = ride
+        return result
+    }
+}
