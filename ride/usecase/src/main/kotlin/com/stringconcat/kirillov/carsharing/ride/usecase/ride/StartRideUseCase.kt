@@ -4,11 +4,11 @@ import arrow.core.Either
 import arrow.core.extensions.either.apply.tupled
 import arrow.core.flatMap
 import arrow.core.rightIfNotNull
-import com.stringconcat.kirillov.carsharing.ride.Ride
-import com.stringconcat.kirillov.carsharing.ride.RideId
-import com.stringconcat.kirillov.carsharing.ride.RideIdGenerator
-import com.stringconcat.kirillov.carsharing.ride.RideStartingError
-import com.stringconcat.kirillov.carsharing.ride.RideVehicleInRent
+import com.stringconcat.kirillov.carsharing.ride.domain.Ride
+import com.stringconcat.kirillov.carsharing.ride.domain.RideId
+import com.stringconcat.kirillov.carsharing.ride.domain.RideIdGenerator
+import com.stringconcat.kirillov.carsharing.ride.domain.RideStartingError
+import com.stringconcat.kirillov.carsharing.ride.domain.RideVehicleInRent
 import com.stringconcat.kirillov.carsharing.ride.usecase.customer.RideCustomerExtractor
 import com.stringconcat.kirillov.carsharing.ride.usecase.ride.StartRideUseCaseError.CustomerNotFound
 import com.stringconcat.kirillov.carsharing.ride.usecase.ride.StartRideUseCaseError.VehicleNotFound

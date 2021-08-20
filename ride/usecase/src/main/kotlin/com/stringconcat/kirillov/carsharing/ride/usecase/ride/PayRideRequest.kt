@@ -2,7 +2,7 @@ package com.stringconcat.kirillov.carsharing.ride.usecase.ride
 
 import arrow.core.Either
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.Price
-import com.stringconcat.kirillov.carsharing.ride.RideId
+import com.stringconcat.kirillov.carsharing.ride.domain.RideId
 import com.stringconcat.kirillov.carsharing.ride.usecase.ride.InvalidPayRideParametersError.InvalidPriceValue
 import java.math.BigDecimal
 

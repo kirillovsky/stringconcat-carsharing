@@ -1,9 +1,9 @@
 package com.stringconcat.kirillov.carsharing.ride.usecase.ride
 
 import arrow.core.Either
-import com.stringconcat.kirillov.carsharing.ride.RideCustomerId
-import com.stringconcat.kirillov.carsharing.ride.RideId
-import com.stringconcat.kirillov.carsharing.ride.RideVehicleId
+import com.stringconcat.kirillov.carsharing.ride.domain.RideCustomerId
+import com.stringconcat.kirillov.carsharing.ride.domain.RideId
+import com.stringconcat.kirillov.carsharing.ride.domain.RideVehicleId
 import java.time.OffsetDateTime
 
 interface StartRide {

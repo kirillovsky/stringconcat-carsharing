@@ -1,15 +1,15 @@
-package com.stringconcat.kirillov.carsharing.ride
+package com.stringconcat.kirillov.carsharing.ride.domain
 
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomDistance
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomPrice
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.toKilometers
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.toPrice
-import com.stringconcat.kirillov.carsharing.ride.RideStartingError.CustomerIsRejected
-import com.stringconcat.kirillov.carsharing.ride.RideStartingError.VehicleAlreadyInRent
-import com.stringconcat.kirillov.carsharing.ride.RideStartingError.VehicleNotInRentalPool
-import com.stringconcat.kirillov.carsharing.ride.RideStatus.FINISHED
-import com.stringconcat.kirillov.carsharing.ride.RideStatus.PAID
-import com.stringconcat.kirillov.carsharing.ride.RideStatus.STARTED
+import com.stringconcat.kirillov.carsharing.ride.domain.RideStartingError.CustomerIsRejected
+import com.stringconcat.kirillov.carsharing.ride.domain.RideStartingError.VehicleAlreadyInRent
+import com.stringconcat.kirillov.carsharing.ride.domain.RideStartingError.VehicleNotInRentalPool
+import com.stringconcat.kirillov.carsharing.ride.domain.RideStatus.FINISHED
+import com.stringconcat.kirillov.carsharing.ride.domain.RideStatus.PAID
+import com.stringconcat.kirillov.carsharing.ride.domain.RideStatus.STARTED
 import io.kotest.assertions.arrow.either.shouldBeLeft
 import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.collections.shouldContainExactly

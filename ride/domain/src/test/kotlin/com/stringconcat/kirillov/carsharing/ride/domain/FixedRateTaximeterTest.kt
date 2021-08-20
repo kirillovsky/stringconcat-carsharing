@@ -1,4 +1,4 @@
-package com.stringconcat.kirillov.carsharing.ride
+package com.stringconcat.kirillov.carsharing.ride.domain
 
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomPrice
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.toKilometers

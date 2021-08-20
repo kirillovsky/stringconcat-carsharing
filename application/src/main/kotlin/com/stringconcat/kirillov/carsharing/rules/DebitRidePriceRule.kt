@@ -3,8 +3,8 @@ package com.stringconcat.kirillov.carsharing.rules
 import arrow.core.getOrHandle
 import com.stringconcat.kirillov.carsharing.integration.acquirer.Acquirer
 import com.stringconcat.kirillov.carsharing.listeners.DomainEventListener
-import com.stringconcat.kirillov.carsharing.ride.RideFinishedEvent
-import com.stringconcat.kirillov.carsharing.ride.Taximeter
+import com.stringconcat.kirillov.carsharing.ride.domain.RideFinishedEvent
+import com.stringconcat.kirillov.carsharing.ride.domain.Taximeter
 import com.stringconcat.kirillov.carsharing.ride.usecase.ride.RideExtractor
 
 class DebitRidePriceRule(

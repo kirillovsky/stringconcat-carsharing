@@ -1,7 +1,7 @@
 package com.stringconcat.kirillov.carsharing.ride.usecase.ride
 
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomPrice
-import com.stringconcat.kirillov.carsharing.ride.randomRideId
+import com.stringconcat.kirillov.carsharing.ride.domain.randomRideId
 import com.stringconcat.kirillov.carsharing.ride.usecase.ride.InvalidPayRideParametersError.InvalidPriceValue
 import io.kotest.assertions.arrow.either.shouldBeLeft
 import io.kotest.assertions.arrow.either.shouldBeRight

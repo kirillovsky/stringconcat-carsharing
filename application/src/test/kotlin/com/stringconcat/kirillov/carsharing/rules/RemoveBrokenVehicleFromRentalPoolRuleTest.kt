@@ -2,7 +2,7 @@ package com.stringconcat.kirillov.carsharing.rules
 
 import com.stringconcat.kirillov.carsharing.maintenance.domain.MaintenanceVehicleEvents.VehicleBroken
 import com.stringconcat.kirillov.carsharing.maintenance.domain.randomMaintenanceVehicleId
-import com.stringconcat.kirillov.carsharing.ride.RideVehicleId
+import com.stringconcat.kirillov.carsharing.ride.domain.RideVehicleId
 import com.stringconcat.kirillov.carsharing.ride.usecase.MockPutRideVehicleUseCase
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe

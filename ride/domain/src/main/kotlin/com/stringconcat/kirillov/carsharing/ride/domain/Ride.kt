@@ -1,4 +1,4 @@
-package com.stringconcat.kirillov.carsharing.ride
+package com.stringconcat.kirillov.carsharing.ride.domain
 
 import arrow.core.Either
 import arrow.core.left
@@ -7,12 +7,12 @@ import com.stringconcat.kirillov.carsharing.commons.types.base.AggregateRoot
 import com.stringconcat.kirillov.carsharing.commons.types.error.BusinessError
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.Distance
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.Price
-import com.stringconcat.kirillov.carsharing.ride.RideStartingError.CustomerIsRejected
-import com.stringconcat.kirillov.carsharing.ride.RideStartingError.VehicleAlreadyInRent
-import com.stringconcat.kirillov.carsharing.ride.RideStartingError.VehicleNotInRentalPool
-import com.stringconcat.kirillov.carsharing.ride.RideStatus.FINISHED
-import com.stringconcat.kirillov.carsharing.ride.RideStatus.PAID
-import com.stringconcat.kirillov.carsharing.ride.RideStatus.STARTED
+import com.stringconcat.kirillov.carsharing.ride.domain.RideStartingError.CustomerIsRejected
+import com.stringconcat.kirillov.carsharing.ride.domain.RideStartingError.VehicleAlreadyInRent
+import com.stringconcat.kirillov.carsharing.ride.domain.RideStartingError.VehicleNotInRentalPool
+import com.stringconcat.kirillov.carsharing.ride.domain.RideStatus.FINISHED
+import com.stringconcat.kirillov.carsharing.ride.domain.RideStatus.PAID
+import com.stringconcat.kirillov.carsharing.ride.domain.RideStatus.STARTED
 import java.time.OffsetDateTime
 
 class Ride internal constructor(

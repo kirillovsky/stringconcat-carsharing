@@ -1,6 +1,6 @@
 package com.stringconcat.kirillov.carsharing.ride.usecase.customer
 
-import com.stringconcat.kirillov.carsharing.ride.rideCustomer
+import com.stringconcat.kirillov.carsharing.ride.domain.rideCustomer
 import com.stringconcat.kirillov.carsharing.ride.usecase.InMemoryRideCustomerRepository
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.should

@@ -4,11 +4,11 @@ import arrow.core.left
 import arrow.core.right
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomPrice
 import com.stringconcat.kirillov.carsharing.integration.acquirer.MockAcquirer
-import com.stringconcat.kirillov.carsharing.ride.CalculationRidePriceError
-import com.stringconcat.kirillov.carsharing.ride.RideFinishedEvent
-import com.stringconcat.kirillov.carsharing.ride.StubTaximeter
-import com.stringconcat.kirillov.carsharing.ride.finishedRide
-import com.stringconcat.kirillov.carsharing.ride.randomRideId
+import com.stringconcat.kirillov.carsharing.ride.domain.CalculationRidePriceError
+import com.stringconcat.kirillov.carsharing.ride.domain.RideFinishedEvent
+import com.stringconcat.kirillov.carsharing.ride.domain.StubTaximeter
+import com.stringconcat.kirillov.carsharing.ride.domain.finishedRide
+import com.stringconcat.kirillov.carsharing.ride.domain.randomRideId
 import com.stringconcat.kirillov.carsharing.ride.usecase.InMemoryRideRepository
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.nulls.shouldBeNull

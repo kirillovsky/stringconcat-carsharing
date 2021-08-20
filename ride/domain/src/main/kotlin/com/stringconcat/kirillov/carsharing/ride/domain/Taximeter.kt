@@ -1,4 +1,4 @@
-package com.stringconcat.kirillov.carsharing.ride
+package com.stringconcat.kirillov.carsharing.ride.domain
 
 import arrow.core.Either
 import com.stringconcat.kirillov.carsharing.commons.types.error.BusinessError

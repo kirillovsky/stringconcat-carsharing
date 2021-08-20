@@ -1,7 +1,7 @@
 package com.stringconcat.kirillov.carsharing.ride.usecase.ride
 
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomDistance
-import com.stringconcat.kirillov.carsharing.ride.randomRideId
+import com.stringconcat.kirillov.carsharing.ride.domain.randomRideId
 import com.stringconcat.kirillov.carsharing.ride.usecase.ride.InvalidFinishRideParameters.InvalidCoveredKilometers
 import io.kotest.assertions.arrow.either.shouldBeLeft
 import io.kotest.assertions.arrow.either.shouldBeRight

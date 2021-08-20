@@ -1,4 +1,4 @@
-package com.stringconcat.kirillov.carsharing.ride
+package com.stringconcat.kirillov.carsharing.ride.domain
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test

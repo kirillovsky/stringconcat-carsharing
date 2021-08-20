@@ -1,4 +1,4 @@
-package com.stringconcat.kirillov.carsharing.ride
+package com.stringconcat.kirillov.carsharing.ride.domain
 
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe

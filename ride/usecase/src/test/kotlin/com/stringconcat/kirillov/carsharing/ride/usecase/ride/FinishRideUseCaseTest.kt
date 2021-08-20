@@ -1,11 +1,11 @@
 package com.stringconcat.kirillov.carsharing.ride.usecase.ride
 
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomDistance
-import com.stringconcat.kirillov.carsharing.ride.RideFinishedEvent
-import com.stringconcat.kirillov.carsharing.ride.RideStatus
-import com.stringconcat.kirillov.carsharing.ride.finishedRide
-import com.stringconcat.kirillov.carsharing.ride.randomRideId
-import com.stringconcat.kirillov.carsharing.ride.startedRide
+import com.stringconcat.kirillov.carsharing.ride.domain.RideFinishedEvent
+import com.stringconcat.kirillov.carsharing.ride.domain.RideStatus.FINISHED
+import com.stringconcat.kirillov.carsharing.ride.domain.finishedRide
+import com.stringconcat.kirillov.carsharing.ride.domain.randomRideId
+import com.stringconcat.kirillov.carsharing.ride.domain.startedRide
 import com.stringconcat.kirillov.carsharing.ride.usecase.InMemoryRideRepository
 import com.stringconcat.kirillov.carsharing.ride.usecase.ride.FinishRideUseCaseError.RideAlreadyFinishedError
 import com.stringconcat.kirillov.carsharing.ride.usecase.ride.FinishRideUseCaseError.RideNotFound
@@ -42,7 +42,7 @@ internal class FinishRideUseCaseTest {
         result.shouldBeRight()
         persister[startedRide.id] should {
             it.shouldNotBeNull()
-            it.status shouldBe RideStatus.FINISHED
+            it.status shouldBe FINISHED
             it.finishDateTime shouldBe finishedDateTime
             it.coveredDistance shouldBe coveredDistance
             it.popEvents().shouldContainExactly(RideFinishedEvent(rideId = startedRide.id))

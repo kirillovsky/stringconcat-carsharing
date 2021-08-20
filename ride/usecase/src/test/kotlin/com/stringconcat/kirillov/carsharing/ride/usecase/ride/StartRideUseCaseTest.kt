@@ -1,13 +1,13 @@
 package com.stringconcat.kirillov.carsharing.ride.usecase.ride
 
-import com.stringconcat.kirillov.carsharing.ride.RideStartedEvent
-import com.stringconcat.kirillov.carsharing.ride.RideStatus.STARTED
-import com.stringconcat.kirillov.carsharing.ride.RideVehicleInRent
-import com.stringconcat.kirillov.carsharing.ride.randomRideCustomerId
-import com.stringconcat.kirillov.carsharing.ride.randomRideId
-import com.stringconcat.kirillov.carsharing.ride.randomRideVehicleId
-import com.stringconcat.kirillov.carsharing.ride.rideCustomer
-import com.stringconcat.kirillov.carsharing.ride.rideVehicle
+import com.stringconcat.kirillov.carsharing.ride.domain.RideStartedEvent
+import com.stringconcat.kirillov.carsharing.ride.domain.RideStatus.STARTED
+import com.stringconcat.kirillov.carsharing.ride.domain.RideVehicleInRent
+import com.stringconcat.kirillov.carsharing.ride.domain.randomRideCustomerId
+import com.stringconcat.kirillov.carsharing.ride.domain.randomRideId
+import com.stringconcat.kirillov.carsharing.ride.domain.randomRideVehicleId
+import com.stringconcat.kirillov.carsharing.ride.domain.rideCustomer
+import com.stringconcat.kirillov.carsharing.ride.domain.rideVehicle
 import com.stringconcat.kirillov.carsharing.ride.usecase.InMemoryRideCustomerRepository
 import com.stringconcat.kirillov.carsharing.ride.usecase.InMemoryRideRepository
 import com.stringconcat.kirillov.carsharing.ride.usecase.InMemoryRideVehicleRepository
