@@ -1,6 +1,7 @@
-package com.stringconcat.kirillov.carsharing.customer
+package com.stringconcat.kirillov.carsharing.customer.usecase
 
 import arrow.core.Either
+import com.stringconcat.kirillov.carsharing.customer.domain.CustomerId
 
 interface RegisterCustomer {
     fun execute(request: RegisterCustomerRequest): Either<RegisterCustomerUseCaseError, CustomerId>

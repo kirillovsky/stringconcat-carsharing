@@ -1,7 +1,7 @@
-package com.stringconcat.kirillov.carsharing.customer
+package com.stringconcat.kirillov.carsharing.customer.domain
 
-import com.stringconcat.kirillov.carsharing.customer.AgeCreationErrors.BirthDateMoreThanCurrentDate
-import com.stringconcat.kirillov.carsharing.customer.AgeCreationErrors.IllegalYearsCount
+import com.stringconcat.kirillov.carsharing.customer.domain.AgeCreationErrors.BirthDateMoreThanCurrentDate
+import com.stringconcat.kirillov.carsharing.customer.domain.AgeCreationErrors.IllegalYearsCount
 import io.kotest.assertions.arrow.either.shouldBeLeft
 import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.comparables.shouldBeEqualComparingTo

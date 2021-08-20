@@ -1,6 +1,6 @@
 package com.stringconcat.kirillov.carsharing.rules
 
-import com.stringconcat.kirillov.carsharing.customer.CustomerRegistered
+import com.stringconcat.kirillov.carsharing.customer.domain.CustomerRegistered
 import com.stringconcat.kirillov.carsharing.listeners.DomainEventListener
 import com.stringconcat.kirillov.carsharing.ride.domain.RideCustomerId
 import com.stringconcat.kirillov.carsharing.ride.usecase.customer.PutRideCustomer

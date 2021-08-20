@@ -1,5 +1,8 @@
-package com.stringconcat.kirillov.carsharing.customer
+package com.stringconcat.kirillov.carsharing.customer.usecase
 
+import com.stringconcat.kirillov.carsharing.customer.domain.Customer
+import com.stringconcat.kirillov.carsharing.customer.domain.CustomerId
+import com.stringconcat.kirillov.carsharing.customer.domain.FullName
 import java.time.LocalDate
 
 class InMemoryCustomerRepository : CustomerPersister, CustomerExtractor, HashMap<CustomerId, Customer>() {

@@ -1,9 +1,9 @@
-package com.stringconcat.kirillov.carsharing.customer
+package com.stringconcat.kirillov.carsharing.customer.domain
 
-import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.ActuallyDoesNotExists
-import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.AlreadyRegistered
-import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.BirthDateMoreThanRegistrationDate
-import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.NotMaturedEnough
+import com.stringconcat.kirillov.carsharing.customer.domain.CustomerRegistrationError.ActuallyDoesNotExists
+import com.stringconcat.kirillov.carsharing.customer.domain.CustomerRegistrationError.AlreadyRegistered
+import com.stringconcat.kirillov.carsharing.customer.domain.CustomerRegistrationError.BirthDateMoreThanRegistrationDate
+import com.stringconcat.kirillov.carsharing.customer.domain.CustomerRegistrationError.NotMaturedEnough
 import io.kotest.assertions.arrow.either.shouldBeLeft
 import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.collections.shouldContainExactly

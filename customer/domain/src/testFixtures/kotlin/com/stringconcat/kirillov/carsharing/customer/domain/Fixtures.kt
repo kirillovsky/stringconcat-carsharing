@@ -1,4 +1,4 @@
-package com.stringconcat.kirillov.carsharing.customer
+package com.stringconcat.kirillov.carsharing.customer.domain
 
 import arrow.core.getOrHandle
 import com.github.javafaker.Faker
@@ -28,10 +28,10 @@ fun randomCustomerId() = CustomerId(value = faker.number().randomNumber())
 fun customer(
     id: CustomerId = randomCustomerId(),
     rejected: Boolean = false,
-): Customer {
+): com.stringconcat.kirillov.carsharing.customer.domain.Customer {
     val age = randomAge()
 
-    return Customer.registerCustomer(
+    return com.stringconcat.kirillov.carsharing.customer.domain.Customer.registerCustomer(
         idGenerator = { id },
         fullName = fullName(),
         birthDate = now().minusYears(age.yearsCount.toLong()),
@@ -49,6 +49,6 @@ fun customer(
 
 fun randomAge(minAge: Int = 18, maxAge: Int = 100) = faker.number().numberBetween(maxAge, minAge).asYearsAge()
 
-fun Int.asYearsAge() = Age
+fun Int.asYearsAge() = com.stringconcat.kirillov.carsharing.customer.domain.Age
     .from(yearsCount = this)
     .getOrHandle(::failOnBusinessError)

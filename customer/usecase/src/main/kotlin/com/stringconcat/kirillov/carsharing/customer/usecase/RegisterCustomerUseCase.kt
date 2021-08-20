@@ -1,10 +1,17 @@
-package com.stringconcat.kirillov.carsharing.customer
+package com.stringconcat.kirillov.carsharing.customer.usecase
 
 import arrow.core.Either
-import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.ActuallyDoesNotExists
-import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.AlreadyRegistered
-import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.BirthDateMoreThanRegistrationDate
-import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.NotMaturedEnough
+import com.stringconcat.kirillov.carsharing.customer.domain.Age
+import com.stringconcat.kirillov.carsharing.customer.domain.Customer
+import com.stringconcat.kirillov.carsharing.customer.domain.CustomerActuallyExists
+import com.stringconcat.kirillov.carsharing.customer.domain.CustomerAlreadyRegistered
+import com.stringconcat.kirillov.carsharing.customer.domain.CustomerId
+import com.stringconcat.kirillov.carsharing.customer.domain.CustomerIdGenerator
+import com.stringconcat.kirillov.carsharing.customer.domain.CustomerRegistrationError
+import com.stringconcat.kirillov.carsharing.customer.domain.CustomerRegistrationError.ActuallyDoesNotExists
+import com.stringconcat.kirillov.carsharing.customer.domain.CustomerRegistrationError.AlreadyRegistered
+import com.stringconcat.kirillov.carsharing.customer.domain.CustomerRegistrationError.BirthDateMoreThanRegistrationDate
+import com.stringconcat.kirillov.carsharing.customer.domain.CustomerRegistrationError.NotMaturedEnough
 
 class RegisterCustomerUseCase(
     private val maturityAge: Age,

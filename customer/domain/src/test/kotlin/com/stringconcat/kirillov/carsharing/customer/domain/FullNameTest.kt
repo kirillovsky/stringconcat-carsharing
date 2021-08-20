@@ -1,8 +1,8 @@
-package com.stringconcat.kirillov.carsharing.customer
+package com.stringconcat.kirillov.carsharing.customer.domain
 
-import com.stringconcat.kirillov.carsharing.customer.CreateFullNameError.InvalidFirstName
-import com.stringconcat.kirillov.carsharing.customer.CreateFullNameError.InvalidMiddleName
-import com.stringconcat.kirillov.carsharing.customer.CreateFullNameError.InvalidSecondName
+import com.stringconcat.kirillov.carsharing.customer.domain.CreateFullNameError.InvalidFirstName
+import com.stringconcat.kirillov.carsharing.customer.domain.CreateFullNameError.InvalidMiddleName
+import com.stringconcat.kirillov.carsharing.customer.domain.CreateFullNameError.InvalidSecondName
 import io.kotest.assertions.arrow.either.shouldBeLeft
 import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.shouldBe

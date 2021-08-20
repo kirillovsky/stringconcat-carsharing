@@ -1,7 +1,7 @@
 package com.stringconcat.kirillov.carsharing.integration.gis.gmp
 
-import com.stringconcat.kirillov.carsharing.customer.CustomerActuallyExists
-import com.stringconcat.kirillov.carsharing.customer.FullName
+import com.stringconcat.kirillov.carsharing.customer.domain.CustomerActuallyExists
+import com.stringconcat.kirillov.carsharing.customer.domain.FullName
 import java.time.LocalDate
 
 object CustomerAlwaysExistsInGisGmp : CustomerActuallyExists {

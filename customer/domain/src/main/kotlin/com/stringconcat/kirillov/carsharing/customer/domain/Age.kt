@@ -1,12 +1,12 @@
-package com.stringconcat.kirillov.carsharing.customer
+package com.stringconcat.kirillov.carsharing.customer.domain
 
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import com.stringconcat.kirillov.carsharing.commons.types.base.ValueObject
 import com.stringconcat.kirillov.carsharing.commons.types.error.BusinessError
-import com.stringconcat.kirillov.carsharing.customer.AgeCreationErrors.BirthDateMoreThanCurrentDate
-import com.stringconcat.kirillov.carsharing.customer.AgeCreationErrors.IllegalYearsCount
+import com.stringconcat.kirillov.carsharing.customer.domain.AgeCreationErrors.BirthDateMoreThanCurrentDate
+import com.stringconcat.kirillov.carsharing.customer.domain.AgeCreationErrors.IllegalYearsCount
 import java.time.LocalDate
 import java.time.Period
 

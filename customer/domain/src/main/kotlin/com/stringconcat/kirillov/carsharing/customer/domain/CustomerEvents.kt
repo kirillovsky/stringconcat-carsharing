@@ -1,4 +1,4 @@
-package com.stringconcat.kirillov.carsharing.customer
+package com.stringconcat.kirillov.carsharing.customer.domain
 
 import com.stringconcat.kirillov.carsharing.commons.types.base.DomainEvent
 

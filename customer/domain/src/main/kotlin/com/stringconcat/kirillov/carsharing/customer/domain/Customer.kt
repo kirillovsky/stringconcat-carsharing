@@ -1,14 +1,14 @@
-package com.stringconcat.kirillov.carsharing.customer
+package com.stringconcat.kirillov.carsharing.customer.domain
 
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import com.stringconcat.kirillov.carsharing.commons.types.base.AggregateRoot
 import com.stringconcat.kirillov.carsharing.commons.types.error.BusinessError
-import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.ActuallyDoesNotExists
-import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.AlreadyRegistered
-import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.BirthDateMoreThanRegistrationDate
-import com.stringconcat.kirillov.carsharing.customer.CustomerRegistrationError.NotMaturedEnough
+import com.stringconcat.kirillov.carsharing.customer.domain.CustomerRegistrationError.ActuallyDoesNotExists
+import com.stringconcat.kirillov.carsharing.customer.domain.CustomerRegistrationError.AlreadyRegistered
+import com.stringconcat.kirillov.carsharing.customer.domain.CustomerRegistrationError.BirthDateMoreThanRegistrationDate
+import com.stringconcat.kirillov.carsharing.customer.domain.CustomerRegistrationError.NotMaturedEnough
 import java.time.LocalDate
 
 class Customer internal constructor(

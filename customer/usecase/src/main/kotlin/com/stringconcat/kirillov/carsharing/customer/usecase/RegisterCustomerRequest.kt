@@ -1,9 +1,13 @@
-package com.stringconcat.kirillov.carsharing.customer
+package com.stringconcat.kirillov.carsharing.customer.usecase
 
 import arrow.core.Either
 import arrow.core.extensions.either.apply.tupled
 import com.stringconcat.kirillov.carsharing.commons.types.error.BusinessError
-import com.stringconcat.kirillov.carsharing.customer.RegisterCustomerRequest.InvalidRegisterCustomerParameters
+import com.stringconcat.kirillov.carsharing.customer.domain.CreateFullNameError
+import com.stringconcat.kirillov.carsharing.customer.domain.DriverLicenseNumber
+import com.stringconcat.kirillov.carsharing.customer.domain.DriverLicenseNumberError
+import com.stringconcat.kirillov.carsharing.customer.domain.FullName
+import com.stringconcat.kirillov.carsharing.customer.usecase.RegisterCustomerRequest.InvalidRegisterCustomerParameters
 import java.time.LocalDate
 
 data class RegisterCustomerRequest(

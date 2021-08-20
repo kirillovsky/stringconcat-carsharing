@@ -1,13 +1,13 @@
-package com.stringconcat.kirillov.carsharing.customer
+package com.stringconcat.kirillov.carsharing.customer.domain
 
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import com.stringconcat.kirillov.carsharing.commons.types.base.ValueObject
 import com.stringconcat.kirillov.carsharing.commons.types.error.BusinessError
-import com.stringconcat.kirillov.carsharing.customer.CreateFullNameError.InvalidFirstName
-import com.stringconcat.kirillov.carsharing.customer.CreateFullNameError.InvalidMiddleName
-import com.stringconcat.kirillov.carsharing.customer.CreateFullNameError.InvalidSecondName
+import com.stringconcat.kirillov.carsharing.customer.domain.CreateFullNameError.InvalidFirstName
+import com.stringconcat.kirillov.carsharing.customer.domain.CreateFullNameError.InvalidMiddleName
+import com.stringconcat.kirillov.carsharing.customer.domain.CreateFullNameError.InvalidSecondName
 
 private const val CYRILLIC_SYMBOLS_GROUP = "[А-ЯЁ]"
 private val FIRST_NAME_PATTERN = "$CYRILLIC_SYMBOLS_GROUP+".toRegex()

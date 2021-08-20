@@ -1,7 +1,7 @@
-package com.stringconcat.kirillov.carsharing.customer
+package com.stringconcat.kirillov.carsharing.customer.domain
 
-import com.stringconcat.kirillov.carsharing.customer.DriverLicenseNumberError.IllegalNumber
-import com.stringconcat.kirillov.carsharing.customer.DriverLicenseNumberError.IllegalSeries
+import com.stringconcat.kirillov.carsharing.customer.domain.DriverLicenseNumberError.IllegalNumber
+import com.stringconcat.kirillov.carsharing.customer.domain.DriverLicenseNumberError.IllegalSeries
 import io.kotest.assertions.arrow.either.shouldBeLeft
 import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.shouldBe

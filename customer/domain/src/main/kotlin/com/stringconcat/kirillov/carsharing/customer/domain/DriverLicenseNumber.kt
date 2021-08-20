@@ -1,12 +1,12 @@
-package com.stringconcat.kirillov.carsharing.customer
+package com.stringconcat.kirillov.carsharing.customer.domain
 
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import com.stringconcat.kirillov.carsharing.commons.types.base.ValueObject
 import com.stringconcat.kirillov.carsharing.commons.types.error.BusinessError
-import com.stringconcat.kirillov.carsharing.customer.DriverLicenseNumberError.IllegalNumber
-import com.stringconcat.kirillov.carsharing.customer.DriverLicenseNumberError.IllegalSeries
+import com.stringconcat.kirillov.carsharing.customer.domain.DriverLicenseNumberError.IllegalNumber
+import com.stringconcat.kirillov.carsharing.customer.domain.DriverLicenseNumberError.IllegalSeries
 
 private val SERIES_FORMAT = "[1-9][0-9] [0-9]{2}".toRegex()
 private val NUMBER_FORMAT = "[0-9]{6}".toRegex()

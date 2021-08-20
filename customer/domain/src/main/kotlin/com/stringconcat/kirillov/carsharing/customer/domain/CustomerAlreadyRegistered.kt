@@ -1,4 +1,4 @@
-package com.stringconcat.kirillov.carsharing.customer
+package com.stringconcat.kirillov.carsharing.customer.domain
 
 import java.time.LocalDate
 
