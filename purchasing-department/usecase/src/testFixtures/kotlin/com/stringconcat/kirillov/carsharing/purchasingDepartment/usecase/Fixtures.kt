@@ -12,10 +12,15 @@ import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.randomCa
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.usecase.AddVehicleToBalanceRequest.RegistrationPlateDate
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.usecase.AddVehicleToBalanceRequest.VehicleModeData
 
-class FakePurchasingVehiclePersister : HashMap<PurchasingVehicleId, PurchasingVehicle>(), PurchasingVehiclePersister {
+class InMemoryPurchasingVehicleRepository : HashMap<PurchasingVehicleId, PurchasingVehicle>(),
+    PurchasingVehiclePersister, PurchasingVehicleExtractor {
     override fun save(vehicle: PurchasingVehicle) {
         this[vehicle.id] = vehicle
     }
+
+    override fun getAll(): List<PurchasingVehicle> = values.toList()
+
+    override fun getById(id: PurchasingVehicleId): PurchasingVehicle? = this[id]
 }
 
 fun addVehicleToBalanceRequest(
@@ -27,9 +32,3 @@ fun addVehicleToBalanceRequest(
     vinData = vin.code,
     capacityData = randomCapacity().value
 ).getOrHandle { error(it.message) }
-
-class FakePurchasingVehicleExtractor : PurchasingVehicleExtractor, HashMap<PurchasingVehicleId, PurchasingVehicle>() {
-    override fun getAll(): List<PurchasingVehicle> = values.toList()
-
-    override fun getById(id: PurchasingVehicleId): PurchasingVehicle? = get(id)
-}

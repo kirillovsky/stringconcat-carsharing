@@ -4,7 +4,7 @@ import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomVeh
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.registrationPlate
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.vin
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.randomCapacity
-import com.stringconcat.kirillov.carsharing.purchasingDepartment.usecase.AddVehicleToBalanceRequest.InvalidVehicleParameters
+import com.stringconcat.kirillov.carsharing.purchasingDepartment.usecase.AddVehicleToBalanceRequest.InvalidAddVehicleToBalanceParameters
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.usecase.AddVehicleToBalanceRequest.RegistrationPlateDate
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.usecase.AddVehicleToBalanceRequest.VehicleModeData
 import io.kotest.assertions.arrow.either.shouldBeLeft
@@ -51,7 +51,7 @@ internal class AddVehicleToBalanceRequestTest {
         )
 
         result shouldBeLeft {
-            it shouldBe InvalidVehicleParameters("Invalid model")
+            it shouldBe InvalidAddVehicleToBalanceParameters("Invalid model")
         }
     }
 
@@ -69,7 +69,7 @@ internal class AddVehicleToBalanceRequestTest {
         )
 
         result shouldBeLeft {
-            it shouldBe InvalidVehicleParameters("Invalid registrationPlate")
+            it shouldBe InvalidAddVehicleToBalanceParameters("Invalid registrationPlate")
         }
     }
 
@@ -83,7 +83,7 @@ internal class AddVehicleToBalanceRequestTest {
         )
 
         result shouldBeLeft {
-            it shouldBe InvalidVehicleParameters("Invalid vin")
+            it shouldBe InvalidAddVehicleToBalanceParameters("Invalid vin")
         }
     }
 
@@ -97,7 +97,7 @@ internal class AddVehicleToBalanceRequestTest {
         )
 
         result shouldBeLeft {
-            it shouldBe InvalidVehicleParameters("Invalid capacity")
+            it shouldBe InvalidAddVehicleToBalanceParameters("Invalid capacity")
         }
     }
 }

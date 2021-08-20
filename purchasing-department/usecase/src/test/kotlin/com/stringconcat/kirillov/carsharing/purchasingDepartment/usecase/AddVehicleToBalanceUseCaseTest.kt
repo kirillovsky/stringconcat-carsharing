@@ -24,12 +24,12 @@ internal class AddVehicleToBalanceUseCaseTest {
         val registrationPlate = registrationPlate()
         val vin = vin()
         val capacity = randomCapacity()
-        val persister = FakePurchasingVehiclePersister()
+        val repo = InMemoryPurchasingVehicleRepository()
 
         val result = AddVehicleToBalanceUseCase(
             idGenerator = { vehicleId },
-            vehicleExtractor = FakePurchasingVehicleExtractor(),
-            vehiclePersister = persister
+            vehicleExtractor = repo,
+            vehiclePersister = repo
         ).execute(
             AddVehicleToBalanceRequest(
                 model = model,
@@ -42,7 +42,7 @@ internal class AddVehicleToBalanceUseCaseTest {
         result shouldBeRight {
             it shouldBe vehicleId
         }
-        persister[vehicleId] should {
+        repo[vehicleId] should {
             it.shouldNotBeNull()
             it.id shouldBe vehicleId
             it.vin shouldBe vin
@@ -55,12 +55,12 @@ internal class AddVehicleToBalanceUseCaseTest {
 
     @Test
     fun `shouldn't add vehicle to balance if exists ones with same registration plate`() {
-        val persister = FakePurchasingVehiclePersister()
+        val persister = InMemoryPurchasingVehicleRepository()
         val existingRegistrationPlate = registrationPlate()
 
         val result = AddVehicleToBalanceUseCase(
             idGenerator = { randomPurchasingVehicleId() },
-            vehicleExtractor = FakePurchasingVehicleExtractor().apply {
+            vehicleExtractor = InMemoryPurchasingVehicleRepository().apply {
                 put(
                     randomPurchasingVehicleId(), purchasingVehicle(registrationPlate = existingRegistrationPlate)
                 )
@@ -78,12 +78,12 @@ internal class AddVehicleToBalanceUseCaseTest {
 
     @Test
     fun `shouldn't add vehicle to balance if exists ones with same vin`() {
-        val persister = FakePurchasingVehiclePersister()
+        val persister = InMemoryPurchasingVehicleRepository()
         val existingVin = vin()
 
         val result = AddVehicleToBalanceUseCase(
             idGenerator = { randomPurchasingVehicleId() },
-            vehicleExtractor = FakePurchasingVehicleExtractor().apply {
+            vehicleExtractor = InMemoryPurchasingVehicleRepository().apply {
                 put(
                     randomPurchasingVehicleId(), purchasingVehicle(vin = existingVin)
                 )

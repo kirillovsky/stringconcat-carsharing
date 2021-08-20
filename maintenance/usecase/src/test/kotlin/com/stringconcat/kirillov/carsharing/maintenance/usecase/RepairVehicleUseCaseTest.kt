@@ -15,12 +15,12 @@ import org.junit.jupiter.api.Test
 internal class RepairVehicleUseCaseTest {
     @Test
     fun `should repair broken on finding vehicle`() {
-        val persister = FakeMaintenanceVehiclePersister()
+        val persister = InMemoryMaintenanceVehicleRepository()
         val brokenVehicleId = randomMaintenanceVehicleId()
         val brokenVehicle = maintenanceVehicle(id = brokenVehicleId, broken = true)
         val useCase = RepairVehicleUseCase(
             persister = persister,
-            vehicleExtractor = FakeMaintenanceVehicleExtractor().apply {
+            vehicleExtractor = InMemoryMaintenanceVehicleRepository().apply {
                 put(brokenVehicleId, brokenVehicle)
             }
         )
@@ -39,16 +39,16 @@ internal class RepairVehicleUseCaseTest {
 
     @Test
     fun `shouldn't repair vehicle if vehicle wasn't found`() {
-        val persister = FakeMaintenanceVehiclePersister()
+        val repo = InMemoryMaintenanceVehicleRepository()
         val usecase = RepairVehicleUseCase(
-            persister = persister,
-            vehicleExtractor = FakeMaintenanceVehicleExtractor()
+            persister = repo,
+            vehicleExtractor = repo
         )
 
         val notFoundVehicleId = randomMaintenanceVehicleId()
         val result = usecase.execute(id = notFoundVehicleId)
 
-        persister[notFoundVehicleId].shouldBeNull()
+        repo[notFoundVehicleId].shouldBeNull()
         result shouldBeLeft RepairVehicleUseCaseError.VehicleNotFound
     }
 }
