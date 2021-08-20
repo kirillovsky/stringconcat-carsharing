@@ -1,9 +1,9 @@
-package com.stringconcat.kirillov.carsharing.rules
+package com.stringconcat.kirillov.carsharing.application.rules
 
 import arrow.core.flatMap
 import arrow.core.getOrHandle
 import arrow.core.rightIfNotNull
-import com.stringconcat.kirillov.carsharing.listeners.DomainEventListener
+import com.stringconcat.kirillov.carsharing.application.listeners.DomainEventListener
 import com.stringconcat.kirillov.carsharing.maintenance.usecase.AddVehicleToInventory
 import com.stringconcat.kirillov.carsharing.maintenance.usecase.AddVehicleToInventoryRequest
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.PurchasingDepartmentEvents.VehicleAddedToPurchasingBalance

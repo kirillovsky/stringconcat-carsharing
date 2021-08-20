@@ -1,4 +1,4 @@
-package com.stringconcat.kirillov.carsharing.rules
+package com.stringconcat.kirillov.carsharing.application.rules
 
 import arrow.core.left
 import arrow.core.right

@@ -1,4 +1,4 @@
-package com.stringconcat.kirillov.carsharing.rules
+package com.stringconcat.kirillov.carsharing.application.rules
 
 import com.stringconcat.kirillov.carsharing.maintenance.domain.MaintenanceVehicleEvents.VehicleBroken
 import com.stringconcat.kirillov.carsharing.maintenance.domain.randomMaintenanceVehicleId

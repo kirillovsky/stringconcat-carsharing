@@ -1,7 +1,6 @@
-package com.stringconcat.kirillov.carsharing.rules
+package com.stringconcat.kirillov.carsharing.application.listeners
 
 import com.stringconcat.kirillov.carsharing.commons.types.base.DomainEvent
-import com.stringconcat.kirillov.carsharing.listeners.DomainEventListener
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 

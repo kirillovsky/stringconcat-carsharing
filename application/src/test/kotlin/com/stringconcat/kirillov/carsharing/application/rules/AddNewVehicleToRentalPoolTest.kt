@@ -1,6 +1,6 @@
-package com.stringconcat.kirillov.carsharing.rules
+package com.stringconcat.kirillov.carsharing.application.rules
 
-import com.stringconcat.kirillov.carsharing.maintenance.domain.MaintenanceVehicleEvents.VehicleRepaired
+import com.stringconcat.kirillov.carsharing.maintenance.domain.MaintenanceVehicleEvents.VehicleAddedToMaintenanceInventory
 import com.stringconcat.kirillov.carsharing.maintenance.domain.randomMaintenanceVehicleId
 import com.stringconcat.kirillov.carsharing.ride.domain.RideVehicleId
 import com.stringconcat.kirillov.carsharing.ride.usecase.MockPutRideVehicleUseCase
@@ -8,16 +8,16 @@ import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-internal class ReturnRepairedVehicleToRentalPoolRuleTest {
+internal class AddNewVehicleToRentalPoolTest {
     @Test
-    fun `should return repaired vehicle to rental pool`() {
-        val usecase = MockPutRideVehicleUseCase()
-        val rule = ReturnRepairedVehicleToRentalPoolRule(putRideVehicle = usecase)
+    fun `should add new vehicle to rental pool`() {
+        val putRideVehicle = MockPutRideVehicleUseCase()
+        val rule = AddNewVehicleToRentalPool(putRideVehicle = putRideVehicle)
         val vehicleId = randomMaintenanceVehicleId()
 
-        rule.handle(event = VehicleRepaired(vehicleId))
+        rule.handle(event = VehicleAddedToMaintenanceInventory(vehicleId))
 
-        usecase should {
+        putRideVehicle should {
             it.receivedRideVehicleId shouldBe RideVehicleId(vehicleId.value)
             it.receivedInRentalPool shouldBe true
         }

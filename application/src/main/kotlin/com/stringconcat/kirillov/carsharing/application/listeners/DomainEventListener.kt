@@ -1,4 +1,4 @@
-package com.stringconcat.kirillov.carsharing.listeners
+package com.stringconcat.kirillov.carsharing.application.listeners
 
 import com.stringconcat.kirillov.carsharing.commons.types.base.DomainEvent
 import java.lang.reflect.ParameterizedType

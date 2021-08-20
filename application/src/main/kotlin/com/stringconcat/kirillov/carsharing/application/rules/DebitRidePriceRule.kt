@@ -1,8 +1,8 @@
-package com.stringconcat.kirillov.carsharing.rules
+package com.stringconcat.kirillov.carsharing.application.rules
 
 import arrow.core.getOrHandle
 import com.stringconcat.kirillov.carsharing.integration.acquirer.Acquirer
-import com.stringconcat.kirillov.carsharing.listeners.DomainEventListener
+import com.stringconcat.kirillov.carsharing.application.listeners.DomainEventListener
 import com.stringconcat.kirillov.carsharing.ride.domain.RideFinishedEvent
 import com.stringconcat.kirillov.carsharing.ride.domain.Taximeter
 import com.stringconcat.kirillov.carsharing.ride.usecase.ride.RideExtractor
