@@ -15,4 +15,9 @@ dependencies {
     testImplementation(Libs.kotestArrow)
     testImplementation(Libs.kotlinScriptRuntime)
     testImplementation(Libs.junit5Params)
+
+    testFixturesImplementation(project(":commons:ddd-types"))
+    testFixturesImplementation(testFixtures(project(":commons:value-objects")))
+    testFixturesImplementation(testFixtures(project(":purchasing-department:domain")))
+    testFixturesImplementation(Libs.arrowCore)
 }

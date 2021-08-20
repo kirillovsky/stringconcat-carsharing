@@ -14,11 +14,12 @@ private val faker = Faker()
 fun randomPurchasingVehicleId() = PurchasingVehicleId(value = faker.number().randomNumber())
 
 fun purchasingVehicle(
+    id: PurchasingVehicleId = randomPurchasingVehicleId(),
     registrationPlate: RegistrationPlate = registrationPlate(),
     vin: Vin = vin(),
 ) = PurchasingVehicle
     .addVehicleToBalance(
-        idGenerator = { randomPurchasingVehicleId() },
+        idGenerator = { id },
         model = randomVehicleModel(),
         registrationPlate,
         vin,
