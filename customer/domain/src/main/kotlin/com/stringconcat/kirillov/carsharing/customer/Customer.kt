@@ -52,7 +52,7 @@ class Customer internal constructor(
                     birthDate = birthDate,
                     driverLicenseNumber = driverLicenseNumber
                 ).apply {
-                    addEvent(CustomerRegistered(value = id))
+                    addEvent(CustomerRegistered(customerId = id))
                 }.right()
             }
         }

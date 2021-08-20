@@ -44,7 +44,7 @@ internal class CustomerTest {
             it.birthDate shouldBe maturedYetBirthDate
             it.driverLicenseNumber shouldBe driverLicenseNumber
             it.isRejected = false
-            it.popEvents().shouldContainExactly(CustomerRegistered(value = id))
+            it.popEvents().shouldContainExactly(CustomerRegistered(customerId = id))
         }
     }
 
@@ -138,7 +138,7 @@ internal class CustomerTest {
 
         customer should {
             it.isRejected shouldBe true
-            it.popEvents().shouldContainExactly(CustomerRejected(value = id))
+            it.popEvents().shouldContainExactly(CustomerRejected(customerId = id))
         }
     }
 

@@ -3,7 +3,6 @@ package com.stringconcat.kirillov.carsharing.ride.usecase.ride
 import arrow.core.Either
 import arrow.core.extensions.either.apply.tupled
 import arrow.core.flatMap
-import arrow.core.getOrHandle
 import arrow.core.rightIfNotNull
 import com.stringconcat.kirillov.carsharing.ride.Ride
 import com.stringconcat.kirillov.carsharing.ride.RideId

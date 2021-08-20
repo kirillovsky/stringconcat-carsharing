@@ -45,7 +45,7 @@ internal class RegisterCustomerUseCaseTest {
             it.birthDate shouldBe birthDate
             it.fullName shouldBe fullName
             it.isRejected shouldBe false
-            it.popEvents().shouldContainExactly(CustomerRegistered(value = customerId))
+            it.popEvents().shouldContainExactly(CustomerRegistered(customerId = customerId))
         }
     }
 
