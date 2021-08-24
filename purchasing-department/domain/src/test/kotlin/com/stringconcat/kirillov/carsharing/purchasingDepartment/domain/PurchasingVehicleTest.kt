@@ -1,8 +1,10 @@
 package com.stringconcat.kirillov.carsharing.purchasingDepartment.domain
 
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.registrationPlate
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomVehicleModel
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.vin
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.randomVehicleModel
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.registrationPlate
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.vin
+import com.stringconcat.kirillov.carsharing.fixtures.purchasingDepartment.domain.purchasingVehicle
+import com.stringconcat.kirillov.carsharing.fixtures.purchasingDepartment.domain.randomPurchasingVehicleId
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.Capacity.Companion.five
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.PurchasingDepartmentEvents.VehicleAddedToPurchasingBalance
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.PurchasingVehicle.CreatePurchasingVehicleError.AlreadyExistsWithSameRegistrationPlate

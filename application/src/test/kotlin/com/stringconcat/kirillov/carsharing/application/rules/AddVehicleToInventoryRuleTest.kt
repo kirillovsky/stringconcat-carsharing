@@ -1,14 +1,14 @@
 package com.stringconcat.kirillov.carsharing.application.rules
 
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.toKilometers
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.toKilometers
+import com.stringconcat.kirillov.carsharing.fixtures.maintenance.domain.randomMaintenanceVehicleId
+import com.stringconcat.kirillov.carsharing.fixtures.purchasingDepartment.domain.purchasingVehicle
+import com.stringconcat.kirillov.carsharing.fixtures.purchasingDepartment.domain.randomPurchasingVehicleId
+import com.stringconcat.kirillov.carsharing.fixtures.purchasingDepartment.usecase.InMemoryPurchasingVehicleRepository
 import com.stringconcat.kirillov.carsharing.maintenance.domain.MaintenanceVehicleId
-import com.stringconcat.kirillov.carsharing.maintenance.domain.randomMaintenanceVehicleId
 import com.stringconcat.kirillov.carsharing.maintenance.usecase.AddVehicleToInventory
 import com.stringconcat.kirillov.carsharing.maintenance.usecase.AddVehicleToInventoryRequest
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.PurchasingDepartmentEvents.VehicleAddedToPurchasingBalance
-import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.purchasingVehicle
-import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.randomPurchasingVehicleId
-import com.stringconcat.kirillov.carsharing.purchasingDepartment.usecase.InMemoryPurchasingVehicleRepository
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull

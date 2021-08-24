@@ -1,10 +1,10 @@
 package com.stringconcat.kirillov.carsharing.customer.usecase
 
-import com.stringconcat.kirillov.carsharing.customer.domain.driverLicenseNumber
-import com.stringconcat.kirillov.carsharing.customer.domain.fullName
 import com.stringconcat.kirillov.carsharing.customer.usecase.RegisterCustomerRequest.DriverLicenseNumberData
 import com.stringconcat.kirillov.carsharing.customer.usecase.RegisterCustomerRequest.FullNameData
 import com.stringconcat.kirillov.carsharing.customer.usecase.RegisterCustomerRequest.InvalidRegisterCustomerParameters
+import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.driverLicenseNumber
+import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.fullName
 import io.kotest.assertions.arrow.either.shouldBeLeft
 import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.shouldBe

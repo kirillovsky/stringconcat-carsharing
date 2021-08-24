@@ -1,14 +1,14 @@
 package com.stringconcat.kirillov.carsharing.ride.usecase.ride
 
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomPrice
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.randomPrice
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.finishedRide
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.paidRide
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.randomRideId
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.startedRide
+import com.stringconcat.kirillov.carsharing.fixtures.ride.usecase.InMemoryRideRepository
 import com.stringconcat.kirillov.carsharing.ride.domain.RidePaidEvent
 import com.stringconcat.kirillov.carsharing.ride.domain.RideStatus.PAID
 import com.stringconcat.kirillov.carsharing.ride.domain.RideStatus.STARTED
-import com.stringconcat.kirillov.carsharing.ride.domain.finishedRide
-import com.stringconcat.kirillov.carsharing.ride.domain.paidRide
-import com.stringconcat.kirillov.carsharing.ride.domain.randomRideId
-import com.stringconcat.kirillov.carsharing.ride.domain.startedRide
-import com.stringconcat.kirillov.carsharing.ride.usecase.InMemoryRideRepository
 import com.stringconcat.kirillov.carsharing.ride.usecase.ride.PayRideUseCaseError.RideNotFound
 import com.stringconcat.kirillov.carsharing.ride.usecase.ride.PayRideUseCaseError.RideNotInFinishStatusError
 import io.kotest.assertions.arrow.either.shouldBeLeft

@@ -10,6 +10,7 @@ object Versions {
     const val junit5 = "5.7.2"
     const val detekt = "1.17.0"
     const val kotest = "4.4.3"
+    const val archUnit = "0.21.0"
 }
 
 object Plugins {
@@ -39,4 +40,5 @@ object Libs {
     const val kotestJunit5Runner = "io.kotest:kotest-runner-junit5:${Versions.kotest}"
     const val kotestArrow = "io.kotest:kotest-assertions-arrow:${Versions.kotest}"
     const val faker = "com.github.javafaker:javafaker:${Versions.faker}"
+    const val archunitJunit5 = "com.tngtech.archunit:archunit-junit5:${Versions.archUnit}"
 }

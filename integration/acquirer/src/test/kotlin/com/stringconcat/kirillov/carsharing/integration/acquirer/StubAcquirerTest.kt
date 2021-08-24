@@ -1,7 +1,7 @@
 package com.stringconcat.kirillov.carsharing.integration.acquirer
 
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomPrice
-import com.stringconcat.kirillov.carsharing.ride.domain.randomRideCustomerId
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.randomPrice
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.randomRideCustomerId
 import io.kotest.assertions.throwables.shouldNotThrow
 import org.junit.jupiter.api.Test
 

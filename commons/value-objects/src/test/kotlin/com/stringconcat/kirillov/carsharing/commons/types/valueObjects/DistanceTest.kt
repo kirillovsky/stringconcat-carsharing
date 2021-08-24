@@ -1,6 +1,7 @@
 package com.stringconcat.kirillov.carsharing.commons.types.valueObjects
 
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.Distance.NegativeDistanceValueError
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.toKilometers
 import io.kotest.assertions.arrow.either.shouldBeLeft
 import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.should

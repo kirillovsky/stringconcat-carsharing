@@ -1,5 +1,7 @@
 package com.stringconcat.kirillov.carsharing.ride.domain
 
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.randomRideCustomerId
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.rideCustomer
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test

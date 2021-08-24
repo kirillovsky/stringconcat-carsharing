@@ -1,8 +1,8 @@
 package com.stringconcat.kirillov.carsharing.maintenance.usecase
 
+import com.stringconcat.kirillov.carsharing.fixtures.maintenance.domain.maintenanceVehicle
+import com.stringconcat.kirillov.carsharing.fixtures.maintenance.domain.randomMaintenanceVehicleId
 import com.stringconcat.kirillov.carsharing.maintenance.domain.MaintenanceVehicleEvents.VehicleRepaired
-import com.stringconcat.kirillov.carsharing.maintenance.domain.maintenanceVehicle
-import com.stringconcat.kirillov.carsharing.maintenance.domain.randomMaintenanceVehicleId
 import io.kotest.assertions.arrow.either.shouldBeLeft
 import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.collections.shouldContainExactly

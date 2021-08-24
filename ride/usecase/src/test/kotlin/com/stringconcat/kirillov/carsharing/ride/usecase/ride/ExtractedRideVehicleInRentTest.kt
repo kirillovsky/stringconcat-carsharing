@@ -1,9 +1,9 @@
 package com.stringconcat.kirillov.carsharing.ride.usecase.ride
 
-import com.stringconcat.kirillov.carsharing.ride.domain.randomRideId
-import com.stringconcat.kirillov.carsharing.ride.domain.randomRideVehicleId
-import com.stringconcat.kirillov.carsharing.ride.domain.startedRide
-import com.stringconcat.kirillov.carsharing.ride.usecase.InMemoryRideRepository
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.randomRideId
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.randomRideVehicleId
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.startedRide
+import com.stringconcat.kirillov.carsharing.fixtures.ride.usecase.InMemoryRideRepository
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 

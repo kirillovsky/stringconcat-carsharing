@@ -1,9 +1,11 @@
 package com.stringconcat.kirillov.carsharing.maintenance.domain
 
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.toKilometers
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomVehicleModel
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.registrationPlate
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.vin
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.randomVehicleModel
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.registrationPlate
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.toKilometers
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.vin
+import com.stringconcat.kirillov.carsharing.fixtures.maintenance.domain.maintenanceVehicle
+import com.stringconcat.kirillov.carsharing.fixtures.maintenance.domain.randomMaintenanceVehicleId
 import com.stringconcat.kirillov.carsharing.maintenance.domain.MaintenanceVehicleEvents.VehicleAddedToMaintenanceInventory
 import com.stringconcat.kirillov.carsharing.maintenance.domain.MaintenanceVehicleEvents.VehicleBroken
 import com.stringconcat.kirillov.carsharing.maintenance.domain.MaintenanceVehicleEvents.VehicleCoveredMileageIncreased

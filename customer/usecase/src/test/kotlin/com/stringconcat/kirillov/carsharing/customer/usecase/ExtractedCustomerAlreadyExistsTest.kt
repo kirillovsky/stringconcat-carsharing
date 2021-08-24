@@ -1,7 +1,7 @@
 package com.stringconcat.kirillov.carsharing.customer.usecase
 
-import com.stringconcat.kirillov.carsharing.customer.domain.customer
-import com.stringconcat.kirillov.carsharing.customer.domain.fullName
+import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.customer
+import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.fullName
 import io.kotest.matchers.shouldBe
 import java.time.LocalDate
 import org.junit.jupiter.api.Test

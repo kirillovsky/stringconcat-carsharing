@@ -1,7 +1,7 @@
 package com.stringconcat.kirillov.carsharing.ride.usecase.vehicle
 
-import com.stringconcat.kirillov.carsharing.ride.domain.rideVehicle
-import com.stringconcat.kirillov.carsharing.ride.usecase.InMemoryRideVehicleRepository
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.rideVehicle
+import com.stringconcat.kirillov.carsharing.fixtures.ride.usecase.InMemoryRideVehicleRepository
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe

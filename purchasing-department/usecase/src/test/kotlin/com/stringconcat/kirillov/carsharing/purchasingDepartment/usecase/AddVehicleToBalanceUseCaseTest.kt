@@ -1,12 +1,14 @@
 package com.stringconcat.kirillov.carsharing.purchasingDepartment.usecase
 
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomVehicleModel
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.registrationPlate
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.vin
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.randomVehicleModel
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.registrationPlate
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.vin
+import com.stringconcat.kirillov.carsharing.fixtures.purchasingDepartment.domain.purchasingVehicle
+import com.stringconcat.kirillov.carsharing.fixtures.purchasingDepartment.domain.randomCapacity
+import com.stringconcat.kirillov.carsharing.fixtures.purchasingDepartment.domain.randomPurchasingVehicleId
+import com.stringconcat.kirillov.carsharing.fixtures.purchasingDepartment.usecase.InMemoryPurchasingVehicleRepository
+import com.stringconcat.kirillov.carsharing.fixtures.purchasingDepartment.usecase.addVehicleToBalanceRequest
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.PurchasingDepartmentEvents.VehicleAddedToPurchasingBalance
-import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.purchasingVehicle
-import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.randomCapacity
-import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.randomPurchasingVehicleId
 import io.kotest.assertions.arrow.either.shouldBeLeft
 import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.collections.shouldContainExactly
