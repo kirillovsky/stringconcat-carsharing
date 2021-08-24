@@ -14,6 +14,7 @@ dependencies {
     implementation(project(":customer:usecase"))
     implementation(project(":customer:persistence"))
     implementation(project(":integration:acquirer"))
+    implementation(project(":integration:gis-gmp"))
     implementation(Libs.arrowCore)
 
     testImplementation(testFixtures(project(":commons:value-objects")))
