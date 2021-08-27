@@ -3,10 +3,10 @@ package com.stringconcat.kirillov.carsharing.customer.usecase
 import com.stringconcat.kirillov.carsharing.customer.domain.CustomerActuallyExists
 import com.stringconcat.kirillov.carsharing.customer.domain.CustomerAlreadyRegistered
 import com.stringconcat.kirillov.carsharing.customer.domain.CustomerRegistered
-import com.stringconcat.kirillov.carsharing.customer.domain.asYearsAge
-import com.stringconcat.kirillov.carsharing.customer.domain.driverLicenseNumber
-import com.stringconcat.kirillov.carsharing.customer.domain.fullName
-import com.stringconcat.kirillov.carsharing.customer.domain.randomCustomerId
+import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.asYearsAge
+import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.driverLicenseNumber
+import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.fullName
+import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.randomCustomerId
 import io.kotest.assertions.arrow.either.shouldBeLeft
 import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.collections.shouldContainExactly

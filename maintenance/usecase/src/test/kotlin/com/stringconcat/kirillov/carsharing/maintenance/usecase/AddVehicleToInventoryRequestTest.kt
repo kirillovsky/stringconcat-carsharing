@@ -1,10 +1,10 @@
 package com.stringconcat.kirillov.carsharing.maintenance.usecase
 
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomDistance
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomVehicleModel
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.registrationPlate
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.vin
-import com.stringconcat.kirillov.carsharing.maintenance.domain.randomMaintenanceVehicleId
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.randomDistance
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.randomVehicleModel
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.registrationPlate
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.vin
+import com.stringconcat.kirillov.carsharing.fixtures.maintenance.domain.randomMaintenanceVehicleId
 import com.stringconcat.kirillov.carsharing.maintenance.usecase.AddVehicleToInventoryRequest.InvalidVehicleParameters
 import com.stringconcat.kirillov.carsharing.maintenance.usecase.AddVehicleToInventoryRequest.RegistrationPlateData
 import com.stringconcat.kirillov.carsharing.maintenance.usecase.AddVehicleToInventoryRequest.VehicleModelData

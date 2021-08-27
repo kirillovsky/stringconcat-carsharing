@@ -1,12 +1,12 @@
 package com.stringconcat.kirillov.carsharing.ride.usecase.ride
 
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomDistance
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.randomDistance
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.finishedRide
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.randomRideId
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.startedRide
+import com.stringconcat.kirillov.carsharing.fixtures.ride.usecase.InMemoryRideRepository
 import com.stringconcat.kirillov.carsharing.ride.domain.RideFinishedEvent
 import com.stringconcat.kirillov.carsharing.ride.domain.RideStatus.FINISHED
-import com.stringconcat.kirillov.carsharing.ride.domain.finishedRide
-import com.stringconcat.kirillov.carsharing.ride.domain.randomRideId
-import com.stringconcat.kirillov.carsharing.ride.domain.startedRide
-import com.stringconcat.kirillov.carsharing.ride.usecase.InMemoryRideRepository
 import com.stringconcat.kirillov.carsharing.ride.usecase.ride.FinishRideUseCaseError.RideAlreadyFinishedError
 import com.stringconcat.kirillov.carsharing.ride.usecase.ride.FinishRideUseCaseError.RideNotFound
 import io.kotest.assertions.arrow.either.shouldBeLeft

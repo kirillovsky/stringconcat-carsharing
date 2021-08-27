@@ -4,6 +4,11 @@ import com.stringconcat.kirillov.carsharing.customer.domain.CustomerRegistration
 import com.stringconcat.kirillov.carsharing.customer.domain.CustomerRegistrationError.AlreadyRegistered
 import com.stringconcat.kirillov.carsharing.customer.domain.CustomerRegistrationError.BirthDateMoreThanRegistrationDate
 import com.stringconcat.kirillov.carsharing.customer.domain.CustomerRegistrationError.NotMaturedEnough
+import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.asYearsAge
+import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.customer
+import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.driverLicenseNumber
+import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.fullName
+import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.randomCustomerId
 import io.kotest.assertions.arrow.either.shouldBeLeft
 import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.collections.shouldContainExactly

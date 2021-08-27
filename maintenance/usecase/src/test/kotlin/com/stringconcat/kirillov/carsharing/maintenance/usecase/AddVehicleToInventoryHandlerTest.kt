@@ -1,12 +1,12 @@
 package com.stringconcat.kirillov.carsharing.maintenance.usecase
 
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomDistance
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomVehicleModel
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.registrationPlate
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.vin
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.randomDistance
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.randomVehicleModel
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.registrationPlate
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.vin
+import com.stringconcat.kirillov.carsharing.fixtures.maintenance.domain.maintenanceVehicle
+import com.stringconcat.kirillov.carsharing.fixtures.maintenance.domain.randomMaintenanceVehicleId
 import com.stringconcat.kirillov.carsharing.maintenance.domain.MaintenanceVehicleEvents.VehicleAddedToMaintenanceInventory
-import com.stringconcat.kirillov.carsharing.maintenance.domain.maintenanceVehicle
-import com.stringconcat.kirillov.carsharing.maintenance.domain.randomMaintenanceVehicleId
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.maps.shouldBeEmpty
 import io.kotest.matchers.nulls.shouldNotBeNull

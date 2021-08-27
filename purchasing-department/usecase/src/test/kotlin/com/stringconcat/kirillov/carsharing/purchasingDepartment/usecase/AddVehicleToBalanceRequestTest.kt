@@ -1,9 +1,9 @@
 package com.stringconcat.kirillov.carsharing.purchasingDepartment.usecase
 
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomVehicleModel
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.registrationPlate
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.vin
-import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.randomCapacity
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.randomVehicleModel
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.registrationPlate
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.vin
+import com.stringconcat.kirillov.carsharing.fixtures.purchasingDepartment.domain.randomCapacity
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.usecase.AddVehicleToBalanceRequest.InvalidAddVehicleToBalanceParameters
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.usecase.AddVehicleToBalanceRequest.RegistrationPlateDate
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.usecase.AddVehicleToBalanceRequest.VehicleModeData

@@ -2,14 +2,14 @@ package com.stringconcat.kirillov.carsharing.application.rules
 
 import arrow.core.left
 import arrow.core.right
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomPrice
-import com.stringconcat.kirillov.carsharing.integration.acquirer.MockAcquirer
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.randomPrice
+import com.stringconcat.kirillov.carsharing.fixtures.integration.acquirer.MockAcquirer
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.StubTaximeter
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.finishedRide
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.randomRideId
+import com.stringconcat.kirillov.carsharing.fixtures.ride.usecase.InMemoryRideRepository
 import com.stringconcat.kirillov.carsharing.ride.domain.CalculationRidePriceError
 import com.stringconcat.kirillov.carsharing.ride.domain.RideFinishedEvent
-import com.stringconcat.kirillov.carsharing.ride.domain.StubTaximeter
-import com.stringconcat.kirillov.carsharing.ride.domain.finishedRide
-import com.stringconcat.kirillov.carsharing.ride.domain.randomRideId
-import com.stringconcat.kirillov.carsharing.ride.usecase.InMemoryRideRepository
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.should

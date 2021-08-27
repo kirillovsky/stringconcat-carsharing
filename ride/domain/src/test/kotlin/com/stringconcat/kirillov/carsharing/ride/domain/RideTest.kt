@@ -1,9 +1,15 @@
 package com.stringconcat.kirillov.carsharing.ride.domain
 
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomDistance
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomPrice
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.toKilometers
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.toPrice
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.randomDistance
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.randomPrice
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.toKilometers
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.toPrice
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.finishedRide
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.paidRide
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.randomRideId
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.rideCustomer
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.rideVehicle
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.startedRide
 import com.stringconcat.kirillov.carsharing.ride.domain.RideStartingError.CustomerIsRejected
 import com.stringconcat.kirillov.carsharing.ride.domain.RideStartingError.VehicleAlreadyInRent
 import com.stringconcat.kirillov.carsharing.ride.domain.RideStartingError.VehicleNotInRentalPool

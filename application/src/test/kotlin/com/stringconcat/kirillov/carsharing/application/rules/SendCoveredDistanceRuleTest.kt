@@ -9,10 +9,10 @@ import com.stringconcat.kirillov.carsharing.maintenance.usecase.IncreaseVehicleM
 import com.stringconcat.kirillov.carsharing.maintenance.usecase.IncreaseVehicleMileageUseCaseError
 import com.stringconcat.kirillov.carsharing.maintenance.usecase.IncreaseVehicleMileageUseCaseError.VehicleNotFound
 import com.stringconcat.kirillov.carsharing.ride.domain.RideFinishedEvent
-import com.stringconcat.kirillov.carsharing.ride.domain.finishedRide
-import com.stringconcat.kirillov.carsharing.ride.domain.randomRideId
-import com.stringconcat.kirillov.carsharing.ride.domain.startedRide
-import com.stringconcat.kirillov.carsharing.ride.usecase.InMemoryRideRepository
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.finishedRide
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.randomRideId
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.startedRide
+import com.stringconcat.kirillov.carsharing.fixtures.ride.usecase.InMemoryRideRepository
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.should

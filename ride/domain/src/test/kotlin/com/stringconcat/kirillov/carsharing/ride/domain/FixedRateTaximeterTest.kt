@@ -1,8 +1,10 @@
 package com.stringconcat.kirillov.carsharing.ride.domain
 
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.randomPrice
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.toKilometers
-import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.toPrice
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.randomPrice
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.toKilometers
+import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.toPrice
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.finishedRide
+import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.startedRide
 import io.kotest.assertions.arrow.either.shouldBeLeft
 import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.shouldBe
