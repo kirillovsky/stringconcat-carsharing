@@ -4,6 +4,9 @@
 ## Onboarding
 ### Описание
 	https://howto.stringconcat.com/project-carsharing
+	
+### Event storming
+https://miro.com/app/board/o9J_lA2w404=/
 
 ### Архитектурные решения
 Система включает в себя приложения с разными [арх. характеристиками](https://miro.com/app/board/o9J_lFr3Hp4=/):
