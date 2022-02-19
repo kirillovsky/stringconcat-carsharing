@@ -1,3 +1,7 @@
+plugins {
+    id(Plugins.javaTestFixtures)
+}
+
 dependencies {
     implementation(project(":commons:ddd-types"))
     implementation(project(":commons:value-objects"))

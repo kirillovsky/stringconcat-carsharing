@@ -9,7 +9,7 @@ dependencies {
     implementation(project(":purchasing-department:persistence"))
     implementation(project(":ride:domain"))
     implementation(project(":ride:usecase"))
-    implementation(project(":ride:persistence"))
+    implementation(project(":ride:postgres-persistence"))
     implementation(project(":customer:domain"))
     implementation(project(":customer:usecase"))
     implementation(project(":customer:persistence"))
