@@ -3,8 +3,8 @@ package com.stringconcat.kirillov.carsharing.customer.domain
 import com.stringconcat.kirillov.carsharing.customer.domain.AgeCreationErrors.BirthDateMoreThanCurrentDate
 import com.stringconcat.kirillov.carsharing.customer.domain.AgeCreationErrors.IllegalYearsCount
 import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.asYearsAge
-import io.kotest.assertions.arrow.either.shouldBeLeft
-import io.kotest.assertions.arrow.either.shouldBeRight
+import io.kotest.assertions.arrow.core.shouldBeLeft
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.comparables.shouldBeEqualComparingTo
 import io.kotest.matchers.comparables.shouldBeGreaterThan
 import io.kotest.matchers.comparables.shouldBeLessThan
@@ -20,18 +20,14 @@ internal class AgeTest {
 
         val age = Age.from(yearsCount = expectedYearsCount)
 
-        age shouldBeRight {
-            it.yearsCount shouldBe expectedYearsCount
-        }
+        age.shouldBeRight().yearsCount shouldBe expectedYearsCount
     }
 
     @Test
     fun `age shouldn't contains negative yearsCount`() {
         val result = Age.from(yearsCount = -10)
 
-        result shouldBeLeft {
-            it shouldBe IllegalYearsCount
-        }
+        result shouldBeLeft IllegalYearsCount
     }
 
     @Test
@@ -53,9 +49,7 @@ internal class AgeTest {
             currentDate = LocalDate.of(2021, JULY, 19)
         )
 
-        result shouldBeLeft {
-            it shouldBe BirthDateMoreThanCurrentDate
-        }
+        result shouldBeLeft BirthDateMoreThanCurrentDate
     }
 
     @Test

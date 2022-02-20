@@ -1,7 +1,7 @@
 package com.stringconcat.kirillov.carsharing.maintenance.usecase
 
 import arrow.core.Either
-import arrow.core.extensions.either.apply.tupled
+import arrow.core.zip
 import com.stringconcat.kirillov.carsharing.commons.types.error.BusinessError
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.CreateRegistrationPlateError
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.CreateVehicleModelError
@@ -30,20 +30,21 @@ data class AddVehicleToInventoryRequest internal constructor(
             vinCode: String,
             coveredMileageValue: BigDecimal
         ): Either<InvalidVehicleParameters, AddVehicleToInventoryRequest> =
-            tupled(
-                VehicleModel.from(modelData.name, modelData.maker),
-                registrationPlateData.run { RegistrationPlate.from(series, number, regionCode) },
-                Vin.from(vinCode),
-                Distance.ofKilometers(coveredMileageValue)
-            ).map { (model, registrationPlate, vin, coveredDistance) ->
-                AddVehicleToInventoryRequest(
-                    MaintenanceVehicleId(id),
-                    model,
-                    vin,
-                    coveredDistance,
-                    registrationPlate
-                )
-            }.mapLeft(BusinessError::toErrorMessage)
+            VehicleModel
+                .from(modelData.name, modelData.maker)
+                .zip(
+                    registrationPlateData.run { RegistrationPlate.from(series, number, regionCode) },
+                    Vin.from(vinCode),
+                    Distance.ofKilometers(coveredMileageValue)
+                ) { model, registrationPlate, vin, coveredDistance ->
+                    AddVehicleToInventoryRequest(
+                        MaintenanceVehicleId(id),
+                        model,
+                        vin,
+                        coveredDistance,
+                        registrationPlate
+                    )
+                }.mapLeft(BusinessError::toErrorMessage)
     }
 
     class VehicleModelData(val maker: String, val name: String)

@@ -1,8 +1,8 @@
 package com.stringconcat.kirillov.carsharing.purchasingDepartment.domain
 
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.Capacity.IllegalCapacityValueError
-import io.kotest.assertions.arrow.either.shouldBeLeft
-import io.kotest.assertions.arrow.either.shouldBeRight
+import io.kotest.assertions.arrow.core.shouldBeLeft
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -14,9 +14,7 @@ internal class CapacityTest {
         val expectedValue = 5
         val capacity = Capacity.from(expectedValue)
 
-        capacity shouldBeRight {
-            it.value shouldBe expectedValue
-        }
+        capacity.shouldBeRight().value shouldBe expectedValue
     }
 
     @ParameterizedTest(name = "capacity shouldn''t be less or equals to zero - ''{0}''")
@@ -24,9 +22,7 @@ internal class CapacityTest {
     fun `capacity shouldn't be less or equals to zero`(illegalValue: Int) {
         val negativeCapacity = Capacity.from(illegalValue)
 
-        negativeCapacity shouldBeLeft {
-            it shouldBe IllegalCapacityValueError
-        }
+        negativeCapacity shouldBeLeft IllegalCapacityValueError
     }
 
     @Test

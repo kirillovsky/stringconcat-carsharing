@@ -16,8 +16,8 @@ import com.stringconcat.kirillov.carsharing.ride.domain.RideStartingError.Vehicl
 import com.stringconcat.kirillov.carsharing.ride.domain.RideStatus.FINISHED
 import com.stringconcat.kirillov.carsharing.ride.domain.RideStatus.PAID
 import com.stringconcat.kirillov.carsharing.ride.domain.RideStatus.STARTED
-import io.kotest.assertions.arrow.either.shouldBeLeft
-import io.kotest.assertions.arrow.either.shouldBeRight
+import io.kotest.assertions.arrow.core.shouldBeLeft
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
@@ -45,7 +45,7 @@ internal class RideTest {
             startDateTime = expectedStartDateTime
         )
 
-        ride shouldBeRight {
+        ride.shouldBeRight().let {
             it.id shouldBe expectedId
             it.customerId shouldBe validCustomer.id
             it.vehicleId shouldBe validVehicle.id
@@ -65,9 +65,7 @@ internal class RideTest {
             startDateTime = now()
         )
 
-        result shouldBeLeft {
-            it shouldBe CustomerIsRejected
-        }
+        result shouldBeLeft CustomerIsRejected
     }
 
     @Test
@@ -80,9 +78,7 @@ internal class RideTest {
             startDateTime = now()
         )
 
-        result shouldBeLeft {
-            it shouldBe VehicleNotInRentalPool
-        }
+        result shouldBeLeft VehicleNotInRentalPool
     }
 
     @Test
@@ -96,9 +92,7 @@ internal class RideTest {
             startDateTime = now()
         )
 
-        result shouldBeLeft {
-            it shouldBe VehicleAlreadyInRent
-        }
+        result shouldBeLeft VehicleAlreadyInRent
     }
 
     @Test

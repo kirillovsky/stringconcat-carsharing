@@ -1,7 +1,7 @@
 package com.stringconcat.kirillov.carsharing.purchasingDepartment.usecase
 
 import arrow.core.Either
-import arrow.core.extensions.either.apply.tupled
+import arrow.core.zip
 import com.stringconcat.kirillov.carsharing.commons.types.error.BusinessError
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.CreateRegistrationPlateError
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.CreateVehicleModelError
@@ -25,16 +25,16 @@ data class AddVehicleToBalanceRequest internal constructor(
             registrationPlateData: RegistrationPlateDate,
             vinData: String,
             capacityData: Int,
-        ): Either<InvalidAddVehicleToBalanceParameters, AddVehicleToBalanceRequest> {
-            return tupled(
-                modelData.run { VehicleModel.from(name, maker) },
-                registrationPlateData.run { RegistrationPlate.from(series, number, regionCode) },
-                Vin.from(vinData),
-                Capacity.from(capacityData)
-            ).map { (model, registrationPlate, vin, capacity) ->
-                AddVehicleToBalanceRequest(model, registrationPlate, vin, capacity)
-            }.mapLeft { it.toErrorMessage() }
-        }
+        ): Either<InvalidAddVehicleToBalanceParameters, AddVehicleToBalanceRequest> =
+            modelData.run { VehicleModel.from(name, maker) }
+                .zip(
+                    registrationPlateData.run { RegistrationPlate.from(series, number, regionCode) },
+                    Vin.from(vinData),
+                    Capacity.from(capacityData)
+                ) { model, registrationPlate, vin, capacity ->
+                    AddVehicleToBalanceRequest(model, registrationPlate, vin, capacity)
+                }
+                .mapLeft { it.toErrorMessage() }
     }
 
     class VehicleModeData(val maker: String, val name: String)

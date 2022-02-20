@@ -11,8 +11,8 @@ import com.stringconcat.kirillov.carsharing.ride.domain.RideStatus.PAID
 import com.stringconcat.kirillov.carsharing.ride.domain.RideStatus.STARTED
 import com.stringconcat.kirillov.carsharing.ride.usecase.ride.PayRideUseCaseError.RideNotFound
 import com.stringconcat.kirillov.carsharing.ride.usecase.ride.PayRideUseCaseError.RideNotInFinishStatusError
-import io.kotest.assertions.arrow.either.shouldBeLeft
-import io.kotest.assertions.arrow.either.shouldBeRight
+import io.kotest.assertions.arrow.core.shouldBeLeft
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull

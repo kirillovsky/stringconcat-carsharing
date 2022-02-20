@@ -9,8 +9,8 @@ import com.stringconcat.kirillov.carsharing.ride.domain.RideFinishedEvent
 import com.stringconcat.kirillov.carsharing.ride.domain.RideStatus.FINISHED
 import com.stringconcat.kirillov.carsharing.ride.usecase.ride.FinishRideUseCaseError.RideAlreadyFinishedError
 import com.stringconcat.kirillov.carsharing.ride.usecase.ride.FinishRideUseCaseError.RideNotFound
-import io.kotest.assertions.arrow.either.shouldBeLeft
-import io.kotest.assertions.arrow.either.shouldBeRight
+import io.kotest.assertions.arrow.core.shouldBeLeft
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull

@@ -5,8 +5,8 @@ import com.stringconcat.kirillov.carsharing.customer.usecase.RegisterCustomerReq
 import com.stringconcat.kirillov.carsharing.customer.usecase.RegisterCustomerRequest.InvalidRegisterCustomerParameters
 import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.driverLicenseNumber
 import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.fullName
-import io.kotest.assertions.arrow.either.shouldBeLeft
-import io.kotest.assertions.arrow.either.shouldBeRight
+import io.kotest.assertions.arrow.core.shouldBeLeft
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.shouldBe
 import java.time.LocalDate
 import java.time.Month.AUGUST

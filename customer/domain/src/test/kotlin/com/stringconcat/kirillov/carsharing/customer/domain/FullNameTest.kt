@@ -3,8 +3,8 @@ package com.stringconcat.kirillov.carsharing.customer.domain
 import com.stringconcat.kirillov.carsharing.customer.domain.CreateFullNameError.InvalidFirstName
 import com.stringconcat.kirillov.carsharing.customer.domain.CreateFullNameError.InvalidMiddleName
 import com.stringconcat.kirillov.carsharing.customer.domain.CreateFullNameError.InvalidSecondName
-import io.kotest.assertions.arrow.either.shouldBeLeft
-import io.kotest.assertions.arrow.either.shouldBeRight
+import io.kotest.assertions.arrow.core.shouldBeLeft
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -23,7 +23,7 @@ internal class FullNameTest {
             secondName = "  ${correctSecondName.lowercase()} "
         )
 
-        fullName shouldBeRight {
+        fullName.shouldBeRight().let {
             it.firstName shouldBe correctFirstName
             it.middleName shouldBe correctMiddleName
             it.secondName shouldBe correctSecondName
@@ -35,18 +35,14 @@ internal class FullNameTest {
     fun `fullName should contains only russian letters in middleName`(middleName: String) {
         val fullName = FullName.from(correctFirstName, middleName, correctSecondName)
 
-        fullName shouldBeLeft {
-            it shouldBe InvalidMiddleName
-        }
+        fullName shouldBeLeft InvalidMiddleName
     }
 
     @Test
     fun `fullName can contains nullable middleName`() {
         val fullName = FullName.from(firstName = correctFirstName, secondName = correctSecondName)
 
-        fullName shouldBeRight {
-            it.middleName shouldBe null
-        }
+        fullName.shouldBeRight().middleName shouldBe null
     }
 
     @ParameterizedTest(name = "fullName should contains only russian letters in firstName - {0}")
@@ -54,9 +50,7 @@ internal class FullNameTest {
     fun `fullName should contains only russian letters in firstName`(firstName: String) {
         val fullName = FullName.from(firstName, secondName = correctSecondName)
 
-        fullName shouldBeLeft {
-            it shouldBe InvalidFirstName
-        }
+        fullName shouldBeLeft InvalidFirstName
     }
 
     @ParameterizedTest(name = "fullName should contains only russian letters or hyphen in secondName - {0}")
@@ -64,9 +58,7 @@ internal class FullNameTest {
     fun `fullName should contains russian letters in secondName`(secondName: String) {
         val fullName = FullName.from(firstName = correctFirstName, secondName = secondName)
 
-        fullName shouldBeLeft {
-            it shouldBe InvalidSecondName
-        }
+        fullName shouldBeLeft InvalidSecondName
     }
 
     @Test
@@ -74,8 +66,6 @@ internal class FullNameTest {
         val expectedSecondName = "ПУПКИН-ИВАНОВ"
         val fullName = FullName.from(firstName = correctFirstName, secondName = expectedSecondName)
 
-        fullName shouldBeRight {
-            it.secondName shouldBe expectedSecondName
-        }
+        fullName.shouldBeRight().secondName shouldBe expectedSecondName
     }
 }

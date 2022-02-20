@@ -16,8 +16,8 @@ import com.stringconcat.kirillov.carsharing.ride.usecase.ride.StartRideUseCaseEr
 import com.stringconcat.kirillov.carsharing.ride.usecase.ride.StartRideUseCaseError.VehicleAlreadyInRent
 import com.stringconcat.kirillov.carsharing.ride.usecase.ride.StartRideUseCaseError.VehicleNotFound
 import com.stringconcat.kirillov.carsharing.ride.usecase.ride.StartRideUseCaseError.VehicleNotInRentalPool
-import io.kotest.assertions.arrow.either.shouldBeLeft
-import io.kotest.assertions.arrow.either.shouldBeRight
+import io.kotest.assertions.arrow.core.shouldBeLeft
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull

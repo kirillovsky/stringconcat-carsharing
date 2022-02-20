@@ -7,9 +7,8 @@ import com.stringconcat.kirillov.carsharing.fixtures.purchasingDepartment.domain
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.usecase.AddVehicleToBalanceRequest.InvalidAddVehicleToBalanceParameters
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.usecase.AddVehicleToBalanceRequest.RegistrationPlateDate
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.usecase.AddVehicleToBalanceRequest.VehicleModeData
-import io.kotest.assertions.arrow.either.shouldBeLeft
-import io.kotest.assertions.arrow.either.shouldBeRight
-import io.kotest.matchers.shouldBe
+import io.kotest.assertions.arrow.core.shouldBeLeft
+import io.kotest.assertions.arrow.core.shouldBeRight
 import org.junit.jupiter.api.Test
 
 internal class AddVehicleToBalanceRequestTest {
@@ -50,9 +49,7 @@ internal class AddVehicleToBalanceRequestTest {
             randomCapacityData
         )
 
-        result shouldBeLeft {
-            it shouldBe InvalidAddVehicleToBalanceParameters("Invalid model")
-        }
+        result shouldBeLeft InvalidAddVehicleToBalanceParameters("Invalid model")
     }
 
     @Test
@@ -68,9 +65,7 @@ internal class AddVehicleToBalanceRequestTest {
             randomCapacityData
         )
 
-        result shouldBeLeft {
-            it shouldBe InvalidAddVehicleToBalanceParameters("Invalid registrationPlate")
-        }
+        result shouldBeLeft InvalidAddVehicleToBalanceParameters("Invalid registrationPlate")
     }
 
     @Test
@@ -82,9 +77,7 @@ internal class AddVehicleToBalanceRequestTest {
             randomCapacityData
         )
 
-        result shouldBeLeft {
-            it shouldBe InvalidAddVehicleToBalanceParameters("Invalid vin")
-        }
+        result shouldBeLeft InvalidAddVehicleToBalanceParameters("Invalid vin")
     }
 
     @Test
@@ -96,8 +89,6 @@ internal class AddVehicleToBalanceRequestTest {
             capacityData = -2
         )
 
-        result shouldBeLeft {
-            it shouldBe InvalidAddVehicleToBalanceParameters("Invalid capacity")
-        }
+        result shouldBeLeft InvalidAddVehicleToBalanceParameters("Invalid capacity")
     }
 }

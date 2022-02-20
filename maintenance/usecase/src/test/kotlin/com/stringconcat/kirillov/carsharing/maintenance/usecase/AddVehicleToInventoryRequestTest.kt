@@ -8,8 +8,8 @@ import com.stringconcat.kirillov.carsharing.fixtures.maintenance.domain.randomMa
 import com.stringconcat.kirillov.carsharing.maintenance.usecase.AddVehicleToInventoryRequest.InvalidVehicleParameters
 import com.stringconcat.kirillov.carsharing.maintenance.usecase.AddVehicleToInventoryRequest.RegistrationPlateData
 import com.stringconcat.kirillov.carsharing.maintenance.usecase.AddVehicleToInventoryRequest.VehicleModelData
-import io.kotest.assertions.arrow.either.shouldBeLeft
-import io.kotest.assertions.arrow.either.shouldBeRight
+import io.kotest.assertions.arrow.core.shouldBeLeft
+import io.kotest.assertions.arrow.core.shouldBeRight
 import org.junit.jupiter.api.Test
 
 internal class AddVehicleToInventoryRequestTest {

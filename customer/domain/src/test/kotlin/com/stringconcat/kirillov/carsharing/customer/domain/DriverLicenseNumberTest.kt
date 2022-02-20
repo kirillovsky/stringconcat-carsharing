@@ -2,8 +2,8 @@ package com.stringconcat.kirillov.carsharing.customer.domain
 
 import com.stringconcat.kirillov.carsharing.customer.domain.DriverLicenseNumberError.IllegalNumber
 import com.stringconcat.kirillov.carsharing.customer.domain.DriverLicenseNumberError.IllegalSeries
-import io.kotest.assertions.arrow.either.shouldBeLeft
-import io.kotest.assertions.arrow.either.shouldBeRight
+import io.kotest.assertions.arrow.core.shouldBeLeft
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.DynamicTest.dynamicTest
@@ -18,7 +18,7 @@ internal class DriverLicenseNumberTest {
     fun `driver license number should contains series and number`() {
         val driverLicenseNumber = DriverLicenseNumber.from(series = correctSeries, number = correctNumber)
 
-        driverLicenseNumber shouldBeRight {
+        driverLicenseNumber.shouldBeRight().let {
             it.series shouldBe correctSeries
             it.number shouldBe correctNumber
         }
@@ -40,9 +40,7 @@ internal class DriverLicenseNumberTest {
             dynamicTest("driver license number shouldn't contains $caseName - '$illegalSeries'") {
                 val driverLicenseNumber = DriverLicenseNumber.from(series = illegalSeries, number = correctNumber)
 
-                driverLicenseNumber shouldBeLeft {
-                    it shouldBe IllegalSeries
-                }
+                driverLicenseNumber shouldBeLeft IllegalSeries
             }
         }
     }
@@ -61,9 +59,7 @@ internal class DriverLicenseNumberTest {
             dynamicTest("driver license number shouldn't contains $caseName - '$illegalNumber'") {
                 val driverLicenseNumber = DriverLicenseNumber.from(series = correctSeries, number = illegalNumber)
 
-                driverLicenseNumber shouldBeLeft {
-                    it shouldBe IllegalNumber
-                }
+                driverLicenseNumber shouldBeLeft IllegalNumber
             }
         }
     }

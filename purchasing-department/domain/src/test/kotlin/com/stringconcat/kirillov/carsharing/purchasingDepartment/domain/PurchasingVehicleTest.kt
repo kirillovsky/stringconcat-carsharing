@@ -9,8 +9,8 @@ import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.Capacity
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.PurchasingDepartmentEvents.VehicleAddedToPurchasingBalance
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.PurchasingVehicle.CreatePurchasingVehicleError.AlreadyExistsWithSameRegistrationPlate
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.PurchasingVehicle.CreatePurchasingVehicleError.AlreadyExistsWithSameVin
-import io.kotest.assertions.arrow.either.shouldBeLeft
-import io.kotest.assertions.arrow.either.shouldBeRight
+import io.kotest.assertions.arrow.core.shouldBeLeft
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import java.time.LocalDate.now
@@ -34,7 +34,7 @@ internal class PurchasingVehicleTest {
             existingVehicles = emptyList()
         )
 
-        vehicle shouldBeRight {
+        vehicle.shouldBeRight().let {
             it.id shouldBe expectedId
             it.capacity shouldBe expectedCapacity
             it.model shouldBe expectedModel
@@ -62,9 +62,7 @@ internal class PurchasingVehicleTest {
             )
         )
 
-        vehicle shouldBeLeft {
-            it shouldBe AlreadyExistsWithSameRegistrationPlate
-        }
+        vehicle shouldBeLeft AlreadyExistsWithSameRegistrationPlate
     }
 
     @Test
@@ -84,8 +82,6 @@ internal class PurchasingVehicleTest {
             )
         )
 
-        vehicle shouldBeLeft {
-            it shouldBe AlreadyExistsWithSameVin
-        }
+        vehicle shouldBeLeft AlreadyExistsWithSameVin
     }
 }

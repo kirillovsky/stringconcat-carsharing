@@ -3,8 +3,8 @@ package com.stringconcat.kirillov.carsharing.commons.types.valueObjects
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.CreateRegistrationPlateError.InvalidNumberFormat
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.CreateRegistrationPlateError.InvalidRegionCodeFormat
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.CreateRegistrationPlateError.InvalidSeriesFormat
-import io.kotest.assertions.arrow.either.shouldBeLeft
-import io.kotest.assertions.arrow.either.shouldBeRight
+import io.kotest.assertions.arrow.core.shouldBeLeft
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.DynamicTest.dynamicTest
@@ -22,9 +22,9 @@ internal class RegistrationPlateTest {
             series = validSeries,
             number = validNumber,
             regionCode = validRegistrationCode
-        )
+        ).shouldBeRight()
 
-        plate shouldBeRight {
+        plate.let {
             it.series shouldBe validSeries
             it.number shouldBe validNumber
             it.regionCode shouldBe validRegistrationCode
@@ -39,9 +39,7 @@ internal class RegistrationPlateTest {
             validRegistrationCode
         )
 
-        nonDigitsNumberPlate shouldBeLeft {
-            it shouldBe InvalidNumberFormat
-        }
+        nonDigitsNumberPlate shouldBeLeft InvalidNumberFormat
     }
 
     @Test
@@ -57,12 +55,8 @@ internal class RegistrationPlateTest {
             validRegistrationCode
         )
 
-        twoDigitsNumberPlate shouldBeLeft {
-            it shouldBe InvalidNumberFormat
-        }
-        fourDigitsNumberPlate shouldBeLeft {
-            it shouldBe InvalidNumberFormat
-        }
+        twoDigitsNumberPlate shouldBeLeft InvalidNumberFormat
+        fourDigitsNumberPlate shouldBeLeft InvalidNumberFormat
     }
 
     @Test
@@ -73,9 +67,7 @@ internal class RegistrationPlateTest {
             validRegistrationCode
         )
 
-        zeroNumberPlate shouldBeLeft {
-            it shouldBe InvalidNumberFormat
-        }
+        zeroNumberPlate shouldBeLeft InvalidNumberFormat
     }
 
     @Test
@@ -93,7 +85,7 @@ internal class RegistrationPlateTest {
 
         onePlate.shouldBeRight()
         anotherPlate.shouldBeRight()
-        onePlate.b shouldBe anotherPlate.b
+        onePlate.value shouldBe anotherPlate.value
     }
 
     @Test
@@ -104,9 +96,7 @@ internal class RegistrationPlateTest {
             validRegistrationCode
         )
 
-        invalidSeriesPlate shouldBeLeft {
-            it shouldBe InvalidSeriesFormat
-        }
+        invalidSeriesPlate shouldBeLeft InvalidSeriesFormat
     }
 
     @Test
@@ -122,18 +112,14 @@ internal class RegistrationPlateTest {
             validRegistrationCode
         )
 
-        twoLettersSeriesPlate shouldBeLeft {
-            it shouldBe InvalidSeriesFormat
-        }
-        fourDigitsNumberPlate shouldBeLeft {
-            it shouldBe InvalidSeriesFormat
-        }
+        twoLettersSeriesPlate shouldBeLeft InvalidSeriesFormat
+        fourDigitsNumberPlate shouldBeLeft InvalidSeriesFormat
     }
 
     @TestFactory
     fun `registration plate series shouldn't contains illegal russian letters`(): List<DynamicTest> {
         val legalLetters = listOf('А', 'В', 'Е', 'К', 'М', 'Н', 'О', 'Р', 'С', 'Т', 'У', 'Х')
-        val illegalLetters = CharRange('А', 'Я') - legalLetters
+        val illegalLetters = CharRange('А', 'Я') - legalLetters.toSet()
 
         return illegalLetters.map { illegalLetter ->
             dynamicTest("registration plate series shouldn't contains illegal russian letter - $illegalLetter") {
@@ -143,9 +129,7 @@ internal class RegistrationPlateTest {
                     validRegistrationCode
                 )
 
-                legalSeriesPlate shouldBeLeft {
-                    it shouldBe InvalidSeriesFormat
-                }
+                legalSeriesPlate shouldBeLeft InvalidSeriesFormat
             }
         }
     }
@@ -158,9 +142,7 @@ internal class RegistrationPlateTest {
             regionCode = "D1 "
         )
 
-        invalidPlate shouldBeLeft {
-            it shouldBe InvalidRegionCodeFormat
-        }
+        invalidPlate shouldBeLeft InvalidRegionCodeFormat
     }
 
     @Test
@@ -176,12 +158,8 @@ internal class RegistrationPlateTest {
             regionCode = "1234"
         )
 
-        oneDigitRegionCodePlate shouldBeLeft {
-            it shouldBe InvalidRegionCodeFormat
-        }
-        fourDigitRegionCodePlate shouldBeLeft {
-            it shouldBe InvalidRegionCodeFormat
-        }
+        oneDigitRegionCodePlate shouldBeLeft InvalidRegionCodeFormat
+        fourDigitRegionCodePlate shouldBeLeft InvalidRegionCodeFormat
     }
 
     @Test
@@ -192,9 +170,7 @@ internal class RegistrationPlateTest {
             regionCode = "00"
         )
 
-        illegalPlate shouldBeLeft {
-            it shouldBe InvalidRegionCodeFormat
-        }
+        illegalPlate shouldBeLeft InvalidRegionCodeFormat
     }
 
     @Test
@@ -205,8 +181,6 @@ internal class RegistrationPlateTest {
             regionCode = "091"
         )
 
-        illegalPlate shouldBeLeft {
-            it shouldBe InvalidRegionCodeFormat
-        }
+        illegalPlate shouldBeLeft InvalidRegionCodeFormat
     }
 }

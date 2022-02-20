@@ -3,8 +3,8 @@ package com.stringconcat.kirillov.carsharing.ride.usecase.ride
 import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.randomPrice
 import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.randomRideId
 import com.stringconcat.kirillov.carsharing.ride.usecase.ride.InvalidPayRideParametersError.InvalidPriceValue
-import io.kotest.assertions.arrow.either.shouldBeLeft
-import io.kotest.assertions.arrow.either.shouldBeRight
+import io.kotest.assertions.arrow.core.shouldBeLeft
+import io.kotest.assertions.arrow.core.shouldBeRight
 import org.junit.jupiter.api.Test
 
 internal class PayRideRequestTest {

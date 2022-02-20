@@ -5,8 +5,8 @@ import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.
 import com.stringconcat.kirillov.carsharing.fixtures.commons.types.valueObjects.toPrice
 import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.finishedRide
 import com.stringconcat.kirillov.carsharing.fixtures.ride.domain.startedRide
-import io.kotest.assertions.arrow.either.shouldBeLeft
-import io.kotest.assertions.arrow.either.shouldBeRight
+import io.kotest.assertions.arrow.core.shouldBeLeft
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -20,9 +20,7 @@ internal class FixedRateTaximeterTest {
 
         val resultPrice = taximeter.calculatePrice(ride)
 
-        resultPrice shouldBeRight {
-            it shouldBe (11.21 * 5.2).toPrice()
-        }
+        resultPrice.shouldBeRight() shouldBe (11.21 * 5.2).toPrice()
     }
 
     @Test
@@ -31,8 +29,6 @@ internal class FixedRateTaximeterTest {
 
         val resultPrice = randomRateTaximeter.calculatePrice(ride)
 
-        resultPrice shouldBeLeft {
-            it shouldBe CalculationRidePriceError
-        }
+        resultPrice shouldBeLeft CalculationRidePriceError
     }
 }

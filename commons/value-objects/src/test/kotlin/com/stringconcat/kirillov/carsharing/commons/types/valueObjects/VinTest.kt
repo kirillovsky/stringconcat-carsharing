@@ -2,8 +2,8 @@ package com.stringconcat.kirillov.carsharing.commons.types.valueObjects
 
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.CreateVinError.IllegalCharacterContains
 import com.stringconcat.kirillov.carsharing.commons.types.valueObjects.CreateVinError.InvalidCodeLength
-import io.kotest.assertions.arrow.either.shouldBeLeft
-import io.kotest.assertions.arrow.either.shouldBeRight
+import io.kotest.assertions.arrow.core.shouldBeLeft
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -15,9 +15,7 @@ internal class VinTest {
         val expectedVinCode = "KMHJU81VCBU266113"
         val actualVin = Vin.from(expectedVinCode)
 
-        actualVin shouldBeRight {
-            it.code shouldBe expectedVinCode
-        }
+        actualVin.shouldBeRight().code shouldBe expectedVinCode
     }
 
     @Test
@@ -28,25 +26,21 @@ internal class VinTest {
 
         actualVin.shouldBeRight()
         expectedVin.shouldBeRight()
-        actualVin.b shouldBe expectedVin.b
+        actualVin.value shouldBe expectedVin.value
     }
 
     @Test
     fun `vin should contains only 17 symbols`() {
         val invalidVin = Vin.from("KMHJ")
 
-        invalidVin shouldBeLeft {
-            it shouldBe InvalidCodeLength
-        }
+        invalidVin shouldBeLeft InvalidCodeLength
     }
 
     @Test
     fun `vin should contains only digits or latin letters`() {
         val invalidVin = Vin.from("!@#$%^&*()_+-,./\\")
 
-        invalidVin shouldBeLeft {
-            it shouldBe IllegalCharacterContains
-        }
+        invalidVin shouldBeLeft IllegalCharacterContains
     }
 
     @ParameterizedTest(name = "vin shouldn't contains special latin letter - '{0}'")
@@ -54,8 +48,6 @@ internal class VinTest {
     fun `vin shouldn't contains special latin letter`(specialLetter: Char) {
         val invalidVin = Vin.from("KMHJU81VC${specialLetter}U266113")
 
-        invalidVin shouldBeLeft {
-            it shouldBe IllegalCharacterContains
-        }
+        invalidVin shouldBeLeft IllegalCharacterContains
     }
 }

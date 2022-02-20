@@ -9,8 +9,8 @@ import com.stringconcat.kirillov.carsharing.fixtures.purchasingDepartment.domain
 import com.stringconcat.kirillov.carsharing.fixtures.purchasingDepartment.usecase.InMemoryPurchasingVehicleRepository
 import com.stringconcat.kirillov.carsharing.fixtures.purchasingDepartment.usecase.addVehicleToBalanceRequest
 import com.stringconcat.kirillov.carsharing.purchasingDepartment.domain.PurchasingDepartmentEvents.VehicleAddedToPurchasingBalance
-import io.kotest.assertions.arrow.either.shouldBeLeft
-import io.kotest.assertions.arrow.either.shouldBeRight
+import io.kotest.assertions.arrow.core.shouldBeLeft
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.maps.shouldBeEmpty
 import io.kotest.matchers.nulls.shouldNotBeNull
@@ -41,9 +41,7 @@ internal class AddVehicleToBalanceUseCaseTest {
             )
         )
 
-        result shouldBeRight {
-            it shouldBe vehicleId
-        }
+        result shouldBeRight vehicleId
         repo[vehicleId] should {
             it.shouldNotBeNull()
             it.id shouldBe vehicleId
@@ -72,9 +70,7 @@ internal class AddVehicleToBalanceUseCaseTest {
             addVehicleToBalanceRequest(registrationPlate = existingRegistrationPlate)
         )
 
-        result shouldBeLeft {
-            it shouldBe AddVehicleToBalanceUseCaseError.AlreadyExistsWithSameRegistrationPlate
-        }
+        result shouldBeLeft AddVehicleToBalanceUseCaseError.AlreadyExistsWithSameRegistrationPlate
         persister.shouldBeEmpty()
     }
 
@@ -95,9 +91,7 @@ internal class AddVehicleToBalanceUseCaseTest {
             addVehicleToBalanceRequest(vin = existingVin)
         )
 
-        result shouldBeLeft {
-            it shouldBe AddVehicleToBalanceUseCaseError.AlreadyExistsWithSameVin
-        }
+        result shouldBeLeft AddVehicleToBalanceUseCaseError.AlreadyExistsWithSameVin
         persister.shouldBeEmpty()
     }
 }

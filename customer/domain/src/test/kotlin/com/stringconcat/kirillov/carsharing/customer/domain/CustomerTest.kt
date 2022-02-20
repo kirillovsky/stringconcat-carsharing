@@ -9,8 +9,8 @@ import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.customer
 import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.driverLicenseNumber
 import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.fullName
 import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.randomCustomerId
-import io.kotest.assertions.arrow.either.shouldBeLeft
-import io.kotest.assertions.arrow.either.shouldBeRight
+import io.kotest.assertions.arrow.core.shouldBeLeft
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
@@ -43,7 +43,7 @@ internal class CustomerTest {
             driverLicenseNumber = driverLicenseNumber
         )
 
-        customer shouldBeRight {
+        customer.shouldBeRight().let {
             it.id shouldBe id
             it.fullName shouldBe fullName
             it.birthDate shouldBe maturedYetBirthDate
@@ -69,9 +69,7 @@ internal class CustomerTest {
             driverLicenseNumber = driverLicenseNumber()
         )
 
-        customer shouldBeLeft {
-            it shouldBe BirthDateMoreThanRegistrationDate
-        }
+        customer shouldBeLeft BirthDateMoreThanRegistrationDate
     }
 
     @Test
@@ -91,9 +89,7 @@ internal class CustomerTest {
             driverLicenseNumber = driverLicenseNumber()
         )
 
-        customer shouldBeLeft {
-            it shouldBe NotMaturedEnough
-        }
+        customer shouldBeLeft NotMaturedEnough
     }
 
     @Test
@@ -109,9 +105,7 @@ internal class CustomerTest {
             driverLicenseNumber = driverLicenseNumber()
         )
 
-        customer shouldBeLeft {
-            it shouldBe AlreadyRegistered
-        }
+        customer shouldBeLeft AlreadyRegistered
     }
 
     @Test
@@ -129,9 +123,7 @@ internal class CustomerTest {
             driverLicenseNumber = driverLicenseNumber()
         )
 
-        customer shouldBeLeft {
-            it shouldBe ActuallyDoesNotExists
-        }
+        customer shouldBeLeft ActuallyDoesNotExists
     }
 
     @Test

@@ -1,9 +1,9 @@
 package com.stringconcat.kirillov.carsharing.ride.usecase.ride
 
 import arrow.core.Either
-import arrow.core.extensions.either.apply.tupled
 import arrow.core.flatMap
 import arrow.core.rightIfNotNull
+import arrow.core.zip
 import com.stringconcat.kirillov.carsharing.ride.domain.Ride
 import com.stringconcat.kirillov.carsharing.ride.domain.RideId
 import com.stringconcat.kirillov.carsharing.ride.domain.RideIdGenerator
@@ -22,17 +22,21 @@ class StartRideUseCase(
     private val ridePersister: RidePersister
 ) : StartRide {
     override fun execute(request: StartRideRequest): Either<StartRideUseCaseError, RideId> =
-        tupled(
-            customerExtractor.getById(request.customerId).rightIfNotNull { CustomerNotFound },
-            vehicleExtractor.getById(request.vehicleId).rightIfNotNull { VehicleNotFound }
-        ).flatMap { (customer, vehicle) ->
-            Ride.startRide(vehicleInRent, idGenerator, customer, vehicle, startDateTime = request.startDateTime)
-                .mapLeft { it.toErrorMessage() }
-        }.map {
-            ridePersister.save(it)
+        customerExtractor
+            .getById(request.customerId)
+            .rightIfNotNull { CustomerNotFound }
+            .zip(
+                vehicleExtractor
+                    .getById(request.vehicleId)
+                    .rightIfNotNull { VehicleNotFound }
+            ).flatMap { (customer, vehicle) ->
+                Ride.startRide(vehicleInRent, idGenerator, customer, vehicle, startDateTime = request.startDateTime)
+                    .mapLeft { it.toErrorMessage() }
+            }.map {
+                ridePersister.save(it)
 
-            it.id
-        }
+                it.id
+            }
 }
 
 private fun RideStartingError.toErrorMessage(): StartRideUseCaseError =

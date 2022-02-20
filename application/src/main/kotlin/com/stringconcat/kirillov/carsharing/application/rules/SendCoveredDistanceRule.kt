@@ -1,8 +1,8 @@
 package com.stringconcat.kirillov.carsharing.application.rules
 
-import arrow.core.Either
 import arrow.core.flatMap
 import arrow.core.getOrHandle
+import arrow.core.left
 import arrow.core.right
 import arrow.core.rightIfNotNull
 import com.stringconcat.kirillov.carsharing.application.listeners.DomainEventListener
@@ -21,7 +21,7 @@ class SendCoveredDistanceRule(
             .rightIfNotNull { "Unable to find ride by id=${event.rideId}" }
             .flatMap {
                 if (it.isFinished().not()) {
-                    Either.left("Found ride(id=${it.id}) is not finished")
+                    "Found ride(id=${it.id}) is not finished".left()
                 } else {
                     it.right()
                 }

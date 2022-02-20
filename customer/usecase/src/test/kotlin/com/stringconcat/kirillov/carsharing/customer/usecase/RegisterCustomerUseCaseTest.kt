@@ -7,8 +7,8 @@ import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.asYearsAge
 import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.driverLicenseNumber
 import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.fullName
 import com.stringconcat.kirillov.carsharing.fixtures.customer.domain.randomCustomerId
-import io.kotest.assertions.arrow.either.shouldBeLeft
-import io.kotest.assertions.arrow.either.shouldBeRight
+import io.kotest.assertions.arrow.core.shouldBeLeft
+import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull

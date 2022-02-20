@@ -1,7 +1,7 @@
 package com.stringconcat.kirillov.carsharing.customer.usecase
 
 import arrow.core.Either
-import arrow.core.extensions.either.apply.tupled
+import arrow.core.zip
 import com.stringconcat.kirillov.carsharing.commons.types.error.BusinessError
 import com.stringconcat.kirillov.carsharing.customer.domain.CreateFullNameError
 import com.stringconcat.kirillov.carsharing.customer.domain.DriverLicenseNumber
@@ -23,14 +23,11 @@ data class RegisterCustomerRequest(
             fullNameData: FullNameData,
             driverLicenseNumberData: DriverLicenseNumberData
         ): Either<InvalidRegisterCustomerParameters, RegisterCustomerRequest> =
-            tupled(
-                fullNameData.run {
-                    FullName.from(firstName, middleName, secondName)
-                },
-                driverLicenseNumberData.run {
-                    DriverLicenseNumber.from(series, number)
-                }
-            ).map { (fullName, driverLicenseNumber) ->
+            fullNameData.run {
+                FullName.from(firstName, middleName, secondName)
+            }.zip(
+                DriverLicenseNumber.from(driverLicenseNumberData.series, driverLicenseNumberData.number)
+            ) { fullName, driverLicenseNumber ->
                 RegisterCustomerRequest(registrationDate, birthDate, fullName, driverLicenseNumber)
             }.mapLeft {
                 it.toErrorMessage()
